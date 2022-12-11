@@ -1,0 +1,47 @@
+{
+  "name": "sglobpubpc",
+  "version": "5.2.1",
+  "description": "Tienda Virtual de Impresión de Tarjetas [PrintCards]",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4050",
+    "start": "next start",
+    "build": "next build",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LxingA/SGlobPubPC.git"
+  },
+  "keywords": [
+    "LxingA",
+    "SocASF",
+    "Service Otaku Comunity",
+    "ASFrike",
+    "Marloy P. Harmoon Therdson",
+    "Anethxa",
+    "Akira Yuto Suzuki",
+    "SUDesign",
+    "Lamssie Monroe",
+    "Grou Hayabusa",
+    "Tienda Virtual",
+    "Impresión",
+    "Tarjetas",
+    "Imprenta"
+  ],
+  "author": "LxingA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LxingA/SGlobPubPC/issues"
+  },
+  "homepage": "https://github.com/LxingA/SGlobPubPC#readme",
+  "dependencies": {
+    "aos": "^2.3.4",
+    "firebase": "^9.15.0",
+    "next": "^13.0.6",
+    "react": "^18.2.0",
+    "react-content-loader": "^6.2.0",
+    "react-dom": "^18.2.0",
+    "sass": "^1.56.2"
+  }
+}
