@@ -15,7 +15,7 @@ const Document = () => {
                 <link rel="icon" href="/1340026a-c8f2-4fa0-9683-69e4bc51848c.png" type="image/png" sizes="32x32"/>
                 <link rel="favicon" href="/428f70d3-aff1-4d12-9178-8728cb5161f7.ico" type="image/x-icon"/>
                 <link rel="manifest" href="/025d50df-26f5-4132-be41-9ab28b65f177.webmanifest"/>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" integrity="sha512-Mo79lrQ4UecW8OCcRUZzf0ntfMNgpOFR46Acj2ZtWO8vKhBvD79VCp3VOKSzk6TovLg5evL3Xi3u475Q/jMu4g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" integrity="sha512-Mo79lrQ4UecW8OCcRUZzf0ntfMNgpOFR46Acj2ZtWO8vKhBvD79VCp3VOKSzk6TovLg5evL3Xi3u475Q/jMu4g==" crossOrigin="anonymous" referrerPolicy="no-referrer"/>
             </Head>
             <body>
                 <Main />

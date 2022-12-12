@@ -15,13 +15,13 @@ export const HeaderShopOptions = () => {
         <div className="user-options">
             <div className="user-icon">
                 <Enlace href={authentic?"/cuenta":"/auth?m=login"}>
-                    <Imagen src="/1d000574-359b-47ab-b40b-0e41aedfd190.png" alt="Mí cuenta" width={20} height={20}/>
+                    <Imagen src="/1d000574-359b-47ab-b40b-0e41aedfd190.png" alt="Mí cuenta" width={15} height={18}/>
                 </Enlace>
             </div>
             {authentic && (
                 <div className="user-pedidos">
                     <Enlace href="/">
-                        <Imagen src="/348e9adf-5e93-48ce-a436-6a88924de1cf.png" alt="Mís pedidos" width={20} height={20}/>
+                        <Imagen src="/348e9adf-5e93-48ce-a436-6a88924de1cf.png" alt="Mís pedidos" width={15} height={18}/>
                     </Enlace>
                 </div>
             )}

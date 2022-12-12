@@ -7,6 +7,7 @@
 import {Fragment} from 'react';
 import {HeaderShop} from '../components/ComponentHeader';
 import {FooterShop} from '../components/ComponentFooter';
+import {SliderShop} from '../components/ComponentSlider';
 import Message from '../components/ComponentMessage';
 
 const ViewShop = ({children,firebase,global}) => {
@@ -14,6 +15,7 @@ const ViewShop = ({children,firebase,global}) => {
         <Fragment>
             <Message global={global}/>
             <HeaderShop global={[firebase,global]}/>
+            <SliderShop global={[firebase]}/>
             {children}
             <FooterShop global={[firebase,global]}/>
         </Fragment>

@@ -70,30 +70,30 @@ export const FooterShop = ({global}) => {
                         </p>
                     </div>
                 </div>
-                <div className="main-enlaces">
-                    <ul className="terminos">
-                        <li>
-                            <Enlace href="/">
-                                Términos y Condiciones
-                            </Enlace>
+            </div>
+            <div className="main-enlaces">
+                <ul className="terminos">
+                    <li>
+                        <Enlace href="/">
+                            Términos y Condiciones
+                        </Enlace>
+                    </li>
+                    <li>
+                        <Enlace href="/">
+                            Política de Privacidad
+                        </Enlace>
+                    </li>
+                </ul>
+                <ul className="redes">
+                    <p>Síguenos en nuestras redes:</p>
+                    {siteSocial.map(({url,type},i)=>(
+                        <li key={i}>
+                            <a href={url} target="_blank" rel="noreferrer noopener">
+                                <i className={`fa fa-${type}`} aria-hidden="true"></i>
+                            </a>
                         </li>
-                        <li>
-                            <Enlace href="/">
-                                Política de Privacidad
-                            </Enlace>
-                        </li>
-                    </ul>
-                    <ul className="redes">
-                        <p>Síguenos en nuestras redes:</p>
-                        {siteSocial.map(({url,type},i)=>(
-                            <li key={i}>
-                                <a href={url} target="_blank" rel="noreferrer noopener">
-                                    <i className={`fa fa-${type}`} aria-hidden="true"></i>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                    ))}
+                </ul>
             </div>
         </footer>
     )
