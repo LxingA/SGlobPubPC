@@ -9,8 +9,5 @@
 */
 module.exports = {
     poweredByHeader: false,
-    generateEtags: false,
-    experimental: {
-        appDir: true
-    }
+    generateEtags: false
 };
