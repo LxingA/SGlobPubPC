@@ -29,7 +29,7 @@ const App = ({Component,pageProps}) => {
     },[]);
     return state ? (
         <Component {...pageProps} firebase={value} global={global}/>
-    ) : (
+    ) : (!state || error) && (
         <Fragment>
             <div className="pop-up-anuncios">
                 <p>
@@ -40,35 +40,35 @@ const App = ({Component,pageProps}) => {
             </div>
             <nav>
                 <div className="logotipo">
-                    <Loader width={200} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff">
+                    <Loader width={200} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff0">
                         <rect x={0} y={0} rx={0} ry={0} width={200} height={30}/>
                     </Loader>
                 </div>
                 <ul className="mainmenu">
                     <li>
-                        <Loader width={100} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff">
+                        <Loader width={100} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff0">
                             <rect x={0} y={0} rx={0} ry={0} width={100} height={30}/>
                         </Loader>
                     </li>
                     <li>
-                        <Loader width={100} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff">
+                        <Loader width={100} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff0">
                             <rect x={0} y={0} rx={0} ry={0} width={100} height={30}/>
                         </Loader>
                     </li>
                     <li>
-                        <Loader width={100} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff">
+                        <Loader width={100} height={30} foregroundColor="#ab9a9a" backgroundColor="#fff0">
                             <rect x={0} y={0} rx={0} ry={0} width={100} height={30}/>
                         </Loader>
                     </li>
                 </ul>
                 <div className="user-options">
                     <div className="user-icon">
-                        <Loader width={150} height={25} foregroundColor="#ab9a9a" backgroundColor="#fff">
+                        <Loader width={150} height={25} foregroundColor="#ab9a9a" backgroundColor="#fff0">
                             <rect x={0} y={0} rx={0} ry={0} width={150} height={25}/>
                         </Loader>
                     </div>
                     <div className="user-pedidos">
-                        <Loader width={150} height={25} foregroundColor="#ab9a9a" backgroundColor="#fff">
+                        <Loader width={150} height={25} foregroundColor="#ab9a9a" backgroundColor="#fff0">
                             <rect x={0} y={0} rx={0} ry={0} width={150} height={25}/>
                         </Loader>
                     </div>
