@@ -4,14 +4,17 @@
 @date 12/Dic/22 11:18
 @description Componente con el Slider para el Proyecto
 */
-import {useEffect,useState} from 'react';
+import {useEffect,useState,useReducer} from 'react';
 import {collection,where,query,onSnapshot} from 'firebase/firestore';
 import {getDownloadURL,ref} from 'firebase/storage';
+import {SliderReducer} from '../util/reducer';
 import Enlace from 'next/link';
 
 export const SliderShop = ({global}) => {
+    const {Action:{SRActUpdateSetMaxItems,SRActUpdateInitLower,SRActUpdateInitUpper},Reducer} = SliderReducer;
     const [sliderData,setSliderData] = useState(null);
     const [{FirebaseDatabase,FirebaseStorage}] = global;
+    const [currentCount,dispatch] = useReducer(Reducer,{init:0,max:0});
     useEffect(_ => {
         const sRefDoc = query(collection(FirebaseDatabase,"slider"),where("active","==",true));
         const sRefSocket = onSnapshot(sRefDoc,async baVxB=>{
@@ -21,6 +24,7 @@ export const SliderShop = ({global}) => {
                 const url = await getDownloadURL(ref(FirebaseStorage,`s/${cover}`));
                 __refState__.push({description,title,to,button,url,id:PgEyp.id});
             }));
+            dispatch(SRActUpdateSetMaxItems(__refState__.length));
             setSliderData(__refState__);
         });
         return _ => sRefSocket();
@@ -28,17 +32,17 @@ export const SliderShop = ({global}) => {
     return (
         <header data-aos="fade-up" data-aos-duration="3000">
             <div className="nave-slider">
-                <i className="btn-circle f-left"> {"<"} </i>
-                <i className="btn-circle f-right"> {">"} </i>
+                <i className="btn-circle f-left" onClick={_=>dispatch(SRActUpdateInitLower())}> {"<"} </i>
+                <i className="btn-circle f-right" onClick={_=>dispatch(SRActUpdateInitUpper())}> {">"} </i>
             </div>
-            <div className="sliderMain">
+            <div className="sliderMain" style={{transform:`translateX(-${currentCount.init}%)`}}>
                 <div className="colum-slider">
                     {sliderData && sliderData.map(({id,title,description,to,button,url},i)=>(
                         <div className={`slider-content ctn-${(i+1)}`} key={id}>
                             <div className="content-txt" data-aos={i===0?"fade-right":undefined}>
-                                <h3>{title}</h3>
                                 <p>{description}</p>
-                                <Enlace href={to}>
+                                <h3>{title}</h3>
+                                <Enlace href={to} className="btn-white">
                                     {button}
                                 </Enlace>
                             </div>
