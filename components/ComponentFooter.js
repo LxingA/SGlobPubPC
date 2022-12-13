@@ -24,12 +24,12 @@ export const FooterShop = ({global}) => {
                                 <FooterShopLinks />
                             </AuthContext.Provider>
                             <li>
-                                <Enlace href="/">
+                                <Enlace href="/faq">
                                     Preguntas frecuentes
                                 </Enlace>
                             </li>
                             <li>
-                                <Enlace href="/">
+                                <Enlace href="/about">
                                     Sobre nosotros
                                 </Enlace>
                             </li>
@@ -74,12 +74,7 @@ export const FooterShop = ({global}) => {
             <div className="main-enlaces">
                 <ul className="terminos">
                     <li>
-                        <Enlace href="/">
-                            Términos y Condiciones
-                        </Enlace>
-                    </li>
-                    <li>
-                        <Enlace href="/">
+                        <Enlace href="/privacy">
                             Política de Privacidad
                         </Enlace>
                     </li>
