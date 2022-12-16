@@ -13,18 +13,20 @@ import {getDatabase} from 'firebase/database';
 import {getMessaging} from 'firebase/messaging';
 import {getStorage} from 'firebase/storage';
 
+export const Config = initializeApp({
+    apiKey: "AIzaSyClWIoP_YWCUoJJsHFqcm6WG13sLEZO7b4",
+    authDomain: "scglobproj0.firebaseapp.com",
+    databaseURL: "https://scglobproj0-default-rtdb.firebaseio.com",
+    projectId: "scglobproj0",
+    storageBucket: "scglobproj0.appspot.com",
+    messagingSenderId: "102400467389",
+    appId: "1:102400467389:web:a123b5cdba09af06be32d4",
+    measurementId: "G-EF1EXS0CEN"
+});
+
 const Firebase = async() => {
     let response = {status:true,value:{}};
-    const App = initializeApp({
-        apiKey: "AIzaSyClWIoP_YWCUoJJsHFqcm6WG13sLEZO7b4",
-        authDomain: "scglobproj0.firebaseapp.com",
-        databaseURL: "https://scglobproj0-default-rtdb.firebaseio.com",
-        projectId: "scglobproj0",
-        storageBucket: "scglobproj0.appspot.com",
-        messagingSenderId: "102400467389",
-        appId: "1:102400467389:web:a123b5cdba09af06be32d4",
-        measurementId: "G-EF1EXS0CEN"
-    });
+    const App = Config;
     try{
         initializeAppCheck(App,{
             provider: new ReCaptchaV3Provider("6LdSj0sjAAAAAM8qnmKvnUU-QplRoCrSrOYEBfJX"),

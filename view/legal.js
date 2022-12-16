@@ -9,11 +9,11 @@ import {HeaderShop} from '../components/ComponentHeader';
 import {FooterShop} from '../components/ComponentFooter';
 import Message from '../components/ComponentMessage';
 
-const ViewLegal = ({children,global,firebase,title,description}) => {
+const ViewLegal = ({children,global,firebase,title,description,authentic}) => {
     return (
         <Fragment>
             <Message global={global}/>
-            <HeaderShop global={[firebase,global]}/>
+            <HeaderShop global={[firebase,global,authentic]}/>
             <header data-aos="fade-up" data-aos-duration="3000" className="error Politica">
                 <div className="content-txt" data-aos="fade-right">
                     <h3>{title}</h3>
@@ -25,7 +25,7 @@ const ViewLegal = ({children,global,firebase,title,description}) => {
                     {children}
                 </div>
             </div>
-            <FooterShop global={[firebase,global]}/>
+            <FooterShop global={[firebase,global,authentic]}/>
         </Fragment>
     )
 };

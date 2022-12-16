@@ -4,13 +4,10 @@
 @date 12/Dic/22 09:31
 @description Complemento con Algunos Componentes para ser usados en Header del Proyecto
 */
-import {useContext} from 'react';
-import {AuthContext} from '../util/context';
 import Enlace from 'next/link';
 import Imagen from 'next/image';
 
-export const HeaderShopOptions = () => {
-    const {ACState:{authentic}} = useContext(AuthContext.Context);
+export const HeaderShopOptions = ({authentic}) => {
     return (
         <div className="user-options">
             <div className="user-icon">

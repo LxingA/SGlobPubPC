@@ -10,14 +10,16 @@ import {FooterShop} from '../components/ComponentFooter';
 import {SliderShop} from '../components/ComponentSlider';
 import Message from '../components/ComponentMessage';
 
-const ViewShop = ({children,firebase,global}) => {
+const ViewShop = ({children,firebase,global,slider,authentic}) => {
     return (
         <Fragment>
             <Message global={global}/>
-            <HeaderShop global={[firebase,global]}/>
-            <SliderShop global={[firebase]}/>
+            <HeaderShop global={[firebase,global,authentic]}/>
+            {slider && (
+                <SliderShop global={[firebase]}/>
+            )}
             {children}
-            <FooterShop global={[firebase,global]}/>
+            <FooterShop global={[firebase,global,authentic]}/>
         </Fragment>
     )
 };

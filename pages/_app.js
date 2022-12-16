@@ -6,29 +6,37 @@
 */
 import {useEffect,useState,Fragment} from 'react';
 import {collection,doc,onSnapshot} from 'firebase/firestore';
+import {onAuthStateChanged} from 'firebase/auth';
 import Firebase from '../util/firebase';
 import Animation from 'aos';
 import Loader from 'react-content-loader';
+import $ from 'jquery';
 import '../assets/96517d18-f81c-43d2-ac47-3e96d1230c7f.scss';
 import '../assets/3d0ba9b3-dc6e-4a73-85ee-8f1b6b74abe4.css';
 import 'aos/dist/aos.css';
 
 const App = ({Component,pageProps}) => {
-    const [{state,value,global,error},setStatus] = useState({state:false,value:null,global:null,error:false});
+    const [{state,value,global,error,auth,user},setStatus] = useState({state:false,value:null,global:null,error:false,auth:undefined,user:null});
     const HandlerFirebase = async () => {
         const {status,value} = await Firebase();
         if(status){
             const sRefDoc = doc(collection(value["FirebaseDatabase"],"global"),"ZKQuAiYhLwjg5g7zySE9");
             const sRefObj = {state:status,value,global};
             onSnapshot(sRefDoc,ySqem=>setStatus({...sRefObj,global:ySqem.data()}));
-        }else setStatus({state:status,value,global,error:true});
+        }else setStatus({state:status,value,global,error:true,auth});
     };
     useEffect(_ => {
         HandlerFirebase();
         Animation.init();
+        $("body").attr({"oncontextmenu":"return false","onselectstart":"return false"});
     },[]);
-    return state ? (
-        <Component {...pageProps} firebase={value} global={global}/>
+    useEffect(_ => {
+        global && onAuthStateChanged(value["FirebaseAuth"],RxQFu => {
+            RxQFu ? setStatus(WHgKl=>({...WHgKl,auth:true,user:{nick:RxQFu.displayName,id:RxQFu.uid,tel:RxQFu.phoneNumber,photo:RxQFu.photoURL,mail:RxQFu.email,verified:RxQFu.emailVerified}})) : setStatus(QelSP=>({...QelSP,auth:false,user:null}));
+        })
+    },[global]);
+    return state && typeof auth !== "undefined" ? (
+        <Component {...pageProps} firebase={value} global={global} authentic={auth} user={user}/>
     ) : (!state || error) && (
         <Fragment>
             <div className="pop-up-anuncios">
@@ -76,7 +84,7 @@ const App = ({Component,pageProps}) => {
             </nav>
             <header className="error">
                 <div className="content-txt">
-                    <h3>{error ? "Tienda no Disponible" : "Accediendo..."}</h3>
+                    <h3>{error ? "Tienda no Disponible" : "Cargando..."}</h3>
                     <p>{error ? "Hubo un error a inicializar la Tienda" : "Porfavor espere"}</p>
                     {error && (
                         <a className="btn-white" style={{cursor:"pointer"}} onClick={_=>window.location.reload()}>Reintentar</a>

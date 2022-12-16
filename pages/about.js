@@ -8,14 +8,14 @@ import {Fragment} from 'react';
 import Head from 'next/head';
 import ViewLegal from "../view/legal";
 
-const About = ({global,firebase}) => {
+const About = ({global,firebase,authentic}) => {
     const {siteName} = global;
     return (
         <Fragment>
             <Head>
                 <title>Sobre Nosotros - {siteName}</title>
             </Head>
-            <ViewLegal title="Sobre Nosotros" global={global} firebase={firebase} description="Información acerca de nuestro equipo.">
+            <ViewLegal title="Sobre Nosotros" global={global} firebase={firebase} description="Información acerca de nuestro equipo." authentic={authentic}>
                 dsadsad
             </ViewLegal>
         </Fragment>

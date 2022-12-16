@@ -353,7 +353,7 @@ p.parrafo {
 
 .login-container {
     width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
     background-image: url(../public/213260a5-35a6-45e0-9e95-9da440c741d2.png);
@@ -367,10 +367,10 @@ p.parrafo {
 
 .formulario-conexion {
     background: #FFF;
-    width: 1227px;
+    width: 50%;
     display: flex;
     justify-content: space-between;
-    height: 673px;
+    height: 710px;
     margin-top: 118px;
     align-items: center;
     padding-left: 176px;
@@ -435,6 +435,13 @@ p.parrafo {
 }
 
 .form-2 a {
+    font-size: 10px;
+    display: block;
+    padding: 4px;
+    color: #a98452;
+}
+
+.form-1 p {
     font-size: 10px;
     display: block;
     padding: 4px;
@@ -1702,3 +1709,159 @@ h3.main.statusPedido-s .a-box-order .mfn- span a {
     margin: 0 auto;
     margin-top: 9px;
 }
+
+.abrir-cuenta {
+    height: 712px;
+    margin-top: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.ctn-newCuenta p {
+    font-size: 15px;
+}
+
+a.btn-border {
+    color: black;
+    font-size: 13px;
+    display: inline-block;
+    border: 2px solid #6b6a69;
+    padding: 8px 29px;
+    border-radius: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.ctn-newCuenta p {
+    margin-bottom: 0px;
+}
+
+.ctn-newCuenta a.btn-border {margin-top: -50px;position: relative;}
+
+.abrir-cuenta a.btn-border {margin-top: -278px;}
+
+@media screen and (max-width: 900px) { 
+    .abrir-cuenta {
+        height: 673px;
+        margin-top: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .ctn-newCuenta p {
+        font-size: 15px;
+    }
+    
+    a.btn-border {
+        color: black;
+        font-size: 13px;
+        display: inline-block;
+        border: 2px solid #6b6a69;
+        padding: 8px 29px;
+        border-radius: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .ctn-newCuenta p {
+        margin-bottom: 0px;
+    }
+    
+    .ctn-newCuenta a.btn-border {margin-top: -50px;position: relative;}
+    
+    .abrir-cuenta a.btn-border {margin-top: -278px;}
+    
+    .login-container {
+        flex-wrap: wrap!important;
+    }
+    
+    .abrir-cuenta {
+        width: 44vh;
+        margin: 0;
+        height: 370px;
+    }
+    
+    .formulario-conexion {
+        height: 641px;
+    }
+    
+    .abrir-cuenta a.btn-border {
+        margin: 0!important;
+    }
+    
+    .ctn-newCuenta {
+        margin-top: 41px!important;
+    }
+    }
+
+    .floatingCaja {
+        outline: 1px solid #eee;
+        position: fixed;
+        z-index: 2;
+        background: rgb(255 255 255 / 95%);
+        padding: 48px;
+        width: 500px;
+        outline-offset: -16px;
+        border-radius: 17px;
+        padding-bottom: 15px;
+    }
+    
+    .floatingCaja p {
+        font-size: 12px;
+        border-top: 1px solid #c7c7c7;
+        border-bottom: 1px solid #c7c7c7;
+        text-align: center;
+        padding: 24px;
+        margin: 0 auto;
+    }
+    
+    a.btn-beige {
+        background: #c3c1b4;
+        margin: 0 auto;
+        width: 165px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 38px;
+        border-radius: 17px;
+        color: white;
+        margin-top: 23px;
+        font-size: 12px;
+    }
+    
+    .floatingCaja i {
+        display: block;
+        text-align: center;
+        font-size: 22px;
+        margin-bottom: 21px;
+        color: #c3c1b4;
+    }
+    
+    .floatingCaja {
+        overflow: hidden;
+    }
+    
+    .floatingCaja:before {
+        content: " ";
+        height: 52px;
+        width: 100vh;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    
+    a.btn-beige {
+        margin-bottom: 36px;
+    }
+
+    @media screen and (max-width: 900px) {  
+        .floatingCaja {
+            top: 38%!important;
+            width: 38vh!important;
+        }
+    }

@@ -4,12 +4,10 @@
 @date 12/Dic/22 10:13
 @description Complemento con Algunos Componentes para ser usados en Footer del Proyecto
 */
-import {useContext,Fragment} from 'react';
-import {AuthContext} from '../util/context';
+import {Fragment} from 'react';
 import Enlace from 'next/link';
 
-export const FooterShopLinks = () => {
-    const {ACState:{authentic}} = useContext(AuthContext.Context);
+export const FooterShopLinks = ({authentic}) => {
     return (
         <Fragment>
             {authentic && (

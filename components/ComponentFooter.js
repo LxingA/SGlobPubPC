@@ -4,13 +4,12 @@
 @date 12/Dic/22 09:56
 @description Componente con el Píe de Página para el Proyecto
 */
-import {AuthContext} from '../util/context';
 import {FooterShopLinks} from '../addons/Footer';
 import Logotipo from '../addons/Logo';
 import Enlace from 'next/link';
 
 export const FooterShop = ({global}) => {
-    const [{FirebaseStorage},{siteName,siteLogo,siteDescription,siteCalendar,siteTel,siteMail,siteAddress,siteSocial}] = global;
+    const [{FirebaseStorage},{siteName,siteLogo,siteDescription,siteCalendar,siteTel,siteMail,siteAddress,siteSocial},authentic] = global;
     return (
         <footer data-aos="fade-up" data-aos-anchor-placement="top-bottom">
             <div className="main-footer-content">
@@ -20,9 +19,7 @@ export const FooterShop = ({global}) => {
                         <Logotipo name={siteName} path={siteLogo} storage={FirebaseStorage} color="#af9b82"/>
                         <p>{siteDescription}</p>
                         <ul>
-                            <AuthContext.Provider>
-                                <FooterShopLinks />
-                            </AuthContext.Provider>
+                            <FooterShopLinks authentic={authentic}/>
                             <li>
                                 <Enlace href="/faq">
                                     Preguntas frecuentes
