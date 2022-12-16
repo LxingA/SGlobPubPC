@@ -133,7 +133,7 @@ export const FormAuthLogin = ({FAuth,Callback}) => {
     )
 };
 
-export const FormAuthRegister = ({FAuth,FDatabase,Callback}) => {
+export const FormAuthRegister = ({FAuth,FDatabase,Callback,AuthCallback}) => {
     const stateValuesInit = {
         sinpnkname: initStateValidated,
         sinpfnames: initStateValidated,
@@ -148,6 +148,7 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback}) => {
         if(Object.values(values).filter(({validated})=>!validated).length === 0){
             const getGenreCurrent = $('select[name="sinpgren"]').val() === "m" ? "Masculino" : "Femenino";
             try{
+                AuthCallback(true);
                 const sRefUser = await createUserWithEmailAndPassword(FAuth,values["sinpemail"].value,values["sinppw"].value);
                 await updateProfile(sRefUser.user,{displayName:values["sinpnkname"].value});
                 const [uFName,uSName] = values["sinpfnames"]["value"].split(" ");
@@ -155,6 +156,7 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback}) => {
                 await setDoc(doc(collection(FDatabase,"user"),sRefUser.user.uid),{uFName,uSName,uLName,uEName,uGenre:getGenreCurrent});
                 await sendEmailVerification(sRefUser.user);
                 await signOut(FAuth);
+                AuthCallback(false);
                 Callback({text:`Se le ha envíado un correo de confirmación a ${values["sinpemail"].value}. Favor de verificarlo para acceder a su cuenta`,redirect:true});
             }catch({code}){
                 let __;switch(code){

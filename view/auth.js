@@ -6,8 +6,9 @@
 */
 import {useRouter} from 'next/router';
 
-const ViewAuth = ({children,login,authentic}) => {
+const ViewAuth = ({children,login,authentic,notRefresh}) => {
     const {replace} = useRouter();
+    if(notRefresh) return children;
     switch(authentic){
         case true:
             if(login) replace("/cuenta");

@@ -13,13 +13,14 @@ import ViewAuth from '../view/auth';
 import ViewShop from '../view/shop';
 
 const Auth = ({firebase,global,authentic}) => {
+    const [refresh,setRefresh] = useState(false);
     const [message,setMessage] = useState(null);
     const {FirebaseAuth,FirebaseDatabase} = firebase;
     const {query,pathname} = useRouter();
     const {siteName} = global;
     const isLogin = query.m === "login";
     return (
-        <ViewAuth authentic={authentic} login>
+        <ViewAuth authentic={authentic} login notRefresh={refresh}>
             <Fragment>
                 <Head>
                     <title>{isLogin ? "Autenticación" : query.m === "register" ? "Registro" : "Recuperación"} - {siteName}</title>
@@ -46,7 +47,7 @@ const Auth = ({firebase,global,authentic}) => {
                                 {isLogin ? (
                                     <FormAuthLogin FAuth={FirebaseAuth} Callback={setMessage} FDatabase={FirebaseDatabase}/>
                                 ) : query.m === "register" ? (
-                                    <FormAuthRegister FAuth={FirebaseAuth} FDatabase={FirebaseDatabase} Callback={setMessage}/>                                    
+                                    <FormAuthRegister FAuth={FirebaseAuth} FDatabase={FirebaseDatabase} Callback={setMessage} AuthCallback={setRefresh}/>                                    
                                 ) : (
                                     <FormAuthRecovery FAuth={FirebaseAuth} Callback={setMessage} Site={siteName}/>
                                 )}
