@@ -6,7 +6,7 @@
 */
 import {initializeApp} from 'firebase/app';
 import {initializeAppCheck,ReCaptchaV3Provider} from 'firebase/app-check';
-import {getFirestore,enableIndexedDbPersistence,initializeFirestore,CACHE_SIZE_UNLIMITED} from 'firebase/firestore';
+import {getFirestore,initializeFirestore,CACHE_SIZE_UNLIMITED,enableMultiTabIndexedDbPersistence} from 'firebase/firestore';
 import {getAnalytics} from 'firebase/analytics';
 import {getAuth} from 'firebase/auth';
 import {getDatabase} from 'firebase/database';
@@ -32,9 +32,9 @@ const Firebase = async() => {
             provider: new ReCaptchaV3Provider("6LdSj0sjAAAAAM8qnmKvnUU-QplRoCrSrOYEBfJX"),
             isTokenAutoRefreshEnabled: true
         });
-        await enableIndexedDbPersistence(
+        await enableMultiTabIndexedDbPersistence(
             initializeFirestore(App,{cacheSizeBytes:CACHE_SIZE_UNLIMITED})
-        );
+        )
         response["value"] = {
             FirebaseAnalytic: getAnalytics(App),
             FirebaseAuth: getAuth(App),
