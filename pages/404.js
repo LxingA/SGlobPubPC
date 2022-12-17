@@ -20,7 +20,7 @@ const Error404 = ({global,firebase,authentic}) => {
                 <header data-aos="fade-up" data-aos-duration="3000" className="error">
                     <div className="content-txt" data-aos="fade-right">
                         <h3>Error 404</h3>
-                        <p>La página que está intentando acceder, no existe en {siteName}</p>
+                        <p>La página que está intentando acceder no existe en {siteName}</p>
                         <Enlace href="/" className="btn-white">
                             Regresar a Inicio
                         </Enlace>

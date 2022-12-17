@@ -10,7 +10,6 @@ import {onAuthStateChanged} from 'firebase/auth';
 import Firebase from '../util/firebase';
 import Animation from 'aos';
 import Loader from 'react-content-loader';
-import $ from 'jquery';
 import '../assets/96517d18-f81c-43d2-ac47-3e96d1230c7f.scss';
 import '../assets/3d0ba9b3-dc6e-4a73-85ee-8f1b6b74abe4.css';
 import 'aos/dist/aos.css';
@@ -28,11 +27,14 @@ const App = ({Component,pageProps}) => {
     useEffect(_ => {
         HandlerFirebase();
         Animation.init();
-        $("body").attr({"oncontextmenu":"return false","onselectstart":"return false"});
+        //$("body").attr({"oncontextmenu":"return false","onselectstart":"return false"});
     },[]);
     useEffect(_ => {
         global && onAuthStateChanged(value["FirebaseAuth"],RxQFu => {
-            RxQFu ? setStatus(WHgKl=>({...WHgKl,auth:true,user:{nick:RxQFu.displayName,id:RxQFu.uid,tel:RxQFu.phoneNumber,photo:RxQFu.photoURL,mail:RxQFu.email,verified:RxQFu.emailVerified}})) : setStatus(QelSP=>({...QelSP,auth:false,user:null}));
+            if(RxQFu){
+                const stRefObjUserInfo = {nick:RxQFu.displayName,id:RxQFu.uid,tel:RxQFu.phoneNumber,photo:RxQFu.photoURL,mail:RxQFu.email,verified:RxQFu.emailVerified};
+                onSnapshot(doc(collection(value["FirebaseDatabase"],"user"),RxQFu.uid),dUnlw=>setStatus(mOTng=>({...mOTng,auth:true,user:{...stRefObjUserInfo,info:dUnlw.data()}})));
+            }else setStatus(QelSP=>({...QelSP,auth:false,user:null}));
         })
     },[global]);
     return state && typeof auth !== "undefined" ? (

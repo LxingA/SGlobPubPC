@@ -77,6 +77,31 @@ export const FormAuthRecovery = ({FAuth,Callback,Site}) => {
     )
 };
 
+export const FormAuthResetPassword = ({Callback}) => {
+    const stateValuesInit = {
+        sippwr: initStateValidated
+    };
+    const [values,setValues] = useState(stateValuesInit);
+    const HandlerSubmit = e => {
+        e.preventDefault();
+        values["sippwr"].validated && Callback({show:false,password:values["sippwr"].value});
+    };
+    return (
+        <form onSubmit={HandlerSubmit} className="FormRegister">
+            <h3>Nueva Contraseña</h3>
+            <div className="form-1">
+                <input required onChange={e=>FormCheckerValues(setValues,"rxaBReLXnH",e)} minLength={6} type="password" name="sippwr" placeholder="Tecleé su nueva contraseña"/>
+                {values["sippwr"]["message"] && (
+                    <p>{values["sippwr"].message}</p>
+                )}
+            </div>
+            <div className="buttons-container">
+                <button className="btn-principal">Confirmar</button>
+            </div>
+        </form>
+    )
+};
+
 export const FormAuthLogin = ({FAuth,Callback}) => {
     const {pathname} = useRouter();
     const stateValuesInit = {
@@ -146,7 +171,7 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback,AuthCallback}) => {
     const HandlerSubmit = async e => {
         e.preventDefault();setLoading(true);
         if(Object.values(values).filter(({validated})=>!validated).length === 0){
-            const getGenreCurrent = $('select[name="sinpgren"]').val() === "m" ? "Masculino" : "Femenino";
+            const getGenreCurrent = $('select[name="sinpgren"]').val();
             try{
                 AuthCallback(true);
                 const sRefUser = await createUserWithEmailAndPassword(FAuth,values["sinpemail"].value,values["sinppw"].value);
@@ -170,6 +195,9 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback,AuthCallback}) => {
                 setLoading(false);
                 Callback({text:__,redirect:false});
             }
+        }else{
+            setLoading(false);
+            Callback({text:"Favor de corregir lo solicitado",redirect:false});
         }
     };
     return (
@@ -207,6 +235,7 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback,AuthCallback}) => {
                 <select disabled={loading} name="sinpgren">
                     <option value="m">Masculino</option>
                     <option value="f">Femenino</option>
+                    <option value="s">No Especificar</option>
                 </select>
             </div>
             <div className="form-1">
