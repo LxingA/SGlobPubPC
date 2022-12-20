@@ -21,19 +21,23 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                     <title>Tablero - {siteName}</title>
                 </Head>
                 <ViewAccount global={[firebase,global,authentic,user]}>
-                    <div className="Options-Fast">
-                        <AccountBoxLink arrow to={`${pathname}/config`} title="Administrar" description="Edita tu nombre, cambia tu contraseña o otros datos más." icon="user"/>
-                        <AccountBoxLink arrow to={`${pathname}/address`} title="Direcciones" description="Administra tu lista de direcciones de entrega e facturación." icon="map"/>
-                    </div>
-                    <div className="Productos">
-                        <h3>Pedidos</h3>
-                        <div className="lista-Categorias">
-                            <AccountBoxLink to={`${pathname}?sort=t`} title="Tazas" icon="home"/>
-                            <AccountBoxLink to={`${pathname}?sort=t`} title="Playeras" icon="home"/>
-                            <AccountBoxLink to={`${pathname}?sort=t`} title="Canvas" icon="home"/>
-                            <AccountBoxLink to={`${pathname}?sort=t`} title="Todos" icon="home"/>
-                        </div>
-                    </div>
+                    {user && (
+                        <Fragment>
+                            <div className="Options-Fast" id="home">
+                                <AccountBoxLink arrow to={`${pathname}/advanced`} title="Administrar" description="Edita tu apodo, cambia tu contraseña o otros datos más." icon="user"/>
+                                <AccountBoxLink arrow to={`${pathname}/address`} title="Direcciones" description="Administra tu lista de direcciones de entrega e facturación." icon="map"/>
+                            </div>
+                            <div className="Productos" id="pedidos">
+                                <h3>Pedidos</h3>
+                                <div className="lista-Categorias">
+                                    <AccountBoxLink to={`${pathname}?sort=t`} title="Tazas" icon="home"/>
+                                    <AccountBoxLink to={`${pathname}?sort=t`} title="Playeras" icon="home"/>
+                                    <AccountBoxLink to={`${pathname}?sort=t`} title="Canvas" icon="home"/>
+                                    <AccountBoxLink to={`${pathname}?sort=t`} title="Todos" icon="home"/>
+                                </div>
+                            </div> 
+                        </Fragment>
+                    )}
                 </ViewAccount>
             </Fragment>
         </ViewAuth>

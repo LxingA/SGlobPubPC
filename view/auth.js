@@ -6,17 +6,17 @@
 */
 import {useRouter} from 'next/router';
 
-const ViewAuth = ({children,login,authentic,notRefresh}) => {
-    const {replace} = useRouter();
+const ViewAuth = ({children,login,authentic,notRefresh,redirect}) => {
+    const {push,asPath} = useRouter();
     if(notRefresh) return children;
     switch(authentic){
         case true:
-            if(login) replace("/cuenta");
+            if(login) push(typeof redirect !== "undefined" && redirect ? decodeURI(redirect) : "/cuenta");
             else return children;
         break;
         case false:
             if(login) return children;
-            else replace("/auth?m=login");
+            else push({pathname:"/auth",query:{m:"login",to:encodeURI(asPath)}});
         break;
     }
 };

@@ -7,9 +7,11 @@
 import {useEffect,useState,Fragment} from 'react';
 import {collection,doc,onSnapshot} from 'firebase/firestore';
 import {onAuthStateChanged} from 'firebase/auth';
+import {AuthContext} from '../util/context';
 import Firebase from '../util/firebase';
 import Animation from 'aos';
 import Loader from 'react-content-loader';
+import $ from 'jquery';
 import '../assets/96517d18-f81c-43d2-ac47-3e96d1230c7f.scss';
 import '../assets/3d0ba9b3-dc6e-4a73-85ee-8f1b6b74abe4.css';
 import 'aos/dist/aos.css';
@@ -27,18 +29,24 @@ const App = ({Component,pageProps}) => {
     useEffect(_ => {
         HandlerFirebase();
         Animation.init();
-        //$("body").attr({"oncontextmenu":"return false","onselectstart":"return false"});
+        $("body").attr({"oncontextmenu":"return false","onselectstart":"return false"});
     },[]);
     useEffect(_ => {
         global && onAuthStateChanged(value["FirebaseAuth"],RxQFu => {
             if(RxQFu){
                 const stRefObjUserInfo = {nick:RxQFu.displayName,id:RxQFu.uid,tel:RxQFu.phoneNumber,photo:RxQFu.photoURL,mail:RxQFu.email,verified:RxQFu.emailVerified};
-                onSnapshot(doc(collection(value["FirebaseDatabase"],"user"),RxQFu.uid),dUnlw=>setStatus(mOTng=>({...mOTng,auth:true,user:{...stRefObjUserInfo,info:dUnlw.data()}})));
+                onSnapshot(doc(collection(value["FirebaseDatabase"],"user"),RxQFu.uid),dUnlw=>{
+                    if(dUnlw.exists()){
+                        setStatus(eXysj=>({...eXysj,auth:true,user:{...stRefObjUserInfo,info:dUnlw.data()}}));
+                    }else setStatus(obwEN=>({...obwEN,auth:true,user:{...stRefObjUserInfo,info:{}}}));
+                });
             }else setStatus(QelSP=>({...QelSP,auth:false,user:null}));
         })
     },[global]);
     return state && typeof auth !== "undefined" ? (
-        <Component {...pageProps} firebase={value} global={global} authentic={auth} user={user}/>
+        <AuthContext.Provider>
+            <Component {...pageProps} firebase={value} global={global} authentic={auth} user={user}/>
+        </AuthContext.Provider>
     ) : (!state || error) && (
         <Fragment>
             <div className="pop-up-anuncios">

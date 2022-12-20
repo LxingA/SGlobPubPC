@@ -4,28 +4,47 @@
 @date 13/Dic/22 09:19
 @description Complemento con los Formularios para el Proyecto
 */
-import {useState} from 'react';
+import {useState,useMemo,Fragment,useContext} from 'react';
 import {createUserWithEmailAndPassword,updateProfile,signOut,sendEmailVerification,signInWithEmailAndPassword,sendPasswordResetEmail} from 'firebase/auth';
+import {reauthenticateWithCredential,EmailAuthProvider} from 'firebase/auth';
 import {doc,setDoc,collection} from 'firebase/firestore';
 import {useRouter} from 'next/router';
+import {AuthContext} from '../util/context';
 import Enlace from 'next/link';
 import $ from 'jquery';
-const initStateValidated = {validated:false,message:null,value:null};
+const initStateValidated = {validated:false,message:null,value:null,initialValue:null,name:null};
+const monthOnStr = {
+    "01": "Enero",
+    "02": "Febrero",
+    "03": "Marzo",
+    "04": "Abril",
+    "05": "Mayo",
+    "06": "Junio",
+    "07": "Julio",
+    "08": "Agosto",
+    "09": "Septiembre",
+    "10": "Octubre",
+    "11": "Noviembre",
+    "12": "Diciembre"
+};
 
 const FormCheckerValues = (stateFnRef = () => {}, regExpID = "", refEvent = {}) => {
-    const {target:{value,minLength,name}} = refEvent;
+    const {target:{value,minLength,name,defaultValue}} = refEvent;
     const stRefRegExp = {
         rxLQgtUqxI: /^([A-Za-z0-9]+)$/,
         rxoMADXhJc: /^([A-Z]){1}([a-zÀ-ÿ\u00f1\u00d1]+) ([A-Z]){1}([a-zÀ-ÿ\u00f1\u00d1]+)$/,
         rxsNkFoWyn: /^([a-zA-Z0-9\_\-\+À-ÿ\u00f1\u00d1]+)\@([a-z0-9\-]+)\.([a-z]+)(\.[a-z]+)?$/,
-        rxaBReLXnH: /^([\S\d\W]+)$/
+        rxaBReLXnH: /^([\S\d\W]+)$/,
+        rxaQUDqFhf: /^([a-z]){1}$/,
+        rxSjLuKztg: /^([0-9]){4}\-([0-9]){2}\-([0-9]){2}$/,
+        rxXkmrShwZ: /^([0-9]){10}$/
     };stateFnRef(bkState => {
             const response = {
             error: message => {
                 bkState[name] = {...initStateValidated,message}
             },
             ok: _ => {
-                bkState[name] = {...initStateValidated,validated:true,value}
+                bkState[name] = {...initStateValidated,validated:true,value,initialValue:defaultValue,name}
             }
         };
         if(value.length === 0) response["error"]("No haz introducido nada");
@@ -71,7 +90,7 @@ export const FormAuthRecovery = ({FAuth,Callback,Site}) => {
                 )}
             </div>
             <div className="buttons-container">
-                <button disabled={loading} className="btn-principal">{loading?"Restableciendo":"Restablecer"}</button>
+                <button disabled={loading} className="btn-Principal">{loading?"Restableciendo":"Restablecer"}</button>
             </div>
         </form>
     )
@@ -96,7 +115,7 @@ export const FormAuthResetPassword = ({Callback}) => {
                 )}
             </div>
             <div className="buttons-container">
-                <button className="btn-principal">Confirmar</button>
+                <button className="btn-Principal">Confirmar</button>
             </div>
         </form>
     )
@@ -150,7 +169,7 @@ export const FormAuthLogin = ({FAuth,Callback}) => {
                 </Enlace>
             </div>
             <div className="buttons-container">
-                <button disabled={loading} className="btn-principal">{loading?"Autenticando":"Autenticar"}</button>
+                <button disabled={loading} className="btn-Principal">{loading?"Autenticando":"Autenticar"}</button>
                 <button disabled={loading} className="btn-border">Conectése con <strong><i className="fa fa-facebook-official" aria-hidden="true"></i></strong></button>
                 <button disabled={loading} className="btn-border">Conectése con <strong><i className="fa fa-google" aria-hidden="true"></i></strong></button>
             </div>
@@ -246,7 +265,108 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback,AuthCallback}) => {
                 )}
             </div>
             <div className="buttons-container">
-                <button className="btn-principal" disabled={loading}>{loading?"Registrando":"Registrarse"}</button>
+                <button className="btn-Principal" disabled={loading}>{loading?"Registrando":"Registrarse"}</button>
+            </div>
+        </form>
+    )
+};
+
+export const FormAccountConfig = ({user,callback,updating,completed}) => {
+    const {info:{uFName,uSName,uLName,uEName,uBirtD,uGenre}} = user;
+    const getBirthday = uBirtD && uBirtD.split("-");
+    const stateValuesInit = {
+        scfCNftnames: initStateValidated,
+        scfCNltnames: initStateValidated,
+        scfCDBirth: initStateValidated,
+        scfCDGen: initStateValidated
+    };
+    const [values,setValues] = useState(stateValuesInit);
+    useMemo(_=>callback(values),[values]);
+    useMemo(_=>{!completed&&setValues(stateValuesInit)},[completed]);
+    return Object.keys(user.info).length > 0 && (
+        <Fragment>
+            <form className="dts names">
+                <div className="form-1">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCNftnames">Nombres {`[${uFName} ${uSName}]`}</label>
+                        <input defaultValue={`${uFName} ${uSName}`} disabled={updating} onChange={e=>FormCheckerValues(setValues,"rxoMADXhJc",e)} minLength={6} type="text" name="scfCNftnames" placeholder="Ingrese sus nombres iniciales"/>
+                    </div>
+                </div>
+                <div className="form-1">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCNltnames">Apellidos {`[${uLName} ${uEName}]`}</label>
+                        <input defaultValue={`${uLName} ${uEName}`} disabled={updating} onChange={e=>FormCheckerValues(setValues,"rxoMADXhJc",e)} minLength={6} type="text" name="scfCNltnames" placeholder="Ingrese sus últimos nombres"/>
+                    </div>
+                </div>
+            </form>
+            <form className="dts nacimiento">
+                <div className="form-1 genero">
+                    <label htmlFor="scfCDBirth">Fecha de Nacimiento{uBirtD&&` [${getBirthday[2]} de ${monthOnStr[getBirthday[1]]} de ${getBirthday[0]}]`}</label>
+                    <input disabled={updating} onChange={e=>FormCheckerValues(setValues,"rxSjLuKztg",e)} minLength={10} name="scfCDBirth" type="date" defaultValue={uBirtD}/>
+                </div>
+                <div className="form-1 genero">
+                    <label htmlFor="scfCDGen">Género {`[${uGenre==="m"?"Masculino":uGenre==="f"?"Femenino":"No Especificado"}]`}</label>
+                    <select disabled={updating} onChange={e=>FormCheckerValues(setValues,"rxaQUDqFhf",e)} minLength={1} name="scfCDGen" defaultValue={uGenre}>
+                        <option value="m">Masculino</option>
+                        <option value="f">Femenino</option>
+                        <option value="s">No Especificar</option>
+                    </select>
+                </div>
+            </form>
+        </Fragment>
+    )
+};
+
+export const FormAccountReauth = ({FirebaseAuth,Mail,Callback}) => {
+    const {ACAction:{ARActUpdateCurrentReAuthState},ACDispatch,ACState:{action}} = useContext(AuthContext.Context);
+    const stateValuesInit = {
+        scfRAuthPW: initStateValidated
+    };
+    const [values,setValues] = useState(stateValuesInit);
+    const [loading,setLoading] = useState(false);
+    const HandlerSubmit = async e => {
+        e.preventDefault();setLoading(true);
+        if(values["scfRAuthPW"].validated){
+            try{
+                await reauthenticateWithCredential(FirebaseAuth.currentUser,EmailAuthProvider.credential(Mail,values["scfRAuthPW"].value));
+                ACDispatch(ARActUpdateCurrentReAuthState(true));
+            }catch({code}){
+                let __;setLoading(false);switch(code){
+                    case "auth/user-mismatch":
+                        __ = "Las credenciales actuales no son iguales a la sesión actual";
+                    break;
+                    case "auth/wrong-password":
+                        __ = "La contraseña no es la correcta";
+                    break;
+                    case "auth/invalid-credential":
+                        __ = "La creación de la sesión actual es inválida, Intentelo de nuevo";
+                    break;
+                    default:
+                        __ = "Hubo un error a realizar la autenticación, Intentelo más tarde";
+                    break;
+                }Callback(__);
+            }
+        }
+    };let __TXT_ACTION__;
+    switch(action){
+        case "delete":
+            __TXT_ACTION__ = "Eliminación de Cuenta";
+        break;
+    }
+    return (
+        <form onSubmit={HandlerSubmit}>
+            <div className="form-1">
+                <div className="ctn-form">
+                    <h3 style={{width:"250px"}}>{__TXT_ACTION__}</h3>
+                    <label htmlFor="scfRAuthPW">Se requiere autenticación</label>
+                    <input autoFocus required disabled={loading} minLength={8} onChange={e=>FormCheckerValues(setValues,"rxaBReLXnH",e)} type="password" name="scfRAuthPW" placeholder="Favor de volver a teclear su contraseña"/>
+                    {values["scfRAuthPW"]["message"] && (
+                        <p>{values["scfRAuthPW"].message}</p>
+                    )}
+                    <div className="buttons-container">
+                        <button className="btn-Principal" disabled={loading}>{loading?"Confirmando":"Confirmar"}</button>
+                    </div>
+                </div>
             </div>
         </form>
     )

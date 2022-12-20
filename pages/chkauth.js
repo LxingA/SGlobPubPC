@@ -59,7 +59,7 @@ const AuthCheck = ({firebase,global,authentic}) => {
                 default:
                     __["title"] = "Error Desconocido";
                 break;
-            }setText({...__,desc:"Hubo un error a restablecer su contraseña, Intentelo de nuevo"});
+            }setText({...__,desc:`Hubo un error a ${query.mode==="verifyEmail"?"verificar su correo electrónico":query.mode==="resetPassword"?"restablecer su contraseña":"cambiar su correo electrónico"}, Intentelo de nuevo`});
         }
     };useEffect(_=>{Handler()},[screenPassword]);
     return (

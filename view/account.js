@@ -10,7 +10,6 @@ import {FooterShop} from '../components/ComponentFooter';
 import {signOut} from 'firebase/auth';
 import {NavLink} from '../addons/Link';
 import Message from '../components/ComponentMessage';
-import Imagen from 'next/image';
 
 const ViewAccount = ({children,global,style}) => {
     const [Firebase,Global,Authentic,User] = global;
@@ -23,17 +22,16 @@ const ViewAccount = ({children,global,style}) => {
                     <div className="mainmenu-Account">
                         <div className="ctn-user">
                             <div className="info-Usuario">
-                                <div className="icon-user">
-                                    <Imagen src="/be1d5ae3-b858-482b-ad6a-14734b50af1f.png" width={200} height={200} alt="Textp"/>
-                                </div>
+                                <div className="icon-user"></div>
                                 <span>{User["nick"]}</span>
                                 <button className="btn-Principal" onClick={_=>signOut(Firebase["FirebaseAuth"])}>Desconectarse</button>
                                 <ul className="menu-account">
                                     <NavLink to="/cuenta" icon="home" text="Tablero"/>
-                                    <NavLink to="/cuenta/config" icon="gear" text="Administrar"/>
+                                    <NavLink to="/cuenta/personal" icon="user" text="Datos Personales"/>
                                     <NavLink to="/cuenta/orders" icon="list" text="Pedidos"/>
                                     <NavLink to="/cuenta/address" icon="map" text="Direcciones"/>
                                     <NavLink to="/cuenta/chat" icon="comments" text="Chat"/>
+                                    <NavLink to="/cuenta/advanced" icon="gear" text="Administrar"/>
                                 </ul>
                             </div>
                         </div>

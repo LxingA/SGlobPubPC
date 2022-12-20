@@ -7,6 +7,7 @@
 import {Fragment,useState} from 'react';
 import {useRouter} from 'next/router';
 import {FormAuthLogin,FormAuthRegister,FormAuthRecovery} from '../addons/Form';
+import {BoxMessage} from '../addons/Box';
 import Head from 'next/head';
 import Enlace from 'next/link';
 import ViewAuth from '../view/auth';
@@ -16,20 +17,41 @@ const Auth = ({firebase,global,authentic}) => {
     const [refresh,setRefresh] = useState(false);
     const [message,setMessage] = useState(null);
     const {FirebaseAuth,FirebaseDatabase} = firebase;
-    const {query,pathname} = useRouter();
+    const {query,pathname,push} = useRouter();
     const {siteName} = global;
-    const isLogin = query.m === "login";
+    let __={};switch(query.m){
+        case "login":
+            __["title"] = "Autenticación";
+            __["form"] = <FormAuthLogin FAuth={FirebaseAuth} Callback={setMessage} FDatabase={FirebaseDatabase}/>;
+            __["box"] = true;
+            __["style"] = false;
+        break;
+        case "register":
+            __["title"] = "Registro";
+            __["form"] = <FormAuthRegister FAuth={FirebaseAuth} FDatabase={FirebaseDatabase} Callback={setMessage} AuthCallback={setRefresh}/>;
+            __["box"] = false;
+            __["style"] = true;
+        break;
+        case "recovery":
+            __["title"] = "Recuperación";
+            __["form"] = <FormAuthRecovery FAuth={FirebaseAuth} Callback={setMessage} Site={siteName}/>;
+            __["box"] = false;
+            __["style"] = true;
+        break;
+        default:
+            push("/");
+        break;
+    }
     return (
-        <ViewAuth authentic={authentic} login notRefresh={refresh}>
+        <ViewAuth authentic={authentic} login notRefresh={refresh} redirect={query.to}>
             <Fragment>
                 <Head>
-                    <title>{isLogin ? "Autenticación" : query.m === "register" ? "Registro" : "Recuperación"} - {siteName}</title>
+                    <title>{__["title"]} - {siteName}</title>
                 </Head>
                 <ViewShop global={global} firebase={firebase} authentic={authentic}>
-                    <div className={`login-container${!isLogin?" Register":""}`}>
+                    <div className={`login-container${__["style"]?" Register":""}`}>
                         {message && (
-                            <div className="floatingCaja">
-                                <i className="fa fa-heart-o" aria-hidden="true"></i>
+                            <BoxMessage>
                                 <p>{message["text"]}</p>
                                 {message["redirect"] ? (
                                     <Enlace className="btn-beige" href={{pathname,query:{m:"login"}}} onClick={_=>setMessage(null)}>
@@ -40,21 +62,15 @@ const Auth = ({firebase,global,authentic}) => {
                                         Entendido
                                     </a>
                                 )}
-                            </div>
+                            </BoxMessage>
                         )}
                         <div className="formulario-conexion" data-aos="zoom-in-right">
-                            <div className={`conectarse${!isLogin?" FormRegister":""}`}>
-                                {isLogin ? (
-                                    <FormAuthLogin FAuth={FirebaseAuth} Callback={setMessage} FDatabase={FirebaseDatabase}/>
-                                ) : query.m === "register" ? (
-                                    <FormAuthRegister FAuth={FirebaseAuth} FDatabase={FirebaseDatabase} Callback={setMessage} AuthCallback={setRefresh}/>                                    
-                                ) : (
-                                    <FormAuthRecovery FAuth={FirebaseAuth} Callback={setMessage} Site={siteName}/>
-                                )}
+                            <div className={`conectarse${__["style"]?" FormRegister":""}`}>
+                                {__["form"]}
                             </div>
                         </div>
                         <div className="abrir-cuenta">
-                            {isLogin ? (
+                            {__["box"] ? (
                                 <Fragment>
                                     <div className="ctn-newCuenta">
                                         <h3>¿Nuevo Aquí?</h3>
