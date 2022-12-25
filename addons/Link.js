@@ -9,8 +9,9 @@ import Enlace from 'next/link';
 
 export const NavLink = ({to,icon,text}) => {
     const {pathname} = useRouter();
+    const removeQueryURL = to.indexOf("?") === -1 ? to : to.substring(0,to.indexOf("?"));
     return (
-        <li className={pathname===to?"active":""}>
+        <li className={pathname===removeQueryURL?"active":""}>
             {icon && (
                 <i className={`fa fa-${icon}`}></i>
             )}

@@ -23,6 +23,7 @@ const AuthCheck = ({firebase,global,authentic}) => {
             switch(query.mode){
                 case "verifyEmail":
                     await applyActionCode(FirebaseAuth,query.oobCode);
+                    if(FirebaseAuth.currentUser) await FirebaseAuth.currentUser.reload();
                     setText({...text,status:true,desc:"Se ha verificado con éxito su correo electrónico",title:"Verificación Exitosa"});
                 break;
                 case "resetPassword":

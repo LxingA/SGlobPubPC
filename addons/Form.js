@@ -4,12 +4,14 @@
 @date 13/Dic/22 09:19
 @description Complemento con los Formularios para el Proyecto
 */
-import {useState,useMemo,Fragment,useContext} from 'react';
+import {useState,useMemo,Fragment,useContext, useEffect} from 'react';
 import {createUserWithEmailAndPassword,updateProfile,signOut,sendEmailVerification,signInWithEmailAndPassword,sendPasswordResetEmail} from 'firebase/auth';
 import {reauthenticateWithCredential,EmailAuthProvider} from 'firebase/auth';
-import {doc,setDoc,collection} from 'firebase/firestore';
+import {doc,setDoc,collection,updateDoc,getDoc} from 'firebase/firestore';
 import {useRouter} from 'next/router';
 import {AuthContext} from '../util/context';
+import {RandomHash} from '../util/crypto';
+import Loader from 'react-content-loader';
 import Enlace from 'next/link';
 import $ from 'jquery';
 const initStateValidated = {validated:false,message:null,value:null,initialValue:null,name:null};
@@ -37,7 +39,9 @@ const FormCheckerValues = (stateFnRef = () => {}, regExpID = "", refEvent = {}) 
         rxaBReLXnH: /^([\S\d\W]+)$/,
         rxaQUDqFhf: /^([a-z]){1}$/,
         rxSjLuKztg: /^([0-9]){4}\-([0-9]){2}\-([0-9]){2}$/,
-        rxXkmrShwZ: /^([0-9]){10}$/
+        rxXkmrShwZ: /^([0-9]){10}$/,
+        rxU26S0nZA: /^([A-Za-z0-9 À-ÿ\u00f1\u00d1]+)$/,
+        rxzDc43135: /^([0-9]+)$/
     };stateFnRef(bkState => {
             const response = {
             error: message => {
@@ -197,7 +201,7 @@ export const FormAuthRegister = ({FAuth,FDatabase,Callback,AuthCallback}) => {
                 await updateProfile(sRefUser.user,{displayName:values["sinpnkname"].value});
                 const [uFName,uSName] = values["sinpfnames"]["value"].split(" ");
                 const [uLName,uEName] = values["sinplnames"]["value"].split(" ");
-                await setDoc(doc(collection(FDatabase,"user"),sRefUser.user.uid),{uFName,uSName,uLName,uEName,uGenre:getGenreCurrent});
+                await setDoc(doc(collection(FDatabase,"user"),sRefUser.user.uid),{uFName,uSName,uLName,uEName,uGenre:getGenreCurrent,uAllowEmailSender:false,uLengthAddress:0});
                 await sendEmailVerification(sRefUser.user);
                 await signOut(FAuth);
                 AuthCallback(false);
@@ -369,5 +373,215 @@ export const FormAccountReauth = ({FirebaseAuth,Mail,Callback}) => {
                 </div>
             </div>
         </form>
+    )
+};
+
+export const FormAccountAddressCreate = ({user,fDatabase,Updated,handler}) => {
+    const {push,pathname,query,replace} = useRouter();
+    const {info:{uLengthAddress}} = user;
+    const stateValuesInit = {
+        scfCAddressSavedT: initStateValidated,
+        scfCAddressAdd: initStateValidated,
+        scfCAddressExt: initStateValidated,
+        scfCAddressInt: initStateValidated,
+        scfCAddressStr: initStateValidated,
+        scfCAddressCol: initStateValidated,
+        scfCAddressCP: initStateValidated,
+        scfCAddressState: initStateValidated,
+        scfCAddressCity: initStateValidated,
+        scfCAddressRef: initStateValidated
+    };
+    if(Updated) delete stateValuesInit["scfCAddressSavedT"];
+    const [values,setValues] = useState(stateValuesInit);
+    const [loading,setLoading] = useState(false);
+    const [allowed,setAllowed] = useState(false);
+    const [data,setData] = useState(null);
+    const [update,setUpdate] = useState(null);
+    const HandlerSaved = async e => {
+        e.preventDefault();setLoading(true);let __={};
+        const stRefDoc = doc(collection(fDatabase,"address"),user.id);
+        const stRefUser = doc(collection(fDatabase,"user"),user.id);
+        const gtRefRandomH = RandomHash(16);
+        try{
+            __[gtRefRandomH] = {
+                name: values["scfCAddressSavedT"].value,
+                cp: values["scfCAddressCP"].value,
+                int: values["scfCAddressInt"].value,
+                ext: values["scfCAddressExt"].value,
+                addr: values["scfCAddressAdd"].value,
+                state: values["scfCAddressState"].value,
+                city: values["scfCAddressCity"].value,
+                ref: values["scfCAddressRef"].value,
+                street: values["scfCAddressStr"].value,
+                colony: values["scfCAddressCol"].value,
+                active: false
+            };if(uLengthAddress === 0){
+                __[gtRefRandomH]["active"] = true;
+                await setDoc(stRefDoc,__);
+                await updateDoc(stRefUser,{uLengthAddress:1});
+            }else{
+                const gtCurrentVLAddress = (await getDoc(stRefDoc)).data();
+                await updateDoc(stRefDoc,{...gtCurrentVLAddress,...__});
+                await updateDoc(stRefUser,{uLengthAddress:(uLengthAddress+1)});
+            }push({pathname,query:{view:"all"}});
+        }catch(error){}
+    };
+    const HandlerUpdated = async e => {
+        let __=data;e.preventDefault();setLoading(true);
+        const stRefObjWithDatabaseName = {
+            scfCAddressCP: "cp",
+            scfCAddressInt: "int",
+            scfCAddressExt: "ext",
+            scfCAddressAdd: "addr",
+            scfCAddressState: "state",
+            scfCAddressCity: "city",
+            scfCAddressRef: "ref",
+            scfCAddressStr: "street",
+            scfCAddressCol: "colony"
+        };delete __["uniqKey"];update.forEach(({key,value})=>{
+            __[stRefObjWithDatabaseName[key]] = value;
+        });let __stRefSaved__={};__stRefSaved__[query.id]=__;
+        await updateDoc(doc(collection(fDatabase,"address"),user.id),__stRefSaved__);
+        replace({pathname,query:{view:"all"}});
+    };
+    const HandlerEvent = async _ => {
+        if(Updated){
+            const stRefFilterAddress = Object.values(values).filter(({validated,initialValue,value})=>validated&&value!==initialValue);
+            if(stRefFilterAddress.length > 0){
+                const stRefObjWithNewContent = stRefFilterAddress.map(({value,name})=>({key:name,value}));
+                setUpdate(stRefObjWithNewContent);
+                setAllowed(true);
+            }else setAllowed(false);
+        }else{
+            if(Object.values(values).filter(({validated})=>validated).length === Object.keys(stateValuesInit).length) setAllowed(true);
+            else setAllowed(false);
+        }
+    };
+    useMemo(_=>HandlerEvent(),[values]);
+    const HandlerGetData = async _ => {
+        const gtObjDataWithCurrentAddress = (await handler()).filter(({uniqKey})=>uniqKey===query.id);
+        if(gtObjDataWithCurrentAddress.length === 0) replace({pathname,query:{view:"all"}});
+        else setData(gtObjDataWithCurrentAddress[0]);
+    };
+    useEffect(_ => {
+        if(Updated) HandlerGetData();
+    },[]);
+    return (
+        <Fragment>
+            <h3 className="main NameDireccion">
+                {!Updated ? (
+                    <span>
+                        Guardar cómo: 
+                        <form>
+                            <input onChange={e=>FormCheckerValues(setValues,"rxLQgtUqxI",e)} disabled={loading} required minLength={4} name="scfCAddressSavedT" type="text" placeholder="Ejemplo: Casa, Trabajo, Tienda (Min 4 de L)"/>
+                        </form>
+                    </span>
+                ) : (
+                    data ? (
+                        <span>
+                            Editando la Dirección "{data["name"]}"
+                        </span>
+                    ) : (
+                        <Loader width={350} height={35}>
+                            <rect width={350} height={35} x={0} y={0} rx={0} ry={0}/>
+                        </Loader>
+                    )
+                )}
+                <div className="ctn-ediciones">
+                    {!Updated ? (
+                        <button disabled={loading||!allowed} onClick={HandlerSaved}>
+                            <i className="fa fa-cloud" aria-hidden="true"></i>
+                            {loading ? "Guardando" : "Guardar Dirección"}
+                        </button>
+                    ) : (
+                        <button disabled={loading||!allowed} onClick={HandlerUpdated}>
+                            <i className="fa fa-pencil" aria-hidden="true"></i>
+                            {loading ? "Actualizando" : "Actualizar Dirección"}
+                        </button>
+                    )}
+                </div>
+            </h3>
+            <form className="dts names-calle">
+                <div className="form-1">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCAddressAdd">Dirección*</label>
+                        <input defaultValue={Updated?data&&data["addr"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxU26S0nZA",e)} required minLength={6} type="text" name="scfCAddressAdd" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé su dirección actual"}/>
+                        {values["scfCAddressAdd"]["message"] && (
+                            <p>{values["scfCAddressAdd"].message}</p>
+                        )}
+                    </div>
+                </div>
+                <div className="form-1 ext">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCAddressExt">N° Exterior*</label>
+                        <input defaultValue={Updated?data&&data["ext"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxzDc43135",e)} minLength={1} required type="number" name="scfCAddressExt" min={0} placeholder={Updated?!data?"Obteniendo...":"":"Tecleé su número exterior"}/>
+                        {values["scfCAddressExt"]["message"] && (
+                            <p>{values["scfCAddressExt"].message}</p>
+                        )}
+                    </div>
+                </div>
+                <div className="form-1 ext">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCAddressInt">N° Interior {`(Definelo en 0 en caso de no)`}</label>
+                        <input defaultValue={Updated?data&&data["int"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxzDc43135",e)} minLength={1} required type="number" name="scfCAddressInt" min={0} placeholder={Updated?!data?"Obteniendo...":"":"Tecleé su número interior"}/>
+                        {values["scfCAddressInt"]["message"] && (
+                            <p>{values["scfCAddressInt"].message}</p>
+                        )}
+                    </div>
+                </div>
+            </form>
+            <form className="dts colonia-calles">
+                <div className="form-1">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCAddressStr">Entre calle{`(s)*`}</label>
+                        <input defaultValue={Updated?data&&data["street"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxU26S0nZA",e)} minLength={6} required type="text" name="scfCAddressStr" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé el nombre de sus calles"}/>
+                        {values["scfCAddressStr"]["message"] && (
+                            <p>{values["scfCAddressStr"].message}</p>
+                        )}
+                    </div>
+                </div>
+                <div className="form-1">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCAddressCol">Colonía*</label>
+                        <input defaultValue={Updated?data&&data["colony"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxU26S0nZA",e)} minLength={2} required type="text" name="scfCAddressCol" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé el nombre de su colonía"}/>
+                        {values["scfCAddressCol"]["message"] && (
+                            <p>{values["scfCAddressCol"].message}</p>
+                        )}
+                    </div>
+                </div>
+                <div className="form-1">
+                    <div className="ctn-form">
+                        <label htmlFor="scfCAddressCP">Código Postal*</label>
+                        <input defaultValue={Updated?data&&data["cp"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxzDc43135",e)} minLength={1} required min={0} type="number" name="scfCAddressCP" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé su código postal"}/>
+                        {values["scfCAddressCP"]["message"] && (
+                            <p>{values["scfCAddressCP"].message}</p>
+                        )}
+                    </div>
+                </div>
+            </form>
+            <form className="dts passwordctn">
+                <div className="form-1">
+                    <label htmlFor="scfCAddressState">Estado*</label>
+                    <input defaultValue={Updated?data&&data["state"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxU26S0nZA",e)} minLength={4} required type="text" name="scfCAddressState" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé el nombre de su estado"}/>
+                    {values["scfCAddressState"]["message"] && (
+                        <p>{values["scfCAddressState"].message}</p>
+                    )}
+                </div>
+                <div className="form-1">
+                    <label htmlFor="scfCAddressCity">Municipio*</label>
+                    <input defaultValue={Updated?data&&data["city"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxU26S0nZA",e)} minLength={4} required type="text" name="scfCAddressCity" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé el nombre de su municipio"}/>
+                    {values["scfCAddressCity"]["message"] && (
+                        <p>{values["scfCAddressCity"].message}</p>
+                    )}
+                </div>
+                <div className="form-1" style={{position:"relative",left:"15px"}}>
+                    <label htmlFor="scfCAddressRef">Referencía*</label>
+                    <input defaultValue={Updated?data&&data["ref"]:undefined} disabled={loading} onChange={e=>FormCheckerValues(setValues,"rxU26S0nZA",e)} minLength={4} required type="text" name="scfCAddressRef" placeholder={Updated?!data?"Obteniendo...":"":"Tecleé una referencía de su localidad"}/>
+                    {values["scfCAddressRef"]["message"] && (
+                        <p>{values["scfCAddressRef"].message}</p>
+                    )}
+                </div>
+            </form>
+        </Fragment>
     )
 };

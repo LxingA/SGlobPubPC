@@ -67,8 +67,15 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
             ACDispatch(ARActUpdateCurrentActionRequest(null));
             ACDispatch(ARActUpdateCurrentReAuthState(false));
             await deleteDoc(doc(collection(firebase["FirebaseDatabase"],"user"),user.id));
+            await deleteDoc(doc(collection(firebase["FirebaseDatabase"],"address"),user.id));
             await deleteUser(firebase["FirebaseAuth"].currentUser);
         }
+    };
+    const HandlerAllowSenderE = async e => {
+        e.preventDefault();setUpdated(true);const {FirebaseDatabase} = firebase;
+        const stRefDoc = doc(collection(FirebaseDatabase,"user"),user.id);
+        await updateDoc(stRefDoc,{uAllowEmailSender:!user["info"].uAllowEmailSender});
+        setUpdated(false);
     };
     useEffect(_ => {
         if(query.exec && query.exec === "delete") HandlerDelete();
@@ -99,7 +106,7 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                                         <p>Elimina permanentemente tu cuenta en el sitio</p>
                                     </div>
                                     <div className="ctn-btn">
-                                        <button className="btn-Principal" disabled={updated} onClick={HandlerDelete}>{updated?"Borrando":"Borrar Cuenta"}</button>
+                                        <button className="btn-Principal" disabled={updated} onClick={HandlerDelete}>Borrar Cuenta</button>
                                     </div>
                                 </div>
                                 <div className="a-option">
@@ -108,7 +115,11 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                                         <p>Recibe descuentos, novedades, estatus de tus pedidos en tú correo electrónico</p>
                                     </div>
                                     <div className="ctn-btn">
-                                        <button className="btn-Principal" disabled={updated||!user.verified}>Permitir</button>
+                                        {user.verified ? (
+                                            <button onClick={HandlerAllowSenderE} className="btn-Principal" disabled={updated}>{user["info"].uAllowEmailSender?"Activado":"Desactivado"}</button>
+                                        ) : (
+                                            <p>Favor de verificar su correo para activar las notificaciones por correo</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

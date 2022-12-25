@@ -29,7 +29,7 @@ const ViewAccount = ({children,global,style}) => {
                                     <NavLink to="/cuenta" icon="home" text="Tablero"/>
                                     <NavLink to="/cuenta/personal" icon="user" text="Datos Personales"/>
                                     <NavLink to="/cuenta/orders" icon="list" text="Pedidos"/>
-                                    <NavLink to="/cuenta/address" icon="map" text="Direcciones"/>
+                                    <NavLink to="/cuenta/address?view=all" icon="map" text="Direcciones"/>
                                     <NavLink to="/cuenta/chat" icon="comments" text="Chat"/>
                                     <NavLink to="/cuenta/advanced" icon="gear" text="Administrar"/>
                                 </ul>
