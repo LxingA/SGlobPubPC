@@ -4,9 +4,9 @@
 @date 13/Dic/22 09:19
 @description Complemento con los Formularios para el Proyecto
 */
-import {useState,useMemo,Fragment,useContext, useEffect} from 'react';
+import {useState,useMemo,Fragment,useContext,useEffect} from 'react';
 import {createUserWithEmailAndPassword,updateProfile,signOut,sendEmailVerification,signInWithEmailAndPassword,sendPasswordResetEmail} from 'firebase/auth';
-import {reauthenticateWithCredential,EmailAuthProvider} from 'firebase/auth';
+import {reauthenticateWithCredential,EmailAuthProvider,updateEmail,updatePassword} from 'firebase/auth';
 import {doc,setDoc,collection,updateDoc,getDoc} from 'firebase/firestore';
 import {useRouter} from 'next/router';
 import {AuthContext} from '../util/context';
@@ -40,7 +40,7 @@ const FormCheckerValues = (stateFnRef = () => {}, regExpID = "", refEvent = {}) 
         rxaQUDqFhf: /^([a-z]){1}$/,
         rxSjLuKztg: /^([0-9]){4}\-([0-9]){2}\-([0-9]){2}$/,
         rxXkmrShwZ: /^([0-9]){10}$/,
-        rxU26S0nZA: /^([A-Za-z0-9 À-ÿ\u00f1\u00d1]+)$/,
+        rxU26S0nZA: /^([A-Za-z0-9 À-ÿ\u00f1\u00d1 ]+)$/,
         rxzDc43135: /^([0-9]+)$/
     };stateFnRef(bkState => {
             const response = {
@@ -356,12 +356,18 @@ export const FormAccountReauth = ({FirebaseAuth,Mail,Callback}) => {
         case "delete":
             __TXT_ACTION__ = "Eliminación de Cuenta";
         break;
+        case "email":
+            __TXT_ACTION__ = "Actualizar el Correo Electrónico";
+        break;
+        case "password":
+            __TXT_ACTION__ = "Actualizar la Contraseña";
+        break;
     }
     return (
         <form onSubmit={HandlerSubmit}>
             <div className="form-1">
                 <div className="ctn-form">
-                    <h3 style={{width:"250px"}}>{__TXT_ACTION__}</h3>
+                    <h3 style={{width:"310px"}}>{__TXT_ACTION__}</h3>
                     <label htmlFor="scfRAuthPW">Se requiere autenticación</label>
                     <input autoFocus required disabled={loading} minLength={8} onChange={e=>FormCheckerValues(setValues,"rxaBReLXnH",e)} type="password" name="scfRAuthPW" placeholder="Favor de volver a teclear su contraseña"/>
                     {values["scfRAuthPW"]["message"] && (
@@ -580,6 +586,168 @@ export const FormAccountAddressCreate = ({user,fDatabase,Updated,handler}) => {
                     {values["scfCAddressRef"]["message"] && (
                         <p>{values["scfCAddressRef"].message}</p>
                     )}
+                </div>
+            </form>
+        </Fragment>
+    )
+};
+
+export const FormAccountAdminNickAndMail = ({user,fAuth}) => {
+    const {ACAction:{ARActUpdateCurrentActionRequest,ARActUpdateCurrentDataRequest,ARActUpdateCurrentReAuthState},ACState:{reauthentic,action,value:WJbXw},ACDispatch} = useContext(AuthContext.Context);
+    const {pathname,push} = useRouter();
+    const {nick,mail} = user;
+    const stateValuesInit = {
+        scfUNickC: initStateValidated,
+        scfUMailC: initStateValidated
+    };
+    const [values,setValues] = useState(stateValuesInit);
+    const [loading,setLoading] = useState({scfUNickC:false,scfUMailC:false});
+    const [message,setMessage] = useState(null);
+    const stRefCurrentPath = {pathname:"/cuenta/reauth",query:{continue:encodeURI(pathname)}};
+    const HandlerUpdateNick = async _ => {
+        setLoading(p9E59=>({...p9E59,scfUNickC:true}));
+        await updateProfile(fAuth.currentUser,{displayName:values["scfUNickC"]["value"]});
+        await fAuth.currentUser.reload();
+        await fAuth.updateCurrentUser(fAuth.currentUser);
+        setValues(stateValuesInit);
+        setLoading(lP103=>({...lP103,scfUNickC:false}));
+    };
+    const HandlerUpdateEmail = async (withReauth = false) => {
+        setLoading(h8Z39=>({...h8Z39,scfUMailC:true}));
+        if(withReauth){
+            ACDispatch(ARActUpdateCurrentActionRequest(null));
+            ACDispatch(ARActUpdateCurrentDataRequest(null));
+            ACDispatch(ARActUpdateCurrentReAuthState(false));
+        }
+        let __=null;try{
+            await updateEmail(fAuth.currentUser,WJbXw?WJbXw:values["scfUMailC"]["value"]);
+        }catch({code}){
+            switch(code){
+                case "auth/invalid-email":
+                    __ = "El correo proporcionado es inválido";
+                break;
+                case "auth/email-already-in-use":
+                    __ = "El correo proporcionado ya está en uso";
+                break;
+                case "auth/requires-recent-login":
+                    __ = "reauthentic";
+                break;
+            }
+        }if(__ === "reauthentic"){
+            ACDispatch(ARActUpdateCurrentActionRequest("email"));
+            ACDispatch(ARActUpdateCurrentDataRequest(values["scfUMailC"]["value"]));
+            push(stRefCurrentPath);
+        }else{
+            if(__) setMessage(__);
+            else{
+                await fAuth.currentUser.reload();
+                await fAuth.updateCurrentUser(fAuth.currentUser);
+            }setValues(stateValuesInit);
+            setLoading(IotFH=>({...IotFH,scfUMailC:false}));
+        }
+    };
+    useEffect(_ => {
+        if(reauthentic && action === "email") HandlerUpdateEmail(true);
+    },[]);
+    return (
+        <form className="dts names">
+            <div className="form-1" style={{marginRight:"0px",width:"42%"}}>
+                <div className="ctn-form">
+                    <label htmlFor="scfUNickC">Nombre de Usuario</label>
+                    <div className="flexie-D">
+                        <input required minLength={2} onChange={e=>FormCheckerValues(setValues,"rxLQgtUqxI",e)} disabled={loading["scfUNickC"]} defaultValue={nick} type="text" name="scfUNickC"/>
+                        <button onClick={HandlerUpdateNick} className="btn-Principal" disabled={loading["scfUNickC"]||!values["scfUNickC"]["validated"]||values["scfUNickC"]["initialValue"]===values["scfUNickC"]["value"]}>{loading["scfUNickC"]?"Actualizando":"Actualizar"}</button>
+                    </div>
+                </div>
+            </div>
+            <div className="form-1" style={{marginRight:"0px",width:"42%"}}>
+                <div className="ctn-form">
+                    <label htmlFor="scfUMailC">{message ? `Error: ${message}` : "Correo Electrónico"}</label>
+                    <div className="flexie-D">
+                        <input required minLength={6} onChange={e=>FormCheckerValues(setValues,"rxsNkFoWyn",e)} disabled={loading["scfUMailC"]} defaultValue={mail} type="email" name="scfUMailC"/>
+                        <button onClick={HandlerUpdateEmail} className="btn-Principal" disabled={loading["scfUMailC"]||!values["scfUMailC"]["validated"]||values["scfUMailC"]["initialValue"]===values["scfUMailC"]["value"]}>{loading["scfUMailC"]?"Actualizando":"Actualizar"}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    )
+};
+
+export const FormAccountAdminPassword = ({fAuth}) => {
+    const {ACAction:{ARActUpdateCurrentActionRequest,ARActUpdateCurrentReAuthState,ARActUpdateCurrentDataRequest},ACDispatch,ACState:{action:Gb733,value:gL848,reauthentic:s758R}} = useContext(AuthContext.Context);
+    const {pathname,push} = useRouter();
+    const stateValuesInit = {
+        scfUPassF: initStateValidated,
+        scfUPassL: initStateValidated
+    };
+    const [values,setValues] = useState(stateValuesInit);
+    const [loading,setLoading] = useState(false);
+    const [isEqual,setIsEqual] = useState(false);
+    const [message,setMessage] = useState(null);
+    const HandlerChecker = _ => {
+        if(values["scfUPassF"]["validated"] && values["scfUPassL"]["validated"]) values["scfUPassF"]["value"] === values["scfUPassL"]["value"] ? setIsEqual(true) : setIsEqual(false);
+        else setIsEqual(false);
+    };
+    const HandlerUpdatePass = async (withReauth = false) => {
+        let __=null;setLoading(true);if(withReauth){
+            ACDispatch(ARActUpdateCurrentDataRequest(null));
+            ACDispatch(ARActUpdateCurrentActionRequest(null));
+            ACDispatch(ARActUpdateCurrentReAuthState(false));
+        }try{
+            await updatePassword(fAuth.currentUser,gL848?gL848:values["scfUPassF"]["value"]);
+        }catch({code}){
+            switch(code){
+                case "auth/weak-password":
+                    __ = "La contraseña proporcionada no es muy segura, Intente con otra";
+                break;
+                case "auth/requires-recent-login":
+                    __ = "reauthentic";
+                break;
+            }
+        }if(__==="reauthentic"){
+            ACDispatch(ARActUpdateCurrentActionRequest("password"));
+            ACDispatch(ARActUpdateCurrentDataRequest(values["scfUPassF"]["value"]));
+            push({pathname:"/cuenta/reauth",query:{continue:encodeURI(pathname)}});
+        }else{
+            if(__) setMessage(__);
+            else{
+                await fAuth.currentUser.reload();
+                await fAuth.updateCurrentUser(fAuth.currentUser);
+            }setMessage("Se ha Actualizado la Contraseña");
+            setValues(stateValuesInit);
+            setLoading(false);
+        }
+    };
+    useMemo(_=>HandlerChecker(),[values]);
+    useEffect(_=>{
+        if(s758R && Gb733 === "password") HandlerUpdatePass(true);
+    },[]);
+    return (
+        <Fragment>
+            <h3 className="main">
+                <span>{message ? message : "Actualizar la Contraseña"}</span>
+                <div className="ctn-ediciones">
+                    <button disabled={loading||!isEqual} onClick={HandlerUpdatePass}>
+                        <i className="fa fa-pencil" aria-hidden="true"></i> {loading ? "Actualizando" : "Actualizar"}
+                    </button>
+                </div>
+            </h3>
+            <form className="dts names">
+                <div className="form-1" style={{marginRight:"0px",width:"42%"}}>
+                    <div className="ctn-form">
+                        <label htmlFor="scfUPassF">{values["scfUPassF"]["message"] ? values["scfUPassF"]["message"] : "Tecleé la Nueva Contraseña"}</label>
+                        <div className="flexie-D">
+                            <input onChange={e=>FormCheckerValues(setValues,"rxaBReLXnH",e)} required minLength={8} type="password" name="scfUPassF" disabled={loading}/>
+                        </div>
+                    </div>
+                </div>
+                <div className="form-1" style={{marginRight:"0px",width:"42%"}}>
+                    <div className="ctn-form">
+                        <label htmlFor="scfUPassL">{values["scfUPassL"]["message"] ? values["scfUPassL"]["message"] : "Vuelva a Teclear la Contraseña"}</label>
+                        <div className="flexie-D">
+                            <input onChange={e=>FormCheckerValues(setValues,"rxaBReLXnH",e)} required minLength={8} type="password" name="scfUPassL" disabled={loading}/>
+                        </div>
+                    </div>
                 </div>
             </form>
         </Fragment>

@@ -9,6 +9,7 @@ import {useRouter} from 'next/router';
 import {FormAccountAddressCreate} from '../../addons/Form';
 import {getDoc,doc,collection,updateDoc,deleteDoc,setDoc} from 'firebase/firestore';
 import Head from 'next/head';
+import Loader from 'react-content-loader';
 import Enlace from 'next/link';
 import ViewAuth from '../../view/auth';
 import ViewAccount from "../../view/account";
@@ -52,7 +53,31 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
         !query.view && push({pathname,query:{view:"all"}});
         if(user) query.view === "all" && user["info"].uLengthAddress > 0 && HandlerEventAddress();
         if(user) query.view === "add" && user["info"].uLengthAddress >= 4 && replace({pathname,query:{view:"all"}});
-    },[user,query,refresh]);
+    },[user,query,refresh]);let __CONSET_LOADING_ITEMS_=[];
+    if(user && query.view === "all" && user["info"].uLengthAddress > 0) for(let z=0;z<=(user["info"].uLengthAddress-1);z++) __CONSET_LOADING_ITEMS_.push((
+        <div className="Caja-Direccion" key={z}>
+            <h3 className="main-title-D">
+                <span>
+                    <Loader width={100} height={30}>
+                        <rect x={0} y={0} rx={0} ry={0} width={100} height={30}/>
+                    </Loader>
+                </span>
+            </h3>
+            <div className="content-direc">
+                <Loader>
+                    <rect x={0} y={0} rx={0} ry={0} width={300} height={20}/>
+                    <rect x={0} y={30} rx={0} ry={0} width={180} height={20}/>
+                    <rect x={0} y={60} rx={0} ry={0} width={260} height={20}/>
+                    <rect x={0} y={120} rx={0} ry={0} width={320} height={20}/>
+                </Loader>
+            </div>
+            <div className="ctn-ediciones">
+                <Loader width={250} height={30}>
+                    <rect x={0} y={0} rx={0} ry={0} width={250} height={30}/>
+                </Loader>
+            </div>
+        </div>
+    ));
     return (
         <ViewAuth authentic={authentic}>
             <Fragment>
@@ -82,7 +107,7 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                             </h3>
                             <div className="container-maincoin direcciones">
                                 {user["info"].uLengthAddress === 0 ? (
-                                    <p>Sni</p>
+                                    <p>Sin nada</p>
                                 ) : address ? address.map(({uniqKey,name,addr,ext,street,colony,cp,state,city,ref,active})=>(
                                     <div className="Caja-Direccion" key={uniqKey}>
                                         <h3 className="main-title-D">
@@ -131,7 +156,7 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                                         </div>
                                     </div>
                                 )) : (
-                                    <p>Cargando</p>
+                                    __CONSET_LOADING_ITEMS_
                                 )}
                             </div>
                         </Fragment>

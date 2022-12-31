@@ -23,8 +23,10 @@ const AuthCheck = ({firebase,global,authentic}) => {
             switch(query.mode){
                 case "verifyEmail":
                     await applyActionCode(FirebaseAuth,query.oobCode);
-                    if(FirebaseAuth.currentUser) await FirebaseAuth.currentUser.reload();
-                    setText({...text,status:true,desc:"Se ha verificado con éxito su correo electrónico",title:"Verificación Exitosa"});
+                    if(authentic){
+                        await FirebaseAuth.currentUser.reload();
+                        await FirebaseAuth.updateCurrentUser(fAuth.currentUser);
+                    }setText({...text,status:true,desc:"Se ha verificado con éxito su correo electrónico",title:"Verificación Exitosa"});
                 break;
                 case "resetPassword":
                     if(screenPassword["password"]){
@@ -80,9 +82,15 @@ const AuthCheck = ({firebase,global,authentic}) => {
                                     {text["desc"]}
                                 </p>
                                 {text["status"] && (
-                                    <Enlace href="/auth?m=login" className="btn-white">
-                                        Autenticarse
-                                    </Enlace>
+                                    authentic ? (
+                                        <Enlace href="/cuenta">
+                                            Ir a la Cuenta
+                                        </Enlace>
+                                    ) : (
+                                        <Enlace href="/auth?m=login">
+                                            Iniciar Sesión
+                                        </Enlace>
+                                    )
                                 )}
                             </Fragment>
                         ) : (

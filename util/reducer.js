@@ -50,6 +50,12 @@ export const AuthReducer = {
             payload: {
                 newReAuthState: DFQgU
             }
+        }),
+        ARActUpdateCurrentDataRequest: AvOcg => ({
+            type: "ARActUpdateCurrentDataRequest",
+            payload: {
+                newDataRequest: AvOcg
+            }
         })
     },
     Reducer: (state = AuthContext.State, action) => {
@@ -59,6 +65,8 @@ export const AuthReducer = {
                 return {...state,action:payload.newActionRequest}
             case "ARActUpdateCurrentReAuthState":
                 return {...state,reauthentic:payload.newReAuthState}
+            case "ARActUpdateCurrentDataRequest":
+                return {...state,value:payload.newDataRequest}
         }
         return state
     }

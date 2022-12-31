@@ -18,5 +18,5 @@ export const AuthContext = {
             </AuthContext.Context.Provider>
         )
     },
-    State: {reauthentic:false,action:null}
+    State: {reauthentic:false,action:null,value:null}
 };

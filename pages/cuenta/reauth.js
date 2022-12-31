@@ -19,7 +19,7 @@ const ReAuth = ({global,firebase,authentic,user}) => {
     const {ACState:{reauthentic,action}} = useContext(AuthContext.Context);
     const {siteName} = global;
     if(user){
-        if(reauthentic || !query.continue || !action) (query.continue && action) ? replace({pathname:decodeURI(query.continue),query:{exec:action}}) : replace("/cuenta")
+        if(reauthentic || !query.continue || !action) (query.continue) && action === "delete" ? replace({pathname:decodeURI(query.continue),query:{exec:action}}) : replace({pathname:decodeURI(query.continue)})
     }
     return (
         <ViewAuth authentic={authentic}>

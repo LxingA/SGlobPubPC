@@ -6,12 +6,11 @@
 */
 import {useEffect,useState,Fragment} from 'react';
 import {collection,doc,onSnapshot} from 'firebase/firestore';
-import {onAuthStateChanged} from 'firebase/auth';
+import {onAuthStateChanged,onIdTokenChanged,signOut} from 'firebase/auth';
 import {AuthContext} from '../util/context';
 import Firebase from '../util/firebase';
 import Animation from 'aos';
 import Loader from 'react-content-loader';
-import $ from 'jquery';
 import '../assets/96517d18-f81c-43d2-ac47-3e96d1230c7f.scss';
 import '../assets/3d0ba9b3-dc6e-4a73-85ee-8f1b6b74abe4.css';
 import 'aos/dist/aos.css';
@@ -29,19 +28,24 @@ const App = ({Component,pageProps}) => {
     useEffect(_ => {
         HandlerFirebase();
         Animation.init();
-        $("body").attr({"oncontextmenu":"return false","onselectstart":"return false"});
     },[]);
     useEffect(_ => {
-        global && onAuthStateChanged(value["FirebaseAuth"],RxQFu => {
+        let _tkEv_,_usInfEv_=null;
+        global && onAuthStateChanged(value["FirebaseAuth"],RxQFu=>{
             if(RxQFu){
-                const stRefObjUserInfo = {nick:RxQFu.displayName,id:RxQFu.uid,tel:RxQFu.phoneNumber,photo:RxQFu.photoURL,mail:RxQFu.email,verified:RxQFu.emailVerified};
-                onSnapshot(doc(collection(value["FirebaseDatabase"],"user"),RxQFu.uid),dUnlw=>{
-                    if(dUnlw.exists()){
-                        setStatus(eXysj=>({...eXysj,auth:true,user:{...stRefObjUserInfo,info:dUnlw.data()}}));
-                    }else setStatus(obwEN=>({...obwEN,auth:true,user:{...stRefObjUserInfo,info:{}}}));
+                _tkEv_ = onIdTokenChanged(value["FirebaseAuth"],scfXu=>{
+                    _usInfEv_ = onSnapshot(doc(collection(value["FirebaseDatabase"],"user"),RxQFu.uid),NRulK=>{
+                        if(NRulK.exists()) setStatus(LDdSn=>({...LDdSn,auth:true,user:{nick:scfXu.displayName,id:RxQFu.uid,tel:scfXu.phoneNumber,photo:scfXu.photoURL,mail:scfXu.email,verified:scfXu.emailVerified,info:NRulK.data()}}));
+                        else signOut(value["FirebaseAuth"])
+                    });
                 });
-            }else setStatus(QelSP=>({...QelSP,auth:false,user:null}));
-        })
+            }else{
+                if(_tkEv_ && _usInfEv_){
+                    _tkEv_();
+                    _usInfEv_();                    
+                }setStatus(zYiCt=>({...zYiCt,auth:false,user:null}));
+            }
+        });
     },[global]);
     return state && typeof auth !== "undefined" ? (
         <AuthContext.Provider>

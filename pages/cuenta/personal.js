@@ -62,7 +62,7 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
     const HandlerDelete = async _ => {
         setUpdated(true);if(ACState["reauthentic"] === false){
             ACDispatch(ARActUpdateCurrentActionRequest("delete"));
-            push({pathname:"/cuenta/reauth",query:{continue:encodeURI(`${pathname}`)}});
+            push({pathname:"/cuenta/reauth",query:{continue:encodeURI(pathname)}});
         }else{
             ACDispatch(ARActUpdateCurrentActionRequest(null));
             ACDispatch(ARActUpdateCurrentReAuthState(false));

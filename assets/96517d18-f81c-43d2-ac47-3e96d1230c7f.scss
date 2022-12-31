@@ -387,6 +387,12 @@ button.btn-Principal {
   margin-bottom: 25px;
   cursor: pointer;
 }
+
+button.btn-Principal:disabled {
+  background: #cccccc;
+  pointer-events: none;
+}
+
 button.btn-border {
   background: none;
   border: 1px solid #eee;
@@ -2363,4 +2369,14 @@ h3.main.NameDireccion span form input {
 
 h3.main.NameDireccion span form input:focus {
   outline: 0;
+}
+
+.flexie-D {
+  display: flex;
+  width: 78%;
+}
+
+.flexie-D .btn-Principal {
+  top: 0!important;
+  width: 117px;
 }
