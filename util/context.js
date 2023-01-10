@@ -5,7 +5,7 @@
 @description Utilidad con la Implementación de los Context's en el Proyecto
 */
 import {createContext,useReducer} from 'react';
-import {AuthReducer} from './reducer';
+import {AuthReducer,ConstructReducer} from './reducer';
 
 export const AuthContext = {
     Context: createContext(),
@@ -19,4 +19,30 @@ export const AuthContext = {
         )
     },
     State: {reauthentic:false,action:null,value:null}
+};
+
+export const ConstructContext = {
+    Context: createContext(),
+    Provider: ({children}) => {
+        const {Action,Reducer} = ConstructReducer;
+        const [State,Dispatch] = useReducer(Reducer,ConstructContext.State);
+        return (
+            <ConstructContext.Context.Provider value={{CCAction:Action,CCDispatch:Dispatch,CCState:State}}>
+                {children}
+            </ConstructContext.Context.Provider>
+        )
+    },
+    State: {
+        products: {
+            taza: [],
+            playera: [],
+            canva: []
+        },
+        total: 0,
+        params: {
+            taza: "blanca",
+            playera: "",
+            canva: ""
+        }
+    }
 };

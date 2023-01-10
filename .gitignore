@@ -29,3 +29,4 @@ test-timings.json
 *.tsbuildinfo
 .swc/
 .env.local
+template

@@ -14,3 +14,5 @@ export const RandomHash = len => {
         _+=y.charAt(Math.round(Math.random()*y.length));
     }return _
 };
+
+export const FnUpper = str => str.charAt(0).toUpperCase() + str.substring(1);

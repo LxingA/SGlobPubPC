@@ -22,7 +22,7 @@ export const HeaderShop = ({global}) => {
                     </Enlace>
                 </li>
                 <li>
-                    <Enlace href="/">
+                    <Enlace href="/create?product=taza">
                         Tazas
                     </Enlace>
                 </li>

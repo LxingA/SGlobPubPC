@@ -107,8 +107,8 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                             </h3>
                             <div className="container-maincoin direcciones">
                                 {user["info"].uLengthAddress === 0 ? (
-                                    <p>Sin nada</p>
-                                ) : address ? address.map(({uniqKey,name,addr,ext,street,colony,cp,state,city,ref,active})=>(
+                                    <p>No haz creado aún ninguna dirección</p>
+                                ) : address ? address.map(({uniqKey,name,addr,ext,street,colony,cp,state,city,ref,active,int})=>(
                                     <div className="Caja-Direccion" key={uniqKey}>
                                         <h3 className="main-title-D">
                                             <span>{name}</span>
@@ -127,6 +127,11 @@ const AccountIndex = ({global,firebase,authentic,user}) => {
                                                 <span className="entrecalles">
                                                     {street}
                                                 </span>
+                                                {int !== "0" && (
+                                                    <span className="nexInterior">
+                                                       N° Interior {int}
+                                                    </span>
+                                                )}
                                             </p>
                                             <p className="colonia">
                                                 {colony}

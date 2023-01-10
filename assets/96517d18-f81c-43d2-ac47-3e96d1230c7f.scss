@@ -1896,9 +1896,6 @@ button.FloatingCerrar {
   margin-bottom: 16px;
 }
 
-.Pop-Up-Changes {
-  display: none;
-}
 .agregar-Producto-perso {
   position: fixed;
   background: #c2b097;
@@ -2379,4 +2376,826 @@ h3.main.NameDireccion span form input:focus {
 .flexie-D .btn-Principal {
   top: 0!important;
   width: 117px;
+}
+
+.dashboard-cuenta.datosMain form.dts .form-1 p {
+  display: block;
+  width: 100%;
+  margin-top: 9px;
+}
+
+.dashboard-cuenta.datosMain form.dts .form-1 {
+  flex-wrap: wrap;
+}
+
+.lista-Categorias a {
+  color: black;
+}
+
+.form-1 p {
+  display: block;
+  width: 100%;
+  margin-top: 9px;
+}
+
+.form-1 {
+  flex-wrap: wrap;
+}
+
+.lista-Categorias a {
+  color: black;
+}
+
+.icon-user {
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-user img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+.icon-user img {
+  pointer-events: none;
+}
+
+.icon-user button.btn-Principal {
+  z-index: 2;
+  position: relative;
+  font-size: 9px;
+  margin-top: 66px;
+  padding: 8px;
+  width: 58%;
+}
+
+.icon-user button.btn-Principal {
+  transition: all ease 0.5s;
+  opacity: 0;
+}
+
+.icon-user:hover button.btn-Principal {
+  opacity: 1;
+}
+
+.advertencia {
+  position: fixed;
+  z-index: 888;
+  bottom: 0;
+  background: #9c8d7bed;
+  width: 100%;
+  height: 167px;
+}
+
+.advertencia {
+  display: flex;
+  align-items: center;
+  padding-left: 53px;
+  justify-content: space-around;
+}
+
+.pText {
+  color: white;
+}
+
+.advertencia button {
+  border: 0px;
+  padding: 10px 29px;
+  border-radius: 19px;
+  font-size: 12px;
+}
+.content-direc p span {
+  margin-right: 7px;
+}
+span.nexterior {
+  margin-left: 8px;
+}
+span.codigoPostal {
+  margin-left: 7px;
+}
+p.calles {
+  display: block!important;
+}
+
+.Pop-UPDisenios {
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.Pop-UPDisenios {
+  z-index: 678;
+}
+
+.box-Grande {
+  background: #fff;
+  padding: 38px;
+  text-align: center;
+}
+
+.box-Grande {
+  position: relative;
+}
+
+.box-Grande {
+  width: 50%;
+  max-width: 1250px;
+}
+
+.info-dATA h3 {
+  border-bottom: 1px solid #eee;
+  display: block;
+  margin-bottom: 13px;
+  padding: 25px;
+  padding-top: 0px;
+  font-weight: 600;
+}
+
+
+.info-dATA p {margin-bottom: 19px;}
+
+.Pop-UPDisenios {
+  display: none;
+}
+
+.Pop-UPDisenios.showDiv {
+  display: flex;
+}
+
+.box-Grande i#Closeet {
+  margin-top: -14px;
+}
+
+.Categoria-Designs {
+  position: relative;
+}
+
+.DivDesign {
+  width: 180px;
+  height: 202px;
+  position: relative;
+  overflow: hidden;
+}
+
+.PreviewDsgn {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.PreviewDsgn img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.DivDesign {
+  border: 1px solid #eee;
+  padding: 14px;
+  border-radius: 18px;
+  box-shadow: 2px 2px #eee;
+  cursor: pointer;
+}
+
+.dts-Dsgn span {
+  background: #d3c1a9;
+  color: white;
+  padding: 6px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+
+.DivDesign:hover {
+  transform: scale(1.04);
+  transition: all ease 0.3s;
+}
+
+.DivDesign {
+  transition: all ease 0.3s;
+}
+
+.DivDesign {
+  display: inline-block;
+  margin-right: 16px;
+}
+
+.DivDesign {
+  margin-bottom: 16px;
+}
+
+.Categoria-Designs {
+  height: 44%;
+  overflow: auto;
+}
+
+
+.Info-Extra {
+  width: 291px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.Info-Extra img {
+  width: 100%;
+}
+
+.Info-Extra p {
+  font-size: 11px;
+  padding: 29px;
+  display: block;
+  background: #faf9f5;
+  margin-top: 8px;
+  text-align: justify;
+  color: #c43d3d;
+  font-weight: 600;
+}
+
+button.btn-Circle-Color.Negro {
+  background: #000;
+}
+
+button.btn-Circle-Color.Rojo {
+  background: red;
+}
+
+button.btn-Circle-Color.Naranja {
+  background: orange;
+}
+
+.Cate {
+  display: flex;
+  align-items: center;
+  padding: 44px;
+  background: #eee;
+  border-radius: 30px;
+}
+
+.imgCate {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
+.InfoCate {
+  width: 50vh;
+}
+
+.imgCate img {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+.imgCate {
+  margin-right: 34px;
+}
+
+.InfoCate p {
+  font-size: 12px;
+}
+
+.Tags span {
+  background: #b8b897;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 5px 22px;
+  border-radius: 15px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.Tags {
+  display: block;
+  margin-top: 22px;
+}
+
+.Model.Cated {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 44px;
+}
+
+.Model.Cated button {
+  background: #aaaa88;
+  color: white;
+  display: block;
+  padding: 7px 15px;
+  border: 0px;
+  border-radius: 15px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.Model.Cated button {
+  cursor: pointer;
+}
+
+
+.InfoCate {
+  width: 49%;
+}
+
+.Cate {
+  justify-content: space-between;
+}
+
+.Dts-Cantidad h3 {
+  font-size: 14px;
+}
+
+.Dts-Cantidad {
+  margin-bottom: 15px;
+  margin-right: 26px;
+}
+
+.header-categorias {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 114%;
+  height: 361px;
+  border-radius: 44px;
+}
+
+.header-categorias img {
+  position: absolute;
+  pointer-events: none;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.ctn-categoria {
+  position: relative;
+}
+
+a.btn-design1 {
+  position: relative;
+  background: #aaaa88;
+  color: white;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.header-categorias a.btn-design1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 25px;
+  margin-right: 28px;
+}
+
+.ctn-categoria {
+  margin-left: 116px;
+}
+
+.header-categorias {
+  margin-bottom: 41px;
+}
+
+.Catgoria.Sub-Categoria {
+  position: relative;
+}
+
+.header-box h1 span {
+  background: #aaaa88;
+  color: white;
+  border-radius: 15px;
+  padding: 6px;
+  font-size: 10px;
+  margin-left: 7px;
+}
+
+.header-box h1 {
+  display: flex;
+  align-items: center;
+  font-size: 29px;
+}
+
+.SubCategoria {
+  background: #aaaa88;
+  padding: 25px;
+  border-radius: 28px;
+  color: white;
+  margin-bottom: 19px;
+}
+
+.header-box {
+  margin-bottom: 10px;
+}
+
+.subCategoria-body {
+  background: #b8b897;
+  padding: 27px;
+}
+
+.Div-Wrapp {
+  max-width: 750px;
+}
+
+.Div-Wrapp .Model.Cated {
+  width: 113%!important;
+}
+
+.Catgoria.Sub-Categoria {
+  width: 115%;
+}
+
+.SubCategoria .Details-Cate {
+  display: flex;
+  align-items: center;
+}
+
+.SubCategoria {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SubCategoria .Details-Cate .Dts-Cantidad {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.SubCategoria .Details-Cate .Dts-Cantidad span {
+  margin-left: 10px;
+}
+
+.header-box.gg {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header-box.gg a {
+  margin-right: 15px;
+}
+
+.header-box.gg a:nth-child(2) {
+  margin-right: 0px;
+}
+
+.header-box.Cajta {
+  display: flex;
+  background: #Eee;
+  padding: 29px;
+  border-radius: 25px;
+  align-items: center;
+  margin-top: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.datos-producto-config form label {
+  font-size: 11px;
+}
+
+.inputdivy {
+  display: flex;
+  align-items: center;
+}
+
+.inputdivy input {
+  width: 100%;
+  border: 0px;
+  border-radius: 27px;
+  padding: 7px;
+}
+
+.datos-producto-config .header-box {
+  display: flex;
+  align-items: center;
+  height: 49px;
+  margin-top: 14px;
+}
+
+.datos-producto-config .header-box input {border: 0px;border-radius: 18px;padding: 6px;margin-left: 14px;}
+
+.datos-producto-config .header-box input {
+  margin-right: 18px;
+}
+
+
+
+.config-info-Producto {
+  position: relative;
+  overflow: hidden;
+  width: 117%;
+}
+
+.image-product {
+  width: 150px;
+  height: 150px;
+  background-color: #c1c1b1;
+  border-radius: 100%;
+}
+
+.header-box.Cajta .change-images {
+  margin-right: 47px;
+}
+
+.datos-producto-config {
+  position: relative;
+  overflow: hidden;
+  width: 76%;
+}
+
+.datos-producto-config .header-box input.formu-bg {width: 154px;}
+
+textarea.formu-bg {
+  width: 100%;
+  height: 143px;
+  border-radius: 15px;
+  border: 0px;
+  margin-left: 17px;
+  margin-top: 22px;
+}
+
+input.formu-bg {
+  margin-left: 13px;
+}
+
+.header-box.Cajta .change-images a.btn-design1 {
+  position: relative;
+  left: 8px;
+}
+.datos-producto-config h3 {
+  margin-bottom: 19px;
+}
+
+.ctn-2 .header-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.more-options .header-box .name-cate {
+  display: flex;
+  justify-content: space-between;
+  width: 100vh;
+  font-size: 11px;
+}
+
+.tabla-list-pedidos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabla-list-pedidos .image-product {
+  width: 50px;
+  height: 50px;
+}
+
+.tabla-list-pedidos {
+  background: #b8b897;
+  padding: 15px;
+  border-radius: 28px;
+}
+
+.ctn-2 {
+  width: 870px;
+  margin-top: 39px;
+}
+
+.tags-product {
+  font-size: 11px;
+}
+
+.ctn-tags {
+  display: flex;
+}
+
+.name-product {
+  position: relative;
+  margin-left: -27px;
+}
+
+.tabla-list-pedidos {
+  align-items: center;
+}
+
+.datos-product {
+  margin-left: -27px;
+  width: 239px;
+}
+
+.datos-product a {
+  font-size: 12px;
+  color: white;
+  font-weight: 600;
+}
+
+.tags-product .ctn-tags {
+  margin-left: -100px;
+  color: white;
+  font-weight: 600;
+  width: 115px;
+  position: relative;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.ctn-tags p {
+  display: inline-block;
+}
+
+.tags-product h3 {
+  position: relative;
+  left: 93px;
+}
+
+.price-product {
+  margin-left: 158px;
+}
+
+.more-options .header-box {
+  margin-top: 40px;
+}
+
+.tabla-list-pedidos {
+  margin-top: 15px;
+  color: white;
+}
+
+.status-pr i {
+  font-style: normal;
+}
+
+.status-pr i a {
+  background: #aaaa88;
+  font-size: 11px;
+  border-radius: 16px;
+  padding: 5px;
+  color: white;
+}
+
+.price-pr {
+  margin-left: -21px;
+}
+
+.status-pr {
+  margin-right: 12px;
+}
+
+header.cabera {
+  height: 384px;
+  display: flex;
+  align-items: center;
+  border-radius: 28px;
+}
+
+header.cabera img {
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.info-cabe {
+  z-index: 3;
+  margin-left: 73px;
+}
+
+.changes-div {
+  width: 117%;
+  position: relative;
+}
+
+.changes-div a.btn-design1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 6;
+  margin-top: 15px;
+  margin-right: 22px;
+}
+
+.config-info-Producto.galeria {
+  background: #eee;
+  padding: 25px;
+  border-radius: 28px;
+}
+
+.config-info-Producto.galeria .header-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-box.galery-div {
+  margin-top: 24px;
+}
+
+.config-info-Producto.galeria .header-box .change-images {
+  text-align: center;
+  margin-right: 19px;
+  display: inline-block;
+}
+
+
+/* PANEL */
+
+.mainInfo-Pedido {
+  width: 133vh;
+  position: relative;
+  padding: 37px;
+}
+
+.CrearPrdt { 
+  background: #fefefe; 
+  padding: 26px; 
+  width: 62%; 
+  font-size: 12px; 
+  outline: 1px solid #eaeaea; 
+  outline-offset: -9px;
+}
+
+button.viewProduct {
+  margin-top: 69px;
+}
+
+.box-Dagrabble button.viewProduct {
+  margin-top: 19px;
+}
+
+button.viewProduct {
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  background: #d3c1a9;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 15px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.NombreProducto input {
+  border: 0;
+  text-align: center;
+}
+
+.NombreProducto input:focus {
+  outline: none;
+}
+
+.Options-Constructor-Capas .btn-Circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+}
+
+.Options-Constructor-Capas .btn-Circle {
+  transform: rotate(0deg);
+  font-weight: 500;
+  cursor: pointer!important;
+  font-size: 15px;
+}
+
+.Options-Constructor-Capas .btn-Circle:hover {
+  cursor: pointer;
+}
+
+.Lista-Productos-Creados {
+  max-height: 395px;
+  overflow: auto;
+  border: 15px solid #FFF;
+}
+
+button.btn-Circle-Color.active {
+  border: 3px solid #d3c1a9;
+}
+
+button.btn-Basico {
+  margin-right: 9px;
+}
+button.viewProduct {
+  margin: 0 auto;
+  display: block;
+  margin-top: 50px;
+}
+
+.MainChanges {
+  text-align: center;
 }
