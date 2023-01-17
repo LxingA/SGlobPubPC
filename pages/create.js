@@ -14,9 +14,9 @@ import ViewShop from "../view/shop";
 
 const Constructor = ({firebase,global,authentic}) => {
     const Allow = ["taza","playera","canva"];
-    const {siteName} = global;
+    const {siteName,siteBuilder:{font:P68t9}} = global;
     const {query,replace} = useRouter();
-    const visible = useState({productListView:false});
+    const visible = useState({productListView:false,uploadImageView:false,designListView:false,fontListView:false});
     !query.product && replace("/");
     !Allow.includes(query.product) && replace("/");
     return Allow.includes(query.product) && (
@@ -27,13 +27,13 @@ const Constructor = ({firebase,global,authentic}) => {
             <ViewShop firebase={firebase} global={global} authentic={authentic}>
                 <ConstructContext.Provider>
                     <ButtonAddProduct type={query.product}/>
-                    <FontsView />
+                    <FontsView visible={visible} fonts={P68t9}/>
                     <ProductListView visible={visible} type={query.product}/>
                     <BoxConstructView type={query.product} visible={visible} info={global["siteBuilder"]} storage={firebase["FirebaseStorage"]}/>
                     <PriceBoxView type={query.product} info={global["siteBuilder"]}/>
                     <PreviewBoxView />
-                    <DesignListView />
-                    <UploadImageView />
+                    <DesignListView visible={visible}/>
+                    <UploadImageView visible={visible} type={query.product}/>
                 </ConstructContext.Provider>
             </ViewShop>
         </Fragment>

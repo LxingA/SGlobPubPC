@@ -13,7 +13,6 @@ import {AuthContext} from '../util/context';
 import {RandomHash} from '../util/crypto';
 import Loader from 'react-content-loader';
 import Enlace from 'next/link';
-import $ from 'jquery';
 const initStateValidated = {validated:false,message:null,value:null,initialValue:null,name:null};
 const monthOnStr = {
     "01": "Enero",
@@ -126,7 +125,7 @@ export const FormAuthResetPassword = ({Callback}) => {
 };
 
 export const FormAuthLogin = ({FAuth,Callback}) => {
-    const {pathname} = useRouter();
+    const {pathname,query} = useRouter();
     const stateValuesInit = {
         sipnkname: initStateValidated,
         sipnpsw: initStateValidated
@@ -168,7 +167,7 @@ export const FormAuthLogin = ({FAuth,Callback}) => {
                 {values["sipnpsw"].message && (
                     <p>{values["sipnpsw"].message}</p>
                 )}
-                <Enlace href={{pathname,query:{m:"recovery"}}}>
+                <Enlace href={{pathname,query:query.to?{m:"recovery",to:query.to}:{m:"recovery"}}}>
                     ólvide la contraseña
                 </Enlace>
             </div>

@@ -1621,7 +1621,6 @@ a.btn-beige {
   align-items: center;
   border-radius: 14px;
   padding: 10px;
-  width: 58%;
   position: relative;
   overflow: hidden;
   box-shadow: 3px 2px 7px #c3c3c3;
@@ -1919,19 +1918,18 @@ button.FloatingCerrar {
 /* taza area de trabajo */
 
 .Capa{
-  display: none;
+  display: block;
+  width: 250px;
 }
 .Capa.showCapa{
   display: block;
 }
 .EditorCapas.Taza-Especificacion {
-  width: 62%;
+  width: 100%;
   height: 47vh;
   position: absolute;
   z-index: 5;
   top: 0;
-  margin-top: 59px;
-  margin-left: 37px;
 }
 
 .MainChanges img {
@@ -1939,9 +1937,6 @@ button.FloatingCerrar {
   z-index: 1;
 }
 
-.EditorCapas.Taza-Especificacion {
-  overflow: hidden;
-}
 @media screen and (max-width: 900px) {
   .caja-info-costo {
       flex-wrap: wrap;
@@ -1962,6 +1957,7 @@ button.FloatingCerrar {
   .costo-total, .total-PedidoCompleto {
       height: 150px;
   }
+
 .Options-Constructor-Capas {
   width: 83%;
   margin-bottom: 0;
@@ -2524,7 +2520,7 @@ p.calles {
 .info-dATA p {margin-bottom: 19px;}
 
 .Pop-UPDisenios {
-  display: none;
+  display: flex;
 }
 
 .Pop-UPDisenios.showDiv {
@@ -3198,4 +3194,296 @@ button.viewProduct {
 
 .MainChanges {
   text-align: center;
+}
+
+.gtexto {
+  text-align: left;
+}
+
+.gtexto textarea {
+  background-color: transparent;
+  border: 0;
+  resize: none;
+}
+.gtexto textarea:focus {
+  outline: none;
+}
+
+.box-Grande i#Closeet {
+  margin-top: -14px;
+}
+
+i#Closeet {
+  background: #d3c1a9;
+  color: white;
+  font-size: 14px;
+  padding: 14px;
+  margin-right: -20px;
+}
+
+i#Closeet {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 45px;
+  cursor: pointer;
+}
+
+.info-dgg {
+  padding: 25px;
+  text-transform: uppercase;
+  opacity: .8;
+  border: 2px solid #eee;
+}
+
+.Pop-UPDisenios.Images .box-Grande {
+  width: 26%;
+}
+.box-Grande {
+  width: 50%;
+  max-width: 1250px;
+}
+.box-Grande {
+  position: relative;
+}
+.box-Grande {
+  background: #fff;
+  padding: 38px;
+  text-align: center;
+}
+
+.info-dgg p {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.info-dgg i {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 18px;
+  opacity: .7;
+}
+
+.info-dgg p span {
+  display: block;
+  margin-top: 8px;
+}
+
+.info-dgg.active {
+  box-shadow: 2px 1px 19px 5px #e1e1e1ee;
+}
+
+.Pop-Up-Fuentes {
+  display: flex;
+  animation-name: slideInLeft;
+  animation-duration: 1s;
+  animation-delay: 0.2s;
+}
+
+.Pop-Up-Fuentes {
+  background: #fff;
+  width: 23%;
+  position: fixed;
+  z-index: 8;
+  height: 100%;
+}
+
+.Pop-Up-Fuentes {
+  display: flex;
+  justify-content: center;
+  padding-top: 148px;
+}
+
+.cajitaFuentes h3 {
+  text-align: center;
+  width: 75%;
+  display: block;
+  margin:  auto;
+  margin-bottom: 49px;
+}
+
+.inputSearch {
+  border: 1px solid #e0e0e0;
+  border-radius: 50px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inputSearch {
+  padding-right: 6px;
+  padding-left: 25px;
+}
+
+.inputSearch i {
+  background: #d3c1a9;
+  color: white;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: 12px;
+}
+
+.inputSearch input {
+  border: 0px;
+  width: 84%;
+}
+
+.inputSearch input:focus {
+  outline: none;
+}
+
+.inputSearch {
+  margin-bottom: 39px;
+}
+
+.cajitaFuentes h3 {
+  text-align: center;
+  width: 75%;
+  display: block;
+  margin:  auto;
+  margin-bottom: 49px;
+}
+
+.Fuentes-Div {
+  position: relative;
+  margin-bottom: 26px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+}
+
+.Fuentes-Div span {
+  font-size: 21px;
+}
+
+.Fuentes-Div p {
+  font-size: 15px;
+  opacity: .6;
+}
+
+.Fuentes-Div input {
+  display: block;
+  width: 100%;
+  border: 0;
+  height: 42px;
+  font-size: 15px;
+  opacity: .8;
+}
+
+.Fuentes-Div button {
+  width: 30%;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.Fuentes-Div input:focus {
+  outline: none;
+}
+
+.NavEditorTextos {
+  position: absolute;
+}
+
+.gtexto {
+  top: 61px;
+  position: absolute;
+}
+
+.gtexto span {
+  z-index: 999999;
+}
+
+.tVIo4rEi46j8hD1o {
+  float: left;
+}
+
+.NavBtn {
+  margin-top: 7px;
+}
+
+input[type=color] {
+  width: 21px;
+  height: 21px; 
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+  margin: 0 auto;
+}
+
+input[type=color]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+}
+
+input[type=color]::-webkit-color-swatch-wrapper {
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.NavBtn select {
+  padding: 2px;
+  height: 28px;
+  width: 41px;
+  text-align: center;
+  appearance: none;
+  display: flex;
+  margin-bottom: -6px;
+}
+
+.draggable-input input {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 15vh;
+  top: 0;
+  opacity: 0;
+  z-index: 3;
+  cursor: default;
+}
+
+.draggable-input {
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.draggable-input input[type="file"]:hover ,info-dgg {
+  display: none;
+}
+
+.info-dgg {
+  z-index: 2;
+  position: relative;
+  cursor: default;
+}
+
+.draggable-input input:hover .info-dgg {
+  display: none;
+}
+
+.draggable-input input:hover {
+  cursor: default;
+}
+
+.draggable-input-focus {
+  background: #f3f3f3;
+  box-shadow: 1px 3px 20px 3px #d3d3d2;
+}
+
+.Capa:hover  .gtexto img {
+  box-shadow: 1px 1px 20px 4px #919191;
+}
+
+.Capa .gtexto img {
+    margin-bottom: -7px;
+}
+
+.Capa:hover .gtexto span {
+  text-shadow: -1px 2px 12px #000000;
 }

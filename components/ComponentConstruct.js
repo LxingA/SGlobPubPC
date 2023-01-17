@@ -4,16 +4,30 @@
 @date 03/Ene/23 05:05
 @description Componente con los Componentes del Constructor Global
 */
-import {useContext,Fragment,useState} from 'react';
+import {useContext,Fragment} from 'react';
 import {ConstructContext} from '../util/context';
-import {AddonBoxPrice,AddonIconDesign,AddonConstructBoxMessage} from '../addons/Construct';
-import {AddonLayersView,AddonConstructBox} from '../addons/Construct';
+import {AddonBoxPrice,AddonIconDesign,AddonConstructBoxMessage,AddonConstructBoxUploadImage,AddonConstructBoxFontContainerView} from '../addons/Construct';
+import {AddonLayersView,AddonConstructBox,AddonConstructorTextLayout,AddonConstructViewUploadFile} from '../addons/Construct';
 import {FnUpper} from '../util/crypto';
+import Image from 'next/image';
 
-export const FontsView = () => {
-    return (
+export const FontsView = ({visible,fonts}) => {
+    const [y33L6,ysF07rz2sQVqrcz7] = visible;
+    return y33L6["fontListView"] && (
         <div className="Pop-Up-Fuentes">
-            
+            <i className="fa fa-times" aria-hidden="true" id="Closeet" onClick={_=>ysF07rz2sQVqrcz7(zS679=>({...zS679,fontListView:false}))}></i>
+            <div className="cajitaFuentes">
+                <h3>Fuentes</h3>
+                <div className="inputSearch">
+                    <input type="search" />
+                    <i className="fa fa-search" aria-hidden="true"></i>
+                </div>
+                <div className="Fuentes-Div">
+                    {fonts.map(({uniqKey,title,name})=>(
+                        <AddonConstructBoxFontContainerView key={uniqKey} title={title} name={name}/>
+                    ))}
+                </div>
+            </div>
         </div>
     )
 };
@@ -70,8 +84,7 @@ export const PriceBoxView = ({type,info}) => {
     for(let _ = 0;_ <= (products[type].length - 1); _++){
         _SUM_ += Number(parseInt(info[type][products[type][_]["variant"].type].price));
         if(_ === (products[type].length - 1)) _TOTAL_ = _SUM_;
-    }
-    return (
+    }return (
         <div className="caja-info-costo">
             <AddonBoxPrice price={_TXT_[0]} style="costo-total" title={`${FnUpper(type)} ${FnUpper(_TXT_[1])}`}/>
             <AddonBoxPrice price={_TOTAL_} style="total-PedidoCompleto" title="Total"/>
@@ -81,7 +94,7 @@ export const PriceBoxView = ({type,info}) => {
 };
 
 export const BoxConstructView = ({type,visible,info,storage}) => {
-    const {CCState:{products,params},CCAction:{CRActUpdateCurrentParamsConstruct},CCDispatch} = useContext(ConstructContext.Context);
+    const {CCState:{products,params},CCAction:{CRActUpdateCurrentParamsConstruct,CRActElementsFnCurrentProductLayer},CCDispatch} = useContext(ConstructContext.Context);
     const gtCurrentActiveLayout = products[type].filter(({active})=>active);let ___;
     if(gtCurrentActiveLayout.length === 0) ___ = params[type];
     else ___ = gtCurrentActiveLayout[0]["variant"].type;
@@ -96,6 +109,12 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
         return <AddonConstructBox storageClient={storage} viewID={gtCurrentViewObj["uniqKey"]} variantID={details["uniqKey"]} variantPrefix={prefix}/>
     };
     const HandlerClickEvent = (property,value) => CCDispatch(CRActUpdateCurrentParamsConstruct(property,value,type,gtCurrentActiveLayout[0]["uniqKey"]));
+    const HandlerCallback = fn => {
+        if(fn === "design"){
+
+        }else CCDispatch(CRActElementsFnCurrentProductLayer(fn,"add",type,gtCurrentActiveLayout[0]["uniqKey"],gtCurrentActiveLayout[0]["variant"].view))
+    };
+    const HandlerClickActiveElement = (elementID,elementType) => CCDispatch(CRActElementsFnCurrentProductLayer(elementType,"update",type,gtCurrentActiveLayout[0]["uniqKey"],gtCurrentActiveLayout[0]["variant"].view,{id:elementID,active:true}));
     return (
         <div className="My-Account" data-aos="fade-left" data-aos-duration="9000">
             <div id="Constructor">
@@ -121,6 +140,15 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
                                     {details["colors"].map(({uniqKey,name})=>(
                                         <button onClick={_=>HandlerClickEvent("color",uniqKey)} disabled={gtCurrentActiveLayout.length===0} key={uniqKey} className={`btn-Circle-Color ${name}${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].color===uniqKey?" active":"":""}`}></button>
                                     ))}
+                                    {(gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"].type === "magica") && (
+                                        <div className="Info-Extra">
+                                            <Image src="/06dffa3d-d791-486e-82eb-f61f24c7a955.jpeg" alt="Demostración de la Taza Mágica" width={600} height={225}/>
+                                            <p>
+                                                <i className="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                                Advertencia: El diseño impreso sobre la talla, no se notará sobre lo negro hasta agregarle líquido muy caliente a la taza, y este se tornará al color blanco básico, así revelando el diseño, como se muestra en la imagen de ejemplo.
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
                            </Fragment>
                         ) : type === "playera" ? (
@@ -132,13 +160,21 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
                     <div className="Producto-Changes">
                         <div className="MainChanges">
                             {products[type].length === 0 ? <AddonConstructBoxMessage message={`Haz click en el "+" para crear tú ${type}`}/> : HandlerCheckerType()}
+                            <div className={`EditorCapas Taza-Especificacion${gtCurrentActiveLayout.length > 0 ? ` ${gtCurrentActiveLayout[0]["variant"].type}${gtCurrentActiveLayout[0]["variant"].view}` : undefined}`}>
+                                {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["text"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,content,color,active,axis,size})=>(
+                                    <AddonConstructorTextLayout visible={visible} axis={axis} viewID={gtCurrentActiveLayout[0]["variant"].view} callback={[HandlerClickActiveElement]} active={active} colorHex={color} key={uniqKey} productID={gtCurrentActiveLayout[0]["uniqKey"]} content={content} type={type} textID={uniqKey} fontSize={size}/>
+                                ))}
+                                {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["image"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,url,width,active,axis})=>(
+                                    <AddonConstructViewUploadFile callback={[HandlerClickActiveElement]} active={active} key={uniqKey} url={url} width={width} type={type} productID={gtCurrentActiveLayout[0]["uniqKey"]} imageID={uniqKey} viewID={gtCurrentActiveLayout[0]["variant"].view} axis={axis}/>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div className="Btn-Personalizar">
                         <div className="barra-left">
-                            <AddonIconDesign type={type} style="AddText" url="/6f2b809a-be47-4cdf-9be7-03123392ff3a.png"/>
-                            <AddonIconDesign type={type} style="AddImage" url="/92986322-fec4-4883-aa7e-a5b57eb302c2.png"/>
-                            <AddonIconDesign type={type} style="AddDesign" url="/e78af129-f827-46c5-bf77-be62acb5bfaf.png"/>
+                            <AddonIconDesign callback={HandlerCallback} type={type} style="AddText" url="/6f2b809a-be47-4cdf-9be7-03123392ff3a.png"/>
+                            <AddonIconDesign visible={[visible[1],"uploadImageView"]} callback={HandlerCallback} type={type} style="AddImage" url="/92986322-fec4-4883-aa7e-a5b57eb302c2.png"/>
+                            <AddonIconDesign visible={[visible[1],"designListView"]} callback={HandlerCallback} type={type} style="AddDesign" url="/e78af129-f827-46c5-bf77-be62acb5bfaf.png"/>
                         </div>
                     </div>
                 </div>
@@ -158,18 +194,23 @@ export const PreviewBoxView = () => {
     )
 };
 
-export const DesignListView = () => {
-    return (
+export const DesignListView = ({visible}) => {
+    const [wD314,Jp58BTe3w9Q4G26t] = visible;
+    return wD314["designListView"] && (
         <div className="Pop-UPDisenios">
 
         </div>
     )
 };
 
-export const UploadImageView = () => {
-    return (
+export const UploadImageView = ({visible,type}) => {
+    const [Jk045,Rhxm4AXP9HC3xq1n] = visible;
+    return Jk045["uploadImageView"] && (
         <div className="Pop-UPDisenios Images">
-
+            <div className="box-Grande">
+                <i className="fa fa-times" aria-hidden="true" onClick={_=>Rhxm4AXP9HC3xq1n(H0e48=>({...H0e48,uploadImageView:false}))} id="Closeet"></i>
+                <AddonConstructBoxUploadImage callback={Rhxm4AXP9HC3xq1n} type={type}/>
+            </div>
         </div>
     )
 };

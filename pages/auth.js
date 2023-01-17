@@ -54,7 +54,7 @@ const Auth = ({firebase,global,authentic}) => {
                             <BoxMessage>
                                 <p>{message["text"]}</p>
                                 {message["redirect"] ? (
-                                    <Enlace className="btn-beige" href={{pathname,query:{m:"login"}}} onClick={_=>setMessage(null)}>
+                                    <Enlace className="btn-beige" href={{pathname,query:query.to?{m:"login",to:query.to}:{m:"login"}}} onClick={_=>setMessage(null)}>
                                         Entendido
                                     </Enlace>
                                 ) : (
@@ -76,7 +76,7 @@ const Auth = ({firebase,global,authentic}) => {
                                         <h3>¿Nuevo Aquí?</h3>
                                         <p>Abre una cuenta para mantener un control de tus pedidos</p>
                                     </div>
-                                    <Enlace className="btn-border" href={{query:{m:"register"},pathname}}>
+                                    <Enlace className="btn-border" href={{query:query.to?{m:"register",to:query.to}:{m:"register"},pathname}}>
                                         Registrarse
                                     </Enlace>
                                 </Fragment>
@@ -86,7 +86,7 @@ const Auth = ({firebase,global,authentic}) => {
                                         <h3>¿Ya tienes cuenta?</h3>
                                         <p>Logueate con una cuenta existente</p>
                                     </div>
-                                    <Enlace className="btn-border" href={{query:{m:"login"},pathname}}>
+                                    <Enlace className="btn-border" href={{query:query.to?{m:"login",to:query.to}:{m:"login"},pathname}}>
                                         Autenticate
                                     </Enlace>
                                 </Fragment>

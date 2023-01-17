@@ -9,7 +9,6 @@ import {HeaderShop} from '../components/ComponentHeader';
 import {FooterShop} from '../components/ComponentFooter';
 import {SliderShop} from '../components/ComponentSlider';
 import Message from '../components/ComponentMessage';
-import $ from 'jquery';
 
 const ViewShop = ({children,firebase,global,slider,authentic}) => {
     const cookies = useRef(null);

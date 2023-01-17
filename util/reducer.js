@@ -118,11 +118,74 @@ export const ConstructReducer = {
                 typeProduct: r928I,
                 idProductCurrentUpdate: v0B67
             }
+        }),
+        CRActElementsFnCurrentProductLayer: (Wo848,aT911,dC510,j96Q1,d6N06,C3y80={}) => ({
+            type: "CRActElementsFnCurrentProductLayer",
+            payload: {
+                elementType: Wo848,
+                actionParam: aT911,
+                valueParam: C3y80,
+                typeProduct: dC510,
+                idProductCurrent: j96Q1,
+                idViewCurrent: d6N06
+            }
         })
     },
     Reducer: (state = ConstructContext.State, action) => {
         const {payload,type} = action;let _savedRefCurrentState_;const initialElementObj={text:[],image:[]};
         switch(type){
+            case "CRActElementsFnCurrentProductLayer":
+                _savedRefCurrentState_ = state["products"];
+                let _savedRefCurrentObjWithType_ = _savedRefCurrentState_[payload.typeProduct];
+                _savedRefCurrentObjWithType_ = _savedRefCurrentObjWithType_.map(R119g=>{
+                    if(R119g["uniqKey"]===payload.idProductCurrent){
+                        let _savedRefObjMap_ = R119g["variant"]["element"][payload.elementType];
+                        switch(payload.actionParam){
+                            case "add":
+                                let _initialObjState_={uniqKey:RandomHash(16),active:false,view:payload.idViewCurrent,axis:{y:"150px",x:"100px"}};
+                                switch(payload.elementType){
+                                    case "text":
+                                        _initialObjState_["content"] = "Texto de Ejemplo";
+                                        _initialObjState_["font"] = "arial";
+                                        _initialObjState_["color"] = "#fffff";
+                                        _initialObjState_["size"] = 12;
+                                    break;
+                                    case "image":
+                                        _initialObjState_["url"] = payload.valueParam["uri"];
+                                        _initialObjState_["width"] = 200;
+                                    break;
+                                }_savedRefObjMap_.unshift(_initialObjState_);
+                            break;
+                            case "delete":
+                                _savedRefObjMap_.splice(_savedRefObjMap_.findIndex(({uniqKey})=>uniqKey===payload.valueParam["id"]),1);
+                                if(payload.elementType==="image") (_savedRefObjMap_.filter(({url})=>url===payload.valueParam["currentURL"]).length === 0 && payload.valueParam["currentURL"].indexOf("blob") !== -1) && URL.revokeObjectURL(payload.valueParam["currentURL"]);
+                            break;
+                            case "clone":
+                                let _savedRefCloneTextElement_ = _savedRefObjMap_[_savedRefObjMap_.findIndex(({uniqKey})=>uniqKey===payload.valueParam["id"])];
+                                let _instanceNewRefTextElement_ = {..._savedRefCloneTextElement_};
+                                let _savedRefNewIDUniq = RandomHash(16);
+                                _instanceNewRefTextElement_["uniqKey"] = _savedRefNewIDUniq;
+                                _savedRefObjMap_.unshift(_instanceNewRefTextElement_);
+                                _savedRefObjMap_ = _savedRefObjMap_.map(hB588=>{
+                                    if(hB588["uniqKey"] !== _savedRefNewIDUniq) hB588["active"] = false;
+                                    return hB588
+                                });
+                            break;
+                            case "update":
+                                let _savedRefCurrentValues_ = payload.valueParam;
+                                _savedRefObjMap_ = _savedRefObjMap_.map(lB351=>{
+                                    if(lB351["uniqKey"]===_savedRefCurrentValues_["id"]){
+                                        Object.keys(_savedRefCurrentValues_).forEach((j19J5,i)=>{
+                                            if(j19J5 !== "id") lB351[j19J5] = Object.values(_savedRefCurrentValues_)[i]
+                                        })
+                                    }if(_savedRefCurrentValues_["active"] && lB351["uniqKey"] !== _savedRefCurrentValues_["id"]) lB351["active"] = false;
+                                    return lB351
+                                });
+                            break;
+                        }R119g["variant"]["element"][payload.elementType]=_savedRefObjMap_
+                    }return R119g
+                });_savedRefCurrentState_[payload.typeProduct] = _savedRefCurrentObjWithType_;
+                return {...state,products:_savedRefCurrentState_}
             case "CRActUpdateCurrentParamsConstruct":
                 _savedRefCurrentState_ = state["products"];
                 let _savedCurrentRefObjUpdated_ = _savedRefCurrentState_[payload.typeProduct];
@@ -178,7 +241,9 @@ export const ConstructReducer = {
             case "CRActDeleteCurrentProductLayer":
                 _savedRefCurrentState_ = state["products"];
                 let _objDeleteRef_ = _savedRefCurrentState_[payload.typeProductDelete];
-                _objDeleteRef_.splice(_objDeleteRef_.findIndex(({uniqKey})=>uniqKey===payload.idProductDelete),1);
+                let _objRefIDCurrentDeleteProduct_ = _objDeleteRef_.findIndex(({uniqKey})=>uniqKey===payload.idProductDelete);
+                _objDeleteRef_[_objRefIDCurrentDeleteProduct_]["variant"]["element"]["image"].forEach(({url})=>URL.revokeObjectURL(url));
+                _objDeleteRef_.splice(_objRefIDCurrentDeleteProduct_,1);
                 _savedRefCurrentState_[payload.typeProductDelete] = _objDeleteRef_;
                 return {...state,products:_savedRefCurrentState_}
             case "CRActActiveCurrentProductLayer":

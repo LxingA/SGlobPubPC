@@ -10,6 +10,8 @@ const Document = () => {
     return (
         <Html>
             <Head>
+                <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com"/>
+                <link rel="dns-prefetch" href="https://code.jquery.com"/>
                 <link rel="apple-touch-icon" href="/b2bfd931-601f-479c-826a-4fb7d0aba8af.png" type="image/png" sizes="180x180"/>
                 <link rel="icon" href="/de8fc166-8c02-4a4a-8d98-00203cf4c5ed.png" type="image/png" sizes="16x16"/>
                 <link rel="icon" href="/1340026a-c8f2-4fa0-9683-69e4bc51848c.png" type="image/png" sizes="32x32"/>
@@ -20,6 +22,8 @@ const Document = () => {
             <body>
                 <Main />
                 <NextScript />
+                <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+                <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
             </body>
         </Html>
     )

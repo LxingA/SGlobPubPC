@@ -4,7 +4,7 @@
 @date 03/Ene/23 10:49
 @description Complemento para Contener todos los Complementos Adicionales para el Componente Constructor del Proyecto
 */
-import {useContext,useState,useEffect,useRef} from 'react';
+import {useContext,useState,useEffect,useRef,Fragment} from 'react';
 import {ref,getDownloadURL} from 'firebase/storage';
 import {ConstructContext} from '../util/context';
 import Image from 'next/image';
@@ -72,12 +72,20 @@ export const AddonLayersView = ({type,dialog}) => {
     )
 };
 
-export const AddonIconDesign = ({style,url,type}) => {
+export const AddonIconDesign = ({style,url,type,callback,visible}) => {
     const {CCState:{products}} = useContext(ConstructContext.Context);
     const gtCurrentActiveLayout = products[type].filter(({active})=>active);let __ = null;
     if(gtCurrentActiveLayout.length > 0) __ = !Object.values(gtCurrentActiveLayout[0]["variant"]).includes(null);
-    return (
-        <div className={`btn-edit-circle ${style}`} style={products[type].length === 0 || !__ ? {background:"#c3bbb1",pointerEvents:"none"} : undefined}>
+    const HandlerClickEvent = e => {
+        e.preventDefault();
+        if(visible) visible[0](h2G42=>{
+            let _ = h2G42;
+            _[visible[1]] = true;
+            return {..._}
+        });
+        else callback(style.substring(3).toLowerCase())
+    };return (
+        <div onClick={HandlerClickEvent} className={`btn-edit-circle ${style}`} style={products[type].length === 0 || !__ ? {background:"#c3bbb1",pointerEvents:"none"} : undefined}>
             <Image src={url} alt="Icono del Editor" width={44} height={26}/>
         </div>
     )
@@ -105,5 +113,156 @@ export const AddonConstructBoxMessage = ({message}) => {
         <div className="CrearPrdt">
            {message}
         </div>
+    )
+};
+
+const AddonButtonTextTool = ({icon,style,text,callback,color,size}) => {
+    const stRefInputColor=useRef(null);let __={currentNumber:6,currentArray:[]};
+    for(let x=__["currentNumber"];x<=30;x++){
+        __["currentNumber"] += 2;__["currentArray"].push(__["currentNumber"]);
+        x = __["currentNumber"];
+    }return (
+        <div onClick={_=>(!color&&!size)?callback(text.toLowerCase()):undefined} className="NavBtn">
+            {(text === "Color" && color) ? (
+                <Fragment>
+                    <input ref={stRefInputColor} onChange={e=>callback(text.toLowerCase(),e)} type="color" defaultValue={color}/>
+                    <span onClick={_=>stRefInputColor.current&&$(stRefInputColor.current).click()}>{text}</span>
+                </Fragment>
+            ) : (text === "Tamaño" && size) ? (
+                <Fragment>
+                    <select defaultValue={size} onChange={e=>callback(text.toLowerCase(),e)}>
+                        {__["currentArray"].map((tG285,i)=>(
+                            <option key={i} value={tG285}>{tG285}px</option>
+                        ))}
+                    </select>
+                    <span>{text}</span>
+                </Fragment>
+            ) : (
+                <Fragment>
+                    <i className={icon?`fa fa-${icon}`:style} aria-hidden="true"></i>
+                    <span>{text}</span>
+                </Fragment>
+            )}
+        </div>
+    )
+};
+
+const AddonConstructToolView = ({type,productID,elementID,colorHex,viewID,elementType,options={},visible,fontSize}) => {
+    const {CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
+    const HandlerCallback = (fnAction,refEvent=null) => {
+        switch(fnAction){
+            case "borrar":
+                let _objMutate_ = elementType === "image" ? {id:elementID,currentURL:options["url"]} : {id:elementID};
+                CCDispatch(CRActElementsFnCurrentProductLayer(elementType,"delete",type,productID,viewID,_objMutate_));
+            break;
+            case "duplicar":
+                CCDispatch(CRActElementsFnCurrentProductLayer(elementType,"clone",type,productID,viewID,{id:elementID}));
+            break;
+            case "color":
+                CCDispatch(CRActElementsFnCurrentProductLayer(elementType,"update",type,productID,viewID,{id:elementID,color:refEvent.target.value}));
+            break;
+            case "tamaño":
+                CCDispatch(CRActElementsFnCurrentProductLayer(elementType,"update",type,productID,viewID,{id:elementID,size:refEvent.target.value}));
+            break;
+            case "fuente":
+                const [,tN042GbPL9olXpwF] = visible;
+                tN042GbPL9olXpwF(Ai073=>({...Ai073,fontListView:true}));
+            break;
+        }
+    };
+    return (
+        <div className="NavEditorTextos">
+            {elementType === "text" && <AddonButtonTextTool callback={HandlerCallback} icon="font" text="Fuente"/>}
+            {(colorHex && elementType === "text") && <AddonButtonTextTool callback={HandlerCallback} color={colorHex} style="btn-coloristo" text="Color"/>}
+            {(fontSize && elementType === "text") && <AddonButtonTextTool callback={HandlerCallback} size={fontSize} text="Tamaño"/>}
+            <AddonButtonTextTool callback={HandlerCallback} icon="trash" text="Borrar"/>
+            <AddonButtonTextTool callback={HandlerCallback} icon="files-o" text="Duplicar"/>
+        </div>
+    )
+};
+
+export const AddonConstructorTextLayout = ({productID,type,textID,colorHex,callback,content,active,viewID,axis,visible,fontSize}) => {
+    const {CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
+    const stRefContentDiv = useRef(null);
+    const [text,setText] = useState(content);
+    const HandlerClickOutsideEvent = e => {
+        if(stRefContentDiv.current && (!stRefContentDiv.current.contains(e.target) && text !== "")) CCDispatch(CRActElementsFnCurrentProductLayer("text","update",type,productID,viewID,{id:textID,active:false,content:text}));
+        else setText(content)
+    };
+    useEffect(_ => {
+        (stRefContentDiv.current && active) ? document.addEventListener("click",HandlerClickOutsideEvent,true) : document.removeEventListener("click",HandlerClickOutsideEvent,true);
+        if(stRefContentDiv.current) $(stRefContentDiv.current).draggable({
+            containment: "parent",
+            stop: E25s4 => CCDispatch(CRActElementsFnCurrentProductLayer("text","update",type,productID,viewID,{id:textID,axis:{x:E25s4.target.style.left,y:E25s4.target.style.top}})),
+        });
+        return _ => document.removeEventListener("click",HandlerClickOutsideEvent,true);
+    },[stRefContentDiv,active,text,fontSize]);
+    return (
+        <div className="Capa" ref={stRefContentDiv} style={{left:axis["x"],top:axis["y"]}}>
+            {active && <AddonConstructToolView visible={visible} type={type} productID={productID} elementID={textID} colorHex={colorHex} viewID={viewID} elementType="text" fontSize={fontSize}/>}
+            <div onClick={_=>callback[0](textID,"text")} className="gtexto">
+                {active ? <textarea cols={10} autoFocus onChange={e=>setText(e.target.value)} style={{color:colorHex,fontSize:`${fontSize}px`}}>{content}</textarea> : (
+                    <span style={{cursor:"move",color:colorHex,fontSize:`${fontSize}px`}}>{content}</span>
+                )}
+            </div>
+        </div>
+    )
+};
+
+export const AddonConstructBoxUploadImage = ({callback,type}) => {
+    const {CCState:{products},CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
+    const {variant:{view:J231z},uniqKey:cC183} = products[type].filter(({active})=>active)[0];
+    const stRefContentDraggable = useRef(null);
+    const HandlerEventUploadFile = e => {
+        e.preventDefault();const image=e.target.files[0];
+        if(image.size >= 2097152) return;
+        CCDispatch(CRActElementsFnCurrentProductLayer("image","add",type,cC183,J231z,{uri:URL.createObjectURL(image)}));
+        callback(T1j01=>({...T1j01,uploadImageView:false}));
+    };
+    const HandlerFocusEvent = entry => stRefContentDraggable.current && entry ? $(stRefContentDraggable.current).addClass("draggable-input-focus") : $(stRefContentDraggable.current).removeClass("draggable-input-focus");
+    return (
+        <div className="box-Dagrabble">
+            <div className="draggable-input" ref={stRefContentDraggable}>
+                <div className="info-dgg">
+                    <i className="fa fa-file-image-o" aria-hidden="true"></i>
+                    <p>Puede arrastrar su imagen hasta aquí <span>ó</span></p>
+                </div>
+                <input onDragLeave={_=>HandlerFocusEvent(false)} onDragEnd={_=>HandlerFocusEvent(false)} onDragExit={_=>HandlerFocusEvent(false)} onDragStart={_=>HandlerFocusEvent(true)} onDragOver={_=>HandlerFocusEvent(true)} onDragEnter={_=>HandlerFocusEvent(true)} type="file" accept="image/*" onChange={HandlerEventUploadFile}/>
+            </div>
+            <button onClick={_=>$(stRefContentDraggable.current).find("input").click()} className="viewProduct"><i className="fa fa-search" aria-hidden="true"></i> Seleccione manualmente la imagen</button>
+        </div>
+    )
+};
+
+export const AddonConstructViewUploadFile = ({url,width,type,productID,imageID,viewID,active,callback,axis}) => {
+    const {CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
+    const stRefContentDiv = useRef(null);
+    const HandlerOutsideEvent = e => {
+        if(!stRefContentDiv.current.contains(e.target)) CCDispatch(CRActElementsFnCurrentProductLayer("image","update",type,productID,viewID,{id:imageID,active:false}));
+    };
+    useEffect(_ => {
+        stRefContentDiv.current ? document.addEventListener("click",HandlerOutsideEvent,true) : document.removeEventListener("click",HandlerOutsideEvent,true);
+        if(stRefContentDiv.current) $(stRefContentDiv.current).draggable({
+            containment: "parent",
+            stop: Rh164 => CCDispatch(CRActElementsFnCurrentProductLayer("image","update",type,productID,viewID,{id:imageID,axis:{x:Rh164.target.style.left,y:Rh164.target.style.top}}))
+        });return _ => document.removeEventListener("click",HandlerOutsideEvent,true);
+    },[stRefContentDiv]);
+    return (
+        <div className="Capa" ref={stRefContentDiv} style={{left:axis["x"],top:axis["y"]}}>
+            {active && <AddonConstructToolView type={type} productID={productID} elementID={imageID} viewID={viewID} options={{url}} elementType="image"/>}
+            <div className="gtexto" onClick={_=>callback[0](imageID,"image")}>
+                <img style={{cursor:"move"}} src={url} width={`${width}px`}/>
+            </div>
+        </div>
+    )
+};
+
+export const AddonConstructBoxFontContainerView = ({title,name}) => {
+    return (
+        <Fragment>
+            <span>{title}</span>
+            <input type="text" placeholder="Escribe aquí para probar"/>
+            <button className="btn-Principal">Aplicar</button>
+        </Fragment>
     )
 };
