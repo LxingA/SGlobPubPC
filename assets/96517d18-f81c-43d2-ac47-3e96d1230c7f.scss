@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Bebas+Neue&family=Fredoka+One&family=Klee+One:wght@400;600&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Niconne&family=Pacifico&family=Petit+Formal+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sacramento&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -144,7 +145,7 @@ header ::selection {
 }
 header .sliderMain {
   transform: translateX(0%);
-  transition: all ease 0.5s;
+  transition: all ease 0.8s;
 }
 header .sliderMain .colum-slider {
   width: 400%;
@@ -1438,6 +1439,12 @@ header.error.Politica .content-txt {
     margin: 0 auto;
     width: 100vh;
     margin-bottom: 48px;
+  }
+  .Pop-Up-Fuentes {
+    width: 88%!important;
+  }
+  .Pop-UPDisenios.Images .box-Grande {
+    width: 84%!important;
   }
 }
 .StatusPedido {
@@ -3486,4 +3493,105 @@ input[type=color]::-webkit-color-swatch-wrapper {
 
 .Capa:hover .gtexto span {
   text-shadow: -1px 2px 12px #000000;
+}
+
+@media screen and (max-width: 600px) {
+  .advertencia {
+    flex-wrap: wrap;
+    padding: 18px;
+    text-align: center;
+    height: 22%;
+  }
+}
+
+.form-2 p {
+  font-size: 11px;
+  color: #a98452;
+}
+
+a.btn-Principal {
+  background: #d3c1a9;
+  color: white;
+  display: inline-block;
+  margin-top: 26px;
+  padding: 7px 21px;
+  border-radius: 19px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.content-txt .form-1 input {
+  background: none;
+  border: 0px;
+  border-bottom: 2px solid #c3c3c3;
+  display: block;
+  width: 85%;
+  height: 47px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.login-container.reauth-box {
+  background: none;
+  min-height: 502px!important;
+}
+
+.login-container.reauth-box .formulario-conexion {
+  width: 100%;
+  justify-content: center;
+  margin: 0px;
+}
+
+.login-container.reauth-box .conectarse form label {
+  margin-bottom: 41px!important;
+  display: block;
+}
+
+.login-container.reauth-box h3 {
+  margin-bottom: 6px;
+}
+
+.login-container.reauth-box .conectarse form input[type="password"] {
+  margin-bottom: 35px;
+}
+
+.Fuentes-Div {
+  overflow: auto;
+  height: 74%;
+}
+
+.fontBox-Container {
+  border-bottom: 1px solid #eee;
+  padding: 25px;
+}
+
+.fontBox-Container:hover {
+  background: #f9f9f9;
+}
+
+.Fuentes-Div button {
+  margin-bottom: 0px!important;
+}
+
+.NavEditorTextos {
+  z-index: 888;
+}
+
+button.NavBtn {
+  border: 0;
+  background: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.gtexto {
+  min-width: 390px!important;
+}
+
+.Fuentes-Div input {
+  background: none;
+}
+
+.gtexto textarea {
+  width: 100%!important;
 }

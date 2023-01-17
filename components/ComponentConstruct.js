@@ -11,20 +11,16 @@ import {AddonLayersView,AddonConstructBox,AddonConstructorTextLayout,AddonConstr
 import {FnUpper} from '../util/crypto';
 import Image from 'next/image';
 
-export const FontsView = ({visible,fonts}) => {
+export const FontsView = ({visible,fonts,type}) => {
     const [y33L6,ysF07rz2sQVqrcz7] = visible;
-    return y33L6["fontListView"] && (
+    return y33L6["fontListView"]["show"] && (
         <div className="Pop-Up-Fuentes">
-            <i className="fa fa-times" aria-hidden="true" id="Closeet" onClick={_=>ysF07rz2sQVqrcz7(zS679=>({...zS679,fontListView:false}))}></i>
+            <i className="fa fa-times" aria-hidden="true" id="Closeet" onClick={_=>ysF07rz2sQVqrcz7(zS679=>({...zS679,fontListView:{show:false,current:null}}))}></i>
             <div className="cajitaFuentes">
                 <h3>Fuentes</h3>
-                <div className="inputSearch">
-                    <input type="search" />
-                    <i className="fa fa-search" aria-hidden="true"></i>
-                </div>
                 <div className="Fuentes-Div">
-                    {fonts.map(({uniqKey,title,name})=>(
-                        <AddonConstructBoxFontContainerView key={uniqKey} title={title} name={name}/>
+                    {fonts.map(({uniqKey,title,name,style})=>(
+                        <AddonConstructBoxFontContainerView callback={ysF07rz2sQVqrcz7} container={y33L6["fontListView"]["current"]} key={uniqKey} title={title} name={name} style={style} type={type}/>
                     ))}
                 </div>
             </div>
@@ -161,8 +157,8 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
                         <div className="MainChanges">
                             {products[type].length === 0 ? <AddonConstructBoxMessage message={`Haz click en el "+" para crear tú ${type}`}/> : HandlerCheckerType()}
                             <div className={`EditorCapas Taza-Especificacion${gtCurrentActiveLayout.length > 0 ? ` ${gtCurrentActiveLayout[0]["variant"].type}${gtCurrentActiveLayout[0]["variant"].view}` : undefined}`}>
-                                {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["text"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,content,color,active,axis,size})=>(
-                                    <AddonConstructorTextLayout visible={visible} axis={axis} viewID={gtCurrentActiveLayout[0]["variant"].view} callback={[HandlerClickActiveElement]} active={active} colorHex={color} key={uniqKey} productID={gtCurrentActiveLayout[0]["uniqKey"]} content={content} type={type} textID={uniqKey} fontSize={size}/>
+                                {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["text"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,content,color,active,axis,size,font,style})=>(
+                                    <AddonConstructorTextLayout visible={visible} axis={axis} viewID={gtCurrentActiveLayout[0]["variant"].view} callback={[HandlerClickActiveElement]} fontName={font} fontStyled={style} active={active} colorHex={color} key={uniqKey} productID={gtCurrentActiveLayout[0]["uniqKey"]} content={content} type={type} textID={uniqKey} fontSize={size}/>
                                 ))}
                                 {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["image"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,url,width,active,axis})=>(
                                     <AddonConstructViewUploadFile callback={[HandlerClickActiveElement]} active={active} key={uniqKey} url={url} width={width} type={type} productID={gtCurrentActiveLayout[0]["uniqKey"]} imageID={uniqKey} viewID={gtCurrentActiveLayout[0]["variant"].view} axis={axis}/>
@@ -172,9 +168,9 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
                     </div>
                     <div className="Btn-Personalizar">
                         <div className="barra-left">
-                            <AddonIconDesign callback={HandlerCallback} type={type} style="AddText" url="/6f2b809a-be47-4cdf-9be7-03123392ff3a.png"/>
-                            <AddonIconDesign visible={[visible[1],"uploadImageView"]} callback={HandlerCallback} type={type} style="AddImage" url="/92986322-fec4-4883-aa7e-a5b57eb302c2.png"/>
-                            <AddonIconDesign visible={[visible[1],"designListView"]} callback={HandlerCallback} type={type} style="AddDesign" url="/e78af129-f827-46c5-bf77-be62acb5bfaf.png"/>
+                            <AddonIconDesign fontView={visible[0]["fontListView"]["show"]} callback={HandlerCallback} type={type} style="AddText" url="/6f2b809a-be47-4cdf-9be7-03123392ff3a.png"/>
+                            <AddonIconDesign fontView={visible[0]["fontListView"]["show"]} visible={[visible[1],"uploadImageView"]} callback={HandlerCallback} type={type} style="AddImage" url="/92986322-fec4-4883-aa7e-a5b57eb302c2.png"/>
+                            <AddonIconDesign fontView={visible[0]["fontListView"]["show"]} visible={[visible[1],"designListView"]} callback={HandlerCallback} type={type} style="AddDesign" url="/e78af129-f827-46c5-bf77-be62acb5bfaf.png"/>
                         </div>
                     </div>
                 </div>
@@ -215,9 +211,9 @@ export const UploadImageView = ({visible,type}) => {
     )
 };
 
-export const ButtonAddProduct = ({type}) => {
-    const {CCAction:{CRActSetNewProductLayer},CCDispatch,CCState:{products,params}} = useContext(ConstructContext.Context);
-    return products[type].length >= 1 && (
+export const ButtonAddProduct = ({type,visible}) => {
+    const {CCAction:{CRActSetNewProductLayer},CCDispatch,CCState:{products}} = useContext(ConstructContext.Context);
+    return products[type].length >= 1 && !visible[0]["fontListView"]["show"] && (
         <div className="agregar-Producto-perso" onClick={_=>CCDispatch(CRActSetNewProductLayer(type))}>
             +
         </div>

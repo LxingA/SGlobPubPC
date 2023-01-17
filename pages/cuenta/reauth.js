@@ -29,7 +29,7 @@ const ReAuth = ({global,firebase,authentic,user}) => {
                 </Head>
                 <ViewAccount global={[firebase,global,authentic,user]}>
                     {user && (
-                        <div className="login-container">
+                        <div className="login-container reauth-box">
                             {message && (
                                 <BoxMessage>
                                     <p>{message}</p>

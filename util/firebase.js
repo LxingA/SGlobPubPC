@@ -10,7 +10,6 @@ import {getFirestore,initializeFirestore,CACHE_SIZE_UNLIMITED,enableMultiTabInde
 import {getAnalytics} from 'firebase/analytics';
 import {getAuth} from 'firebase/auth';
 import {getDatabase} from 'firebase/database';
-import {getMessaging} from 'firebase/messaging';
 import {getStorage} from 'firebase/storage';
 
 export const Config = initializeApp({
@@ -40,7 +39,6 @@ const Firebase = async() => {
             FirebaseAuth: getAuth(App),
             FirebaseDatabase: getFirestore(App),
             FirebaseSocket: getDatabase(App),
-            FirebaseMessaging: getMessaging(App),
             FirebaseStorage: getStorage(App)
         }
     }catch(error){

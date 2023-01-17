@@ -20,6 +20,12 @@ export const SliderReducer = {
             payload: {
                 setInitialMax: DtPOY
             }
+        }),
+        SRActUpdateSetInitialNumber: fN632 => ({
+            type: "SRActUpdateSetInitialNumber",
+            payload: {
+                setInitialNumber: fN632
+            }
         })
     },
     Reducer: (state, action) => {
@@ -33,6 +39,8 @@ export const SliderReducer = {
             case "SRActUpdateInitLower":
                 __ = (state.init - 100);if(__ < 0) __ = (state.max - 100);
                 return {...state,init:__}
+            case "SRActUpdateSetInitialNumber":
+                return {...state,init:payload.setInitialNumber}
         }
         return state
     }
@@ -146,9 +154,10 @@ export const ConstructReducer = {
                                 switch(payload.elementType){
                                     case "text":
                                         _initialObjState_["content"] = "Texto de Ejemplo";
-                                        _initialObjState_["font"] = "arial";
+                                        _initialObjState_["font"] = "Roboto";
                                         _initialObjState_["color"] = "#fffff";
                                         _initialObjState_["size"] = 12;
+                                        _initialObjState_["style"] = "sans-serif";
                                     break;
                                     case "image":
                                         _initialObjState_["url"] = payload.valueParam["uri"];

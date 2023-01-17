@@ -39,7 +39,7 @@ const FormCheckerValues = (stateFnRef = () => {}, regExpID = "", refEvent = {}) 
         rxaQUDqFhf: /^([a-z]){1}$/,
         rxSjLuKztg: /^([0-9]){4}\-([0-9]){2}\-([0-9]){2}$/,
         rxXkmrShwZ: /^([0-9]){10}$/,
-        rxU26S0nZA: /^([A-Za-z0-9 À-ÿ\u00f1\u00d1 ]+)$/,
+        rxU26S0nZA: /^([A-Za-z0-9 À-ÿ\u00f1\u00d1 \,\.]+)$/,
         rxzDc43135: /^([0-9]+)$/
     };stateFnRef(bkState => {
             const response = {

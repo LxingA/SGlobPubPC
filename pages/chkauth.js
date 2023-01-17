@@ -83,11 +83,11 @@ const AuthCheck = ({firebase,global,authentic}) => {
                                 </p>
                                 {text["status"] && (
                                     authentic ? (
-                                        <Enlace href="/cuenta">
+                                        <Enlace href="/cuenta" className="btn-Principal">
                                             Ir a la Cuenta
                                         </Enlace>
                                     ) : (
-                                        <Enlace href="/auth?m=login">
+                                        <Enlace href="/auth?m=login" className="btn-Principal">
                                             Iniciar Sesión
                                         </Enlace>
                                     )

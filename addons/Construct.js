@@ -22,7 +22,7 @@ export const AddonBoxPrice = ({style,title,price}) => {
 export const AddonLayersView = ({type,dialog}) => {
     const {CCAction:{CRActUpdateCurrentNameProductLayer,CRActSetNewProductLayer,CRActDeleteCurrentProductLayer},CCDispatch} = useContext(ConstructContext.Context);
     const stRefElInput = useRef(null);
-    const [,YFKHaMKn] = dialog;
+    const [P6j60,YFKHaMKn] = dialog;
     const [show,setShow] = useState(false);
     const [output,setOutput] = useState({created:false,refFn:null,autoRemoveEvent:false});
     const {CCState:{products}} = useContext(ConstructContext.Context);
@@ -57,9 +57,9 @@ export const AddonLayersView = ({type,dialog}) => {
                     <div className="NombreProducto" style={{cursor:"pointer"}} onClick={_=>setShow(true)}>{name}</div>
                 )}
                 {products[type].length > 1 ? (
-                    <div className="btn-Circle" onClick={_=>YFKHaMKn(zPDFW=>({...zPDFW,productListView:true}))}> {">"} </div>
+                    <div style={P6j60["fontListView"]["show"]?{background:"#c3bbb1",pointerEvents:"none"}:undefined} className="btn-Circle" onClick={_=>YFKHaMKn(zPDFW=>({...zPDFW,productListView:true}))}> {">"} </div>
                 ) : (
-                    <div className="btn-Circle" onClick={_=>CCDispatch(CRActDeleteCurrentProductLayer(uniqKey,type))}> x </div>
+                    <div style={P6j60["fontListView"]["show"]?{background:"#c3bbb1",pointerEvents:"none"}:undefined} className="btn-Circle" onClick={_=>CCDispatch(CRActDeleteCurrentProductLayer(uniqKey,type))}> x </div>
                 )}
             </div>
         )
@@ -72,7 +72,7 @@ export const AddonLayersView = ({type,dialog}) => {
     )
 };
 
-export const AddonIconDesign = ({style,url,type,callback,visible}) => {
+export const AddonIconDesign = ({style,url,type,callback,visible,fontView}) => {
     const {CCState:{products}} = useContext(ConstructContext.Context);
     const gtCurrentActiveLayout = products[type].filter(({active})=>active);let __ = null;
     if(gtCurrentActiveLayout.length > 0) __ = !Object.values(gtCurrentActiveLayout[0]["variant"]).includes(null);
@@ -85,7 +85,7 @@ export const AddonIconDesign = ({style,url,type,callback,visible}) => {
         });
         else callback(style.substring(3).toLowerCase())
     };return (
-        <div onClick={HandlerClickEvent} className={`btn-edit-circle ${style}`} style={products[type].length === 0 || !__ ? {background:"#c3bbb1",pointerEvents:"none"} : undefined}>
+        <div onClick={HandlerClickEvent} className={`btn-edit-circle ${style}`} style={products[type].length === 0 || !__ || fontView ? {background:"#c3bbb1",pointerEvents:"none"} : undefined}>
             <Image src={url} alt="Icono del Editor" width={44} height={26}/>
         </div>
     )
@@ -116,13 +116,13 @@ export const AddonConstructBoxMessage = ({message}) => {
     )
 };
 
-const AddonButtonTextTool = ({icon,style,text,callback,color,size}) => {
+const AddonButtonTextTool = ({icon,style,text,callback,color,size,visible}) => {
     const stRefInputColor=useRef(null);let __={currentNumber:6,currentArray:[]};
-    for(let x=__["currentNumber"];x<=30;x++){
+    for(let x=__["currentNumber"];x<=64;x++){
         __["currentNumber"] += 2;__["currentArray"].push(__["currentNumber"]);
         x = __["currentNumber"];
     }return (
-        <div onClick={_=>(!color&&!size)?callback(text.toLowerCase()):undefined} className="NavBtn">
+        <button onClick={_=>(!color&&!size)?callback(text.toLowerCase()):undefined} className="NavBtn" disabled={visible?visible[0]["fontListView"]["show"]:false}>
             {(text === "Color" && color) ? (
                 <Fragment>
                     <input ref={stRefInputColor} onChange={e=>callback(text.toLowerCase(),e)} type="color" defaultValue={color}/>
@@ -143,7 +143,7 @@ const AddonButtonTextTool = ({icon,style,text,callback,color,size}) => {
                     <span>{text}</span>
                 </Fragment>
             )}
-        </div>
+        </button>
     )
 };
 
@@ -166,22 +166,22 @@ const AddonConstructToolView = ({type,productID,elementID,colorHex,viewID,elemen
             break;
             case "fuente":
                 const [,tN042GbPL9olXpwF] = visible;
-                tN042GbPL9olXpwF(Ai073=>({...Ai073,fontListView:true}));
+                tN042GbPL9olXpwF(Ai073=>({...Ai073,fontListView:{show:true,current:{productID,elementID,viewID,elementType}}}));
             break;
         }
     };
     return (
         <div className="NavEditorTextos">
-            {elementType === "text" && <AddonButtonTextTool callback={HandlerCallback} icon="font" text="Fuente"/>}
-            {(colorHex && elementType === "text") && <AddonButtonTextTool callback={HandlerCallback} color={colorHex} style="btn-coloristo" text="Color"/>}
-            {(fontSize && elementType === "text") && <AddonButtonTextTool callback={HandlerCallback} size={fontSize} text="Tamaño"/>}
-            <AddonButtonTextTool callback={HandlerCallback} icon="trash" text="Borrar"/>
-            <AddonButtonTextTool callback={HandlerCallback} icon="files-o" text="Duplicar"/>
+            {elementType === "text" && <AddonButtonTextTool visible={visible} callback={HandlerCallback} icon="font" text="Fuente"/>}
+            {(colorHex && elementType === "text") && <AddonButtonTextTool visible={visible} callback={HandlerCallback} color={colorHex} style="btn-coloristo" text="Color"/>}
+            {(fontSize && elementType === "text") && <AddonButtonTextTool visible={visible} callback={HandlerCallback} size={fontSize} text="Tamaño"/>}
+            <AddonButtonTextTool visible={visible} callback={HandlerCallback} icon="trash" text="Borrar"/>
+            <AddonButtonTextTool visible={visible} callback={HandlerCallback} icon="files-o" text="Duplicar"/>
         </div>
     )
 };
 
-export const AddonConstructorTextLayout = ({productID,type,textID,colorHex,callback,content,active,viewID,axis,visible,fontSize}) => {
+export const AddonConstructorTextLayout = ({productID,type,textID,colorHex,callback,content,active,viewID,axis,visible,fontSize,fontName,fontStyled}) => {
     const {CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
     const stRefContentDiv = useRef(null);
     const [text,setText] = useState(content);
@@ -201,8 +201,8 @@ export const AddonConstructorTextLayout = ({productID,type,textID,colorHex,callb
         <div className="Capa" ref={stRefContentDiv} style={{left:axis["x"],top:axis["y"]}}>
             {active && <AddonConstructToolView visible={visible} type={type} productID={productID} elementID={textID} colorHex={colorHex} viewID={viewID} elementType="text" fontSize={fontSize}/>}
             <div onClick={_=>callback[0](textID,"text")} className="gtexto">
-                {active ? <textarea cols={10} autoFocus onChange={e=>setText(e.target.value)} style={{color:colorHex,fontSize:`${fontSize}px`}}>{content}</textarea> : (
-                    <span style={{cursor:"move",color:colorHex,fontSize:`${fontSize}px`}}>{content}</span>
+                {active ? <textarea cols={10} autoFocus onChange={e=>setText(e.target.value)} style={{color:colorHex,fontSize:`${fontSize}px`,fontFamily:`${fontName},${fontStyled}`}}>{content}</textarea> : (
+                    <span style={{cursor:"move",color:colorHex,fontSize:`${fontSize}px`,fontFamily:`${fontName},${fontStyled}`}}>{content}</span>
                 )}
             </div>
         </div>
@@ -257,12 +257,19 @@ export const AddonConstructViewUploadFile = ({url,width,type,productID,imageID,v
     )
 };
 
-export const AddonConstructBoxFontContainerView = ({title,name}) => {
+export const AddonConstructBoxFontContainerView = ({title,name,style,type,container,callback}) => {
+    const {CCState:{products},CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
+    const {font:gW676} = products[type].filter(({uniqKey})=>uniqKey===container["productID"])[0]["variant"]["element"][container["elementType"]].filter(({uniqKey})=>uniqKey===container["elementID"])[0];
+    const stRefFontParam = {fontFamily:`${name},${style}`};
+    const HandlerUpdateFont = _ => {
+        CCDispatch(CRActElementsFnCurrentProductLayer(container["elementType"],"update",type,container["productID"],container["viewID"],{id:container["elementID"],font:name,style}));
+        callback(eP899=>({...eP899,fontListView:{show:false,current:null}}));
+    };
     return (
-        <Fragment>
-            <span>{title}</span>
-            <input type="text" placeholder="Escribe aquí para probar"/>
-            <button className="btn-Principal">Aplicar</button>
-        </Fragment>
+        <div className="fontBox-Container">
+            <span style={stRefFontParam}>{title}</span>
+            <input style={stRefFontParam} type="text" placeholder="Escribe aquí para probar"/>
+            <button onClick={HandlerUpdateFont} className="btn-Principal" disabled={gW676===name}>{gW676===name?"Aplicado":"Aplicar"}</button>
+        </div>
     )
 };
