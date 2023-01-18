@@ -4,6 +4,7 @@
 @date 22/Dic/22 21:12
 @description Utilidad con Algunas Funciones relacionadas en Criptografía para el Proyecto
 */
+import {BannerGlobalTitle} from '../components/ComponentBox';
 const stNumberStr = "01234567899876543210";
 const stWordUpper = "POLLOPIKMMKIUJNNJUYHBBHYTGVVGTRFCCFREDXXDEWSZZSWQAQA";
 const stWordLower = "qazzaqwsxxswedccderfvvfrtgbbgtyhnnhyujmmjuikkilolopp";
@@ -16,3 +17,8 @@ export const RandomHash = len => {
 };
 
 export const FnUpper = str => str.charAt(0).toUpperCase() + str.substring(1);
+
+export const FnGetObjTitleBanner = (key,global,promotion=false) => {
+    const {body:{subtitle:bT512,title:mU044},uniqKey:J3x37} = global.filter(({uniqKey})=>uniqKey===key)[0];
+    return <BannerGlobalTitle title={mU044} subtitle={bT512} promotion={promotion} viewID={J3x37}/>
+};

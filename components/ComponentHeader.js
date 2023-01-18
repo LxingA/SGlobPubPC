@@ -5,11 +5,12 @@
 @description Componente con la Cabecera para el Proyecto
 */
 import {HeaderShopOptions} from '../addons/Header';
+import {FnUpper} from '../util/crypto';
 import Logotipo from "../addons/Logo";
 import Enlace from 'next/link';
 
 export const HeaderShop = ({global}) => {
-    const [{FirebaseStorage},{siteName,siteLogo},authentic] = global;
+    const [{FirebaseStorage},{siteName,siteLogo,siteBuilder},authentic] = global;
     return (
         <nav data-aos="fade-up" data-aos-anchor-placement="top-bottom">
             <div className="logotipo">
@@ -17,18 +18,23 @@ export const HeaderShop = ({global}) => {
             </div>
             <ul className="mainmenu">
                 <li>
-                    <Enlace href="/">
-                        Playeras
+                    <Enlace href="/products">
+                        Productos
                     </Enlace>
                 </li>
-                <li>
-                    <Enlace href="/create?product=taza">
-                        Tazas
-                    </Enlace>
+                <li className="HoverMenu">
+                    <span>Artículos Personalizados</span>
+                    <ul className="submenuPA">
+                        {Object.keys(siteBuilder).sort().map((eV074,C41d7)=>(
+                            eV074 !== "font" && <Enlace key={C41d7} href={`/create?product=${eV074}`}>
+                                {FnUpper(eV074)}
+                            </Enlace>
+                        ))}
+                    </ul>
                 </li>
                 <li>
-                    <Enlace href="/">
-                        Canvas
+                    <Enlace href="/news">
+                        Novedades
                     </Enlace>
                 </li>
             </ul>

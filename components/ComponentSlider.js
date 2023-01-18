@@ -5,7 +5,7 @@
 @description Componente con el Slider para el Proyecto
 */
 import {useEffect,useState,useReducer,useRef,useMemo} from 'react';
-import {collection,where,query,onSnapshot,orderBy} from 'firebase/firestore';
+import {collection,where,query,onSnapshot} from 'firebase/firestore';
 import {getDownloadURL,ref} from 'firebase/storage';
 import {SliderReducer} from '../util/reducer';
 import Enlace from 'next/link';
@@ -19,7 +19,7 @@ export const SliderShop = ({global}) => {
     const [stats,setStats] = useState(stRefInitialStateStats);
     const stRefDivContainer = useRef(null);
     useEffect(_ => {
-        const sRefDoc = query(collection(FirebaseDatabase,"slider"),where("active","==",true),orderBy("order"));
+        const sRefDoc = query(collection(FirebaseDatabase,"slider"),where("active","==",true));
         const sRefSocket = onSnapshot(sRefDoc,async baVxB=>{
             let __refState__ = [];
             await Promise.all(baVxB.docs.map(async PgEyp=>{
@@ -28,7 +28,7 @@ export const SliderShop = ({global}) => {
                 __refState__.push({description,title,to,button,url,id:PgEyp.id});
             }));
             dispatch(SRActUpdateSetMaxItems(__refState__.length));
-            setSliderData(__refState__.sort((h1U99,eW870)=>h1U99-eW870));
+            setSliderData(__refState__);
         });
         return _ => sRefSocket();
     },[]);
@@ -52,21 +52,26 @@ export const SliderShop = ({global}) => {
         setStats(d8K07=>({...d8K07,translateX:__}));
     };
     useMemo(_=>setStats(k87X7=>({...k87X7,translateX:currentCount.init})),[currentCount]);
+    useEffect(_ => {
+        let __refTimeoutCounter__ = null;
+        if(sliderData) __refTimeoutCounter__ = setInterval(_=>dispatch(SRActUpdateInitUpper()),20000);
+        return _=>__refTimeoutCounter__ && clearInterval(__refTimeoutCounter__)
+    },[sliderData]);
     return (
         <header data-aos="fade-up" data-aos-duration="3000">
             <div className="nave-slider">
                 <i className="btn-circle f-left" onClick={_=>dispatch(SRActUpdateInitLower())}> {"<"} </i>
                 <i className="btn-circle f-right" onClick={_=>dispatch(SRActUpdateInitUpper())}> {">"} </i>
             </div>
-            <div onMouseMove={HandlerMouseMoveEvent} onMouseUp={HandlerMouseUpEvent} onMouseDown={HandlerMousePressEvent} className="sliderMain" style={{transform:`translateX(-${stats["press"]?stats["translateX"]:currentCount.init}%)`,cursor:stats["press"]?"move":"default"}} ref={stRefDivContainer}>
+            <div onMouseMove={HandlerMouseMoveEvent} onMouseUp={HandlerMouseUpEvent} onMouseDown={HandlerMousePressEvent} className="sliderMain" style={{transform:`translateX(-${stats["press"]?stats["translateX"]:currentCount.init}%)`,cursor:stats["press"]?"grabbing":"default"}} ref={stRefDivContainer}>
                 <div className="colum-slider">
-                    {sliderData && sliderData.map(({id,title,description,to,button,url},i)=>(
+                    {sliderData && sliderData.map(({id,title,description,url},i)=>(
                         <div className={`slider-content ctn-${(i+1)}`} key={id}>
                             <div className="content-txt" data-aos={i===0?"fade-right":undefined}>
-                                <p>{description}</p>
                                 <h3>{title}</h3>
-                                <Enlace href={to} className="btn-white">
-                                    {button}
+                                <p>{description}</p>
+                                <Enlace href={`/create?product=${title.toLowerCase()}`} className="btn-white">
+                                    Crealo ya
                                 </Enlace>
                             </div>
                             <img src={url}/>

@@ -7,166 +7,43 @@
 import {Fragment,useEffect,useState} from 'react';
 import {doc,collection,onSnapshot} from 'firebase/firestore';
 import {ref,getDownloadURL} from 'firebase/storage';
+import {BannerGlobal} from '../components/ComponentBox';
+import {FnGetObjTitleBanner} from '../util/crypto';
 import Head from 'next/head';
-import Enlace from 'next/link';
-import Loader from 'react-content-loader';
 import Image from 'next/image';
 import ViewShop from "../view/shop";
 
 const Index = ({global,firebase,authentic}) => {
+    const {siteName,siteSlogan,siteTitles} = global;
     const [data,setData] = useState(null);
-    const {siteName,siteSlogan} = global;
     useEffect(_ => {
         const stRefDoc = doc(collection(firebase["FirebaseDatabase"],"page"),"eXyOlQ1QTAugP6OmjDB9");
-        const stRefSocket = onSnapshot(stRefDoc,async T52o4=>{
-            let {secBigTemplate,uniqKey,secMidTemplate,secPromoTemplate} = T52o4.data();let __={};let ___=[];
-            secBigTemplate["imgURL"] = await getDownloadURL(ref(firebase["FirebaseStorage"],`p/${T52o4.id}/${secBigTemplate["imgURL"].replace("$UniqKey$",uniqKey)}`));
-            __["iX08x7Nj"] = secBigTemplate;
-            await Promise.all(
-                secMidTemplate.map(async aB867 => {
-                    aB867["imgURL"] = await getDownloadURL(ref(firebase["FirebaseStorage"],`p/${T52o4.id}/${aB867["imgURL"].replace("$UniqKey$",uniqKey)}`));
-                    ___.push(aB867);
-                })
-            );
-            __["F46z1PL3"] = ___;
-            secPromoTemplate["imgURL"] = await getDownloadURL(ref(firebase["FirebaseStorage"],`p/${T52o4.id}/${secPromoTemplate["imgURL"].replace("$UniqKey$",uniqKey)}`));
-            __["vH7ymR47"] = secPromoTemplate;
-            setData(__);
-        });
-        return _ => stRefSocket();
+        const stRefSocket = onSnapshot(stRefDoc,async r0A90=>{
+            if(r0A90.exists()){
+                let _savedCurrentDataObj_ = r0A90.data();
+                let _savedRefStructureCurrentPage_ = {main:{},promo:{title:FnGetObjTitleBanner("j32T2",siteTitles,true),element:[]}};
+                await Promise.all(Object.keys(_savedCurrentDataObj_["content"]).map(async (Tw898,F477j) => {
+                    let _savedCurrentContentObj_ = Object.values(_savedCurrentDataObj_["content"])[F477j];
+                    _savedCurrentContentObj_["image"] = await getDownloadURL(ref(firebase["FirebaseStorage"],`p/${r0A90.id}/${Tw898}${_savedCurrentContentObj_["image"]}`));
+                    let __savedObjCurrentParamsSet_ = {viewID:Tw898,pageID:r0A90.id,text:_savedCurrentContentObj_["textButton"],href:_savedCurrentContentObj_["to"],title:_savedCurrentContentObj_["title"],description:_savedCurrentContentObj_["description"],image:_savedCurrentContentObj_["image"],subtitle:_savedCurrentContentObj_["subtitle"]};
+                    if(_savedCurrentContentObj_["promotion"]) _savedRefStructureCurrentPage_["promo"]["element"].push(<BannerGlobal promotion {...__savedObjCurrentParamsSet_}/>);
+                    else _savedRefStructureCurrentPage_["main"] = <BannerGlobal {...__savedObjCurrentParamsSet_}/>;
+                }));
+                _savedCurrentDataObj_["content"] = _savedRefStructureCurrentPage_;
+                _savedCurrentDataObj_["idPage"] = r0A90.id;
+                setData(_savedCurrentDataObj_);
+            }else setData(null)
+        });return _ => stRefSocket();
     },[]);
     return (
         <Fragment>
             <Head>
-                <title>{siteSlogan} - {siteName}</title>
+                <title>{data ? data["title"] : siteSlogan} - {siteName}</title>
             </Head>
             <ViewShop global={global} firebase={firebase} slider authentic={authentic}>
-                <Image src="/70319757-f08a-45a2-b9cb-7d056b6517f6.png" alt="Articulos Personalizados" height={80} width={1111} className="img-Logo"/>
-                {!data ? (
-                    <Fragment>
-                        <div className="Seccion-Grande" data-aos="fade-up" data-aos-duration="3000">
-                            <div className="sccion-txt">
-                                <span>
-                                    <Loader width={100} height={20}>
-                                        <rect x={0} y={0} rx={0} ry={0} width={100} height={20}/>
-                                    </Loader>
-                                </span>
-                                <h3>
-                                    <Loader width={250} height={40}>
-                                        <rect x={0} y={0} rx={0} ry={0} width={250} height={40}/>
-                                    </Loader>
-                                </h3>
-                                <p>
-                                    <Loader width={350} height={100}>
-                                        <rect x={0} y={0} rx={0} ry={0} width={350} height={100}/>
-                                    </Loader> 
-                                </p>
-                            </div>
-                        </div>
-                        <div className="Seccion-Medium">
-                            <div className="Sc-Med" data-aos="fade-up" data-aos-duration="3000">
-                                <div className="sccion-txt">
-                                    <span>
-                                        <Loader width={100} height={20}>
-                                            <rect x={0} y={0} rx={0} ry={0} width={100} height={20}/>
-                                        </Loader>
-                                    </span>
-                                    <h3>
-                                        <Loader width={250} height={40}>
-                                            <rect x={0} y={0} rx={0} ry={0} width={250} height={40}/>
-                                        </Loader>
-                                    </h3>
-                                    <p>
-                                        <Loader width={350} height={100}>
-                                            <rect x={0} y={0} rx={0} ry={0} width={350} height={100}/>
-                                        </Loader> 
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="Sc-Med" data-aos="fade-up" data-aos-duration="3000">
-                                <div className="sccion-txt">
-                                    <span>
-                                        <Loader width={100} height={20}>
-                                            <rect x={0} y={0} rx={0} ry={0} width={100} height={20}/>
-                                        </Loader>
-                                    </span>
-                                    <h3>
-                                        <Loader width={250} height={40}>
-                                            <rect x={0} y={0} rx={0} ry={0} width={250} height={40}/>
-                                        </Loader>
-                                    </h3>
-                                    <p>
-                                        <Loader width={350} height={100}>
-                                            <rect x={0} y={0} rx={0} ry={0} width={350} height={100}/>
-                                        </Loader> 
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="promodiv" data-aos="fade-up" data-aos-duration="3000">
-                            <div className="promo-Txt">
-                                <span>
-                                    <Loader width={100} height={20} backgroundColor="#000000">
-                                        <rect x={0} y={0} rx={0} ry={0} width={100} height={20}/>
-                                    </Loader>
-                                </span>
-                                <h3>
-                                    <Loader width={250} height={40} backgroundColor="#000000">
-                                        <rect x={0} y={0} rx={0} ry={0} width={250} height={40}/>
-                                    </Loader>
-                                </h3>
-                                <p>
-                                    <Loader width={300} height={50} backgroundColor="#000000">
-                                        <rect x={0} y={0} rx={0} ry={0} width={300} height={50}/>
-                                    </Loader> 
-                                </p>
-                            </div>
-                        </div>
-                    </Fragment>
-                ) : (
-                    <Fragment>
-                        <div className="Seccion-Grande" data-aos="fade-up" data-aos-duration="3000">
-                            <img src={data["iX08x7Nj"]["imgURL"]} alt={data["iX08x7Nj"]["imgAlt"]}/>
-                            <div className="sccion-txt">
-                                <span>
-                                    {data["iX08x7Nj"]["message"]}
-                                </span>
-                                <h3>
-                                    {data["iX08x7Nj"]["title"]}
-                                </h3>
-                                <p>
-                                    {data["iX08x7Nj"]["description"]}
-                                </p>
-                                <Enlace href={data["iX08x7Nj"]["to"]}>
-                                    {data["iX08x7Nj"]["btTitle"]}
-                                </Enlace>
-                            </div>
-                        </div>
-                        <div className="Seccion-Medium">
-                            {data["F46z1PL3"].map(({button,description,title,to,message,imgAlt,imgURL},i)=>(
-                                <div className="Sc-Med" data-aos="fade-up" data-aos-duration="3000" key={i}>
-                                    <img src={imgURL} alt={imgAlt}/>
-                                    <div className="sccion-txt">
-                                        <span>{message}</span>
-                                        <h3>{title}</h3>
-                                        <p>{description}</p>
-                                        <Enlace href={to}>
-                                            {button}
-                                        </Enlace>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="promodiv" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
-                            <img src={data["vH7ymR47"]["imgURL"]} alt={data["vH7ymR47"]["imgAlt"]}/>
-                            <div className="promo-Txt">
-                                <span>{data["vH7ymR47"]["message"]}</span>
-                                <h3>{data["vH7ymR47"]["title"]}</h3>
-                                <p>{data["vH7ymR47"]["description"]}</p>
-                            </div>
-                        </div>
-                    </Fragment>
-                )}
+                {data && data["content"]["main"]}
+                {data && data["content"]["promo"]["title"]}
+                {data && data["content"]["promo"]["element"]}
                 <ul className="listado-beneficios">
                     <div className="liss" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
                         <li>

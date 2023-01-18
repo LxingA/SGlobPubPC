@@ -196,7 +196,7 @@ export const AddonConstructorTextLayout = ({productID,type,textID,colorHex,callb
             stop: E25s4 => CCDispatch(CRActElementsFnCurrentProductLayer("text","update",type,productID,viewID,{id:textID,axis:{x:E25s4.target.style.left,y:E25s4.target.style.top}})),
         });
         return _ => document.removeEventListener("click",HandlerClickOutsideEvent,true);
-    },[stRefContentDiv,active,text,fontSize]);
+    },[active,text,fontSize]);
     return (
         <div className="Capa" ref={stRefContentDiv} style={{left:axis["x"],top:axis["y"]}}>
             {active && <AddonConstructToolView visible={visible} type={type} productID={productID} elementID={textID} colorHex={colorHex} viewID={viewID} elementType="text" fontSize={fontSize}/>}
@@ -235,19 +235,23 @@ export const AddonConstructBoxUploadImage = ({callback,type}) => {
 };
 
 export const AddonConstructViewUploadFile = ({url,width,type,productID,imageID,viewID,active,callback,axis}) => {
-    const {CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer}} = useContext(ConstructContext.Context);
+    const {CCDispatch,CCAction:{CRActElementsFnCurrentProductLayer},CCState:{byStatic:J0f74}} = useContext(ConstructContext.Context);
     const stRefContentDiv = useRef(null);
     const HandlerOutsideEvent = e => {
         if(!stRefContentDiv.current.contains(e.target)) CCDispatch(CRActElementsFnCurrentProductLayer("image","update",type,productID,viewID,{id:imageID,active:false}));
     };
     useEffect(_ => {
-        stRefContentDiv.current ? document.addEventListener("click",HandlerOutsideEvent,true) : document.removeEventListener("click",HandlerOutsideEvent,true);
-        if(stRefContentDiv.current) $(stRefContentDiv.current).draggable({
+        (stRefContentDiv.current && !J0f74) ? document.addEventListener("click",HandlerOutsideEvent,true) : document.removeEventListener("click",HandlerOutsideEvent,true);
+        if(stRefContentDiv.current && !J0f74) $(stRefContentDiv.current).draggable({
             containment: "parent",
             stop: Rh164 => CCDispatch(CRActElementsFnCurrentProductLayer("image","update",type,productID,viewID,{id:imageID,axis:{x:Rh164.target.style.left,y:Rh164.target.style.top}}))
         });return _ => document.removeEventListener("click",HandlerOutsideEvent,true);
-    },[stRefContentDiv]);
-    return (
+    },[]);
+    return J0f74 ? (
+        <div className="Capa" ref={stRefContentDiv} style={{left:axis["x"],top:axis["y"]}}>
+            <img src={url} width={`${width}px`}/>
+        </div>
+    ) : (
         <div className="Capa" ref={stRefContentDiv} style={{left:axis["x"],top:axis["y"]}}>
             {active && <AddonConstructToolView type={type} productID={productID} elementID={imageID} viewID={viewID} options={{url}} elementType="image"/>}
             <div className="gtexto" onClick={_=>callback[0](imageID,"image")}>

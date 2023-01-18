@@ -36,13 +36,18 @@ export const ConstructContext = {
         products: {
             taza: [],
             playera: [],
-            canva: []
+            canva: [],
+            cojin: [],
+            rompecabeza: []
         },
         total: 0,
         params: {
             taza: "blanca",
             playera: "",
-            canva: ""
-        }
+            canva: "",
+            cojin: "",
+            rompecabeza: ""
+        },
+        byStatic: false
     }
 };
