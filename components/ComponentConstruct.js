@@ -117,20 +117,20 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
                 <AddonLayersView type={type} dialog={visible}/>
                 <div className="Flexie-Constructor">
                     <div className="datos-Cambiantes">
+                        <div className="Dato-Camb">
+                            <h3>Tipo</h3>
+                            {Object.keys(info[type]).map((dJ676,W82x4)=>(
+                                dJ676 !== "_default" && <button onClick={_=>HandlerClickEvent("type",dJ676)} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].type===dJ676?" Active":"":""}`} disabled={gtCurrentActiveLayout.length===0} key={W82x4}>{FnUpper(dJ676)}</button>
+                            ))}
+                        </div>
+                        <div className="Dato-Camb">
+                            <h3>Lado</h3>
+                                {details["views"].map(({uniqKey,name})=>(
+                                    <button onClick={_=>HandlerClickEvent("view",uniqKey)} disabled={gtCurrentActiveLayout.length===0} key={uniqKey} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].view===uniqKey?" Active":"":""}`}>{name}</button>
+                                ))}
+                            </div>
                         {type === "taza" ? (
                            <Fragment>
-                                <div className="Dato-Camb Taza-Variables">
-                                    <h3>Tipo de Taza</h3>
-                                    {Object.keys(info[type]).map((pN695,i)=>(
-                                        <button onClick={_=>HandlerClickEvent("type",pN695)} disabled={gtCurrentActiveLayout.length===0} key={i} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].type===pN695?" Active":"":""}`}>{FnUpper(pN695)}</button>
-                                    ))}
-                                </div>
-                                <div className="Dato-Camb">
-                                    <h3>Lado de la Taza</h3>
-                                    {details["views"].map(({uniqKey,name})=>(
-                                        <button onClick={_=>HandlerClickEvent("view",uniqKey)} disabled={gtCurrentActiveLayout.length===0} key={uniqKey} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].view===uniqKey?" Active":"":""}`}>{name}</button>
-                                    ))}
-                                </div>
                                 <div className="Dato-Camb">
                                     <h3>Colores</h3>
                                     {details["colors"].map(({uniqKey,name})=>(

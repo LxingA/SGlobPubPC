@@ -5,7 +5,7 @@
 @description Componente con el Slider para el Proyecto
 */
 import {useEffect,useState,useReducer,useRef,useMemo} from 'react';
-import {collection,where,query,onSnapshot} from 'firebase/firestore';
+import {collection,where,query,onSnapshot,orderBy} from 'firebase/firestore';
 import {getDownloadURL,ref} from 'firebase/storage';
 import {SliderReducer} from '../util/reducer';
 import Enlace from 'next/link';
@@ -19,7 +19,7 @@ export const SliderShop = ({global}) => {
     const [stats,setStats] = useState(stRefInitialStateStats);
     const stRefDivContainer = useRef(null);
     useEffect(_ => {
-        const sRefDoc = query(collection(FirebaseDatabase,"slider"),where("active","==",true));
+        const sRefDoc = query(collection(FirebaseDatabase,"slider"),where("active","==",true),orderBy("title"));
         const sRefSocket = onSnapshot(sRefDoc,async baVxB=>{
             let __refState__ = [];
             await Promise.all(baVxB.docs.map(async PgEyp=>{

@@ -1765,6 +1765,7 @@ button.btn-Basico.Active {
   background: #d3c1a9;
   color: white;
   font-weight: 600;
+  pointer-events: none;
 }
 
 .Dato-Camb {
@@ -1778,6 +1779,10 @@ button.btn-Circle-Color {
   border: 0;
   background: #fff;
   cursor: pointer;
+}
+
+button.btn-Circle-Color:disabled{
+  pointer-events: none;
 }
 
 .Producto-Changes {
@@ -1959,6 +1964,36 @@ button.FloatingCerrar {
 }
 
 @media screen and (max-width: 900px) {
+  .CrearPrdt {
+    margin: 0px auto;
+    font-size: 17px;
+    width: 100%;
+}
+  .Meidium-Promos {
+    flex-wrap: wrap!important;
+    height: auto!important;
+    justify-content: center!important;
+}
+
+.Med-Div-large {
+    width: 90%!important;
+}
+
+.Med-Div-large .sccion-txt {
+    margin-top: 34px!important;
+    margin-left: 42px!important;
+}
+
+.Med-Div {
+    margin-bottom: 22px!important;
+}
+
+.Med-Div-large .sccion-txt p {
+    font-size: 12px!important;
+}
+
+.Med-Div-large .sccion-txt h3 {font-size: 24px!important;}
+
   .caja-info-costo {
       flex-wrap: wrap;
       text-align: center;
@@ -3202,11 +3237,17 @@ button.viewProduct {
 
 button.btn-Circle-Color.active {
   border: 3px solid #d3c1a9;
+  pointer-events: none;
 }
 
 button.btn-Basico {
   margin-right: 9px;
 }
+
+button.btn-Basico:disabled {
+  pointer-events: none;
+}
+
 button.viewProduct {
   margin: 0 auto;
   display: block;
@@ -3780,6 +3821,693 @@ nav .user-options {
   margin-top: 48px;
 }
 
+
+.Meidium-Promos {
+  display: flex;
+  max-width: 1418px;
+  margin: 0 auto;
+  justify-content: space-between;
+  height: 411px;
+}
+
+.Med-Div {
+  width: 440px;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.Med-Div-large {
+  width: 68.0%;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.Med-Div-large img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+}
+
+.Med-Div img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.Med-Div .sccion-txt {
+  margin: 0px;
+  background: none;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  height: 100%;
+}
+
+.Med-Div .sccion-txt a {
+  position: absolute;
+  bottom: 0;
+  z-index: 3;
+  margin-bottom: 37px;
+  margin-left: -50px;
+}
+
+.Med-Div .sccion-txt span {
+  display: block;
+  margin-top: 48px;
+}
+
+.Med-Div-large .sccion-txt {
+  position: absolute;
+  margin-top: 121px;
+  width: 35%;
+  margin-left: 85px;
+}
+
+.Med-Div-large .sccion-txt p {
+  font-size: 14px;
+}
+
+.Meidium-Promos {
+  margin-bottom: 28px;
+}
+
+.CategoriaHeader {
+  height: 848px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+img.FondoCategoria {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.CategoriaHeader .sccion-txt {width: 88%;margin: 0;}
+
+.contentInfoCategoria {
+  width: 846px;
+  margin-top: -138px;
+}
+
+.Meidium-Promos {
+  margin-top: 20px;
+}
+
+
+.HeaderCategoria {
+  height: 842px;
+  position: relative;
+  overflow: hidden;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+img.FondoCategoria {
+  top: 0;
+  bottom: 43px;
+  object-position: center;
+  object-fit: cover;
+  position: absolute;
+  height: 100%;
+  width: 101%;
+  pointer-events: none;
+}
+
+.HeaderCategoria .content-txt {
+  z-index: 3;
+  background: rgb(255 255 255 / 95%);
+  position: absolute;
+  right: 22%;
+  width: 23%;
+}
+
+.CategoriaDiv {
+  width: 100%;
+  height: 797px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-top: -136px;
+}
+
+.Categorias-Box {
+  max-width: 1585px;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  top: -33px;
+}
+
+.CateContainer {
+  background: #f5f5f5;
+}
+
+.Categorias-Box ul {
+  display: flex;
+  height: 68px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.Categorias-Box ul a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: black;
+  padding: 25px;
+}
+
+.Categorias-Box ul a:hover {
+  background: #f9f9f9;
+}
+
+.Categorias-Box h3 {
+  font-size: 13px;
+}
+
+.NavCate {
+  display: flex;
+  height: 90px;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  padding-left: 34px;
+  border-top: 1px solid #eee;
+  background: #fdfdfd;
+}
+
+.NavCate select {
+  position: absolute;
+  right: 0;
+  margin-right: 40px;
+  width: 13%;
+  font-size: 11px;
+}
+
+.NavCate button {
+  color: white;
+  background: #d0c7be;
+  border: 0px;
+  padding: 10px 38px;
+  border-radius: 16px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-right: 27px;
+}
+
+label.SearchInput {
+  border: 1px solid #Eee;
+  border-radius: 20px;
+  width: 360px;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+}
+
+label.SearchInput input {
+  border: 0px;
+  display: block;
+  width: 85%;
+  height: 43px;
+  background: none;
+  margin: 0 auto;
+}
+
+label.SearchInput i {
+  position: relative;
+  margin-left: 14px;
+  opacity: .6;
+}
+
+label.SearchInput input:focus {
+  outline: none;
+}
+
+.CategoriasProductosFilters {
+  display: flex;
+}
+
+.MenuCategoriasFilter {
+  width: 305px;
+  padding: 28px;
+  position: relative;
+}
+
+.MenuCategoriasFilter h3 {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 28px;
+}
+
+.BoxCateCtn {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 31px;
+  margin-bottom: 25px;
+}
+
+.BoxCateCtn a {
+  display: block;
+  padding: 17px;
+  color: #000;
+  font-size: 12px;
+  opacity: .8;
+  background: #f7f7f7;
+  margin-bottom: 3px;
+}
+
+.BoxCateCtn.TagsDiv a {
+  display: inline-block;
+  width: 49%;
+}
+
+.MainMenuCate {
+  position: sticky;
+  top: 57px;
+}
+
+.NavCate {
+  position: sticky;
+  top: 50px;
+  z-index: 666;
+}
+
+.listProductos {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.productoPC {
+  position: relative;
+  background: #f9f9f9;
+  overflow: hidden;
+  width: 239px;
+  margin-bottom: 14px;
+}
+
+.ImgProductoPC {
+  height: 226px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ImgProductoPC img {
+  position: relative;
+  width: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ImgProductoPC a {
+  background: #000;
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  color: white;
+  width: 100%;
+  font-size: 11px;
+  padding: 14px;
+  bottom: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ContentProductosCate {
+  width: 81%;
+  padding: 21px;
+  padding-top: 36px;
+}
+
+.ImgProductoPC:hover img {
+  transform: scale(1.1);
+  transition: all ease 0.5s;
+}
+
+.ImgProductoPC img {
+  transition:  all ease 0.5s;
+}
+
+.ImgProductoPC a {
+  transition: all ease 0.5s;
+  transform: translateY(100%);
+}
+
+.ImgProductoPC:hover a {
+  transform: translateY(0%);
+}
+
+.InfoProductoPC {
+  text-align: center;
+  padding: 16px;
+}
+
+.InfoProductoPC p {
+  font-weight: 600;
+  color: #c1c1c1;
+}
+
+.InfoProductoPC a {
+  color: black;
+  font-size: 13px;
+  font-weight: 600;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CatesDefault {
+  width: 68%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 158px;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  background: none;
+}
+
+.CatesDefault .Med-Div {
+  margin-bottom: -3px;
+  width: 32.9%;
+}
+
+.CatesDefault .Med-Div:hover img {
+  transition: all ease 0.6s;
+  transform: scale(1.05);
+}
+
+.CatesDefault .Med-Div img {
+  transition: all ease 0.5s;
+}
+
+.CateContainer.CatesDefault .Med-Div-large {
+  height: 360px;
+  width: 66%;
+  margin-bottom: 9px;
+}
+
+.CatesDefault .Med-Div .sccion-txt a {
+  background: #fff;
+  color: black;
+  padding: 21px;
+  border-radius: 0px;
+  width: 189px;
+}
+
+.CatesDefault .Med-Div .sccion-txt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 4;
+}
+
+.CatesDefault.Med-Div .sccion-txt a {
+  position: relative;
+  margin: 0;
+}
+
+.CatesDefault .Med-Div {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 388px;
+  margin-bottom: 5px;
+}
+
+.CatesDefault .Med-Div img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.CatesDefault .Med-Div .sccion-txt a {
+  background: #fff;
+  color: black;
+  padding: 21px;
+  border-radius: 0px;
+  width: 189px;
+}
+
+.CatesDefault .Med-Div .sccion-txt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 4;
+}
+
+.CatesDefault.Med-Div .sccion-txt a {
+  position: relative;
+  margin: 0;
+}
+
+.CatesDefault .Med-Div {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 388px;
+  margin-bottom: 5px;
+}
+
+.CatesDefault .Med-Div img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.CatesDefault .Med-Div .sccion-txt a {
+  position: relative;
+  margin: 0;
+}
+
+.CateContainer.CatesDefault .Med-Div-large {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.CateContainer.CatesDefault .Med-Div-large .sccion-txt {
+  position: relative;
+  margin: 0;
+}
+
+.CateContainer.CatesDefault .Med-Div-large img {
+  position: absolute;
+  top: 0;
+  transition: all ease 0.5s;
+}
+
+.CateContainer.CatesDefault .Med-Div-large .sccion-txt a {
+  background: #fff;
+  color: black;
+  padding: 15px 64px;
+  border-radius: 0px;
+  margin-left: 105px;
+}
+
+.CateContainer.CatesDefault .Med-Div-large:hover img {
+  transition: all ease 0.5s;
+  transform: scale(1.05);
+}
+
+.CateContainer.CatesDefault .Med-Div-large .sccion-txt a, .CatesDefault .Med-Div .sccion-txt a {
+  transition: all ease 0.5s;
+  opacity: 0;
+}
+
+.CateContainer.CatesDefault .Med-Div-large:hover .sccion-txt a, .CatesDefault .Med-Div:hover .sccion-txt a {
+  opacity: 1;
+}
+
+.EscogeTipo {
+  position: relative;
+  z-index: 3;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.FlexieDiv {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+  transition: all ease 0.5s;
+}
+
+.TipoBox img {
+  width: 83%;
+  display: block;
+}
+
+.TipoBox {
+  width: 264px;
+}
+
+.EscogeTipo h3 {
+  display: inline-block;
+  padding: 28px;
+  font-size: 19px;
+  line-height: 42%;
+}
+
+.TipoBox button {
+  cursor: pointer;
+  background: #fff;
+  border: 0px;
+  width: 47%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.TipoBox .FlexieDiv {
+  margin-top: 32px;
+  justify-content: space-between;
+}
+
+.FlexieDiv .TipoBox:hover {
+  transition: all ease 0.5s;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.EscogeTipo p {
+  font-size: 11px;
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+.EscogeTipo h3 p {
+  font-size: 11px;
+  border-top: 1px solid #e1e1e1;
+  display: block;
+  padding-top: 14px;
+  opacity: .7;
+}
+
+.CajaBoxTipo button {
+  border: 0px;
+  background: #fff;
+  padding: 10px 20px;
+  margin-top: 25px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.CajaBoxTipo {
+  padding: 38px;
+  width: 350px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.CajaBoxTipo:hover {
+  background: #ffffffad;
+  border-radius: 27px;
+}
+
+img.TipoImage {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  pointer-events: none;
+}
+
+.NoneProductosTipo p {
+  text-transform: none;
+  font-size: 21px;
+}
+
+.NoneProductosTipo {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 112px;
+}
+
+.NoneProductosTipo button {
+  background: #fff;
+  border: 0px;
+  padding: 12px 45px;
+  margin-top: 35px;
+  border-radius: 11px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.EscogeTipo h3 {
+  z-index: 1;
+  position: relative;
+}
+
+.My-Account.HeaderCategoria {
+  z-index: 1;
+}
+
+.CajaBoxTipo:hover {
+  background: rgb(255 255 255 / 25%);
+  border-radius: 27px;
+}
+
+.TipoBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 241px;
+}
+
+.CategoriaDiv {
+  margin-top: 0px!important;
+}
+
+.CategoriaDiv img.FondoCategoria {
+  z-index: -1;
+}
+
+.CategoriaDiv .CateContainer {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+
+.CategoriaDiv .content-txt {
+  right: 0;
+  position: absolute;
+  margin-right: 18%;
+  padding: 5px 56px;
+}
+
 @media screen and (max-width: 450px) {
   nav ul li a, nav ul li span {
     padding: 0px!important;
@@ -3788,4 +4516,22 @@ nav .user-options {
     margin-right: 0px!important;
   }
   .logotipo {margin-left: 35px;}
+}
+
+@media screen and (max-width: 900px) {
+.CateContainer.CatesDefault {
+  width: 100%;
+}
+
+.CateContainer.CatesDefault .Med-Div-large {
+  width: 100%!important;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.CatesDefault .Med-Div {
+  width: 100%;
+  height: 281px;
+  margin-bottom: 0px!important;
+}
 }

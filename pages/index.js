@@ -7,7 +7,7 @@
 import {Fragment,useEffect,useState} from 'react';
 import {doc,collection,onSnapshot} from 'firebase/firestore';
 import {ref,getDownloadURL} from 'firebase/storage';
-import {BannerGlobal} from '../components/ComponentBox';
+import {BannerGlobal,BannerGlobalMultiple} from '../components/ComponentBox';
 import {FnGetObjTitleBanner} from '../util/crypto';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -19,15 +19,22 @@ const Index = ({global,firebase,authentic}) => {
     useEffect(_ => {
         const stRefDoc = doc(collection(firebase["FirebaseDatabase"],"page"),"eXyOlQ1QTAugP6OmjDB9");
         const stRefSocket = onSnapshot(stRefDoc,async r0A90=>{
+            const stHandlerFunctionGetImageURL = async (cG096,xN909) => (await getDownloadURL(ref(firebase["FirebaseStorage"],`p/${r0A90.id}/${cG096}${xN909}`)));
             if(r0A90.exists()){
                 let _savedCurrentDataObj_ = r0A90.data();
-                let _savedRefStructureCurrentPage_ = {main:{},promo:{title:FnGetObjTitleBanner("j32T2",siteTitles,true),element:[]}};
-                await Promise.all(Object.keys(_savedCurrentDataObj_["content"]).map(async (Tw898,F477j) => {
+                let _savedRefStructureCurrentPage_ = {main:{},promo:{title:FnGetObjTitleBanner("j32T2",siteTitles,true),element:[]},box:[]};
+                await Promise.all(Object.keys(_savedCurrentDataObj_["content"]).map(async(Tw898,F477j)=>{
                     let _savedCurrentContentObj_ = Object.values(_savedCurrentDataObj_["content"])[F477j];
-                    _savedCurrentContentObj_["image"] = await getDownloadURL(ref(firebase["FirebaseStorage"],`p/${r0A90.id}/${Tw898}${_savedCurrentContentObj_["image"]}`));
-                    let __savedObjCurrentParamsSet_ = {viewID:Tw898,pageID:r0A90.id,text:_savedCurrentContentObj_["textButton"],href:_savedCurrentContentObj_["to"],title:_savedCurrentContentObj_["title"],description:_savedCurrentContentObj_["description"],image:_savedCurrentContentObj_["image"],subtitle:_savedCurrentContentObj_["subtitle"]};
-                    if(_savedCurrentContentObj_["promotion"]) _savedRefStructureCurrentPage_["promo"]["element"].push(<BannerGlobal promotion {...__savedObjCurrentParamsSet_}/>);
-                    else _savedRefStructureCurrentPage_["main"] = <BannerGlobal {...__savedObjCurrentParamsSet_}/>;
+                    if(Tw898==="so67f8lP2sGe89XX") _savedRefStructureCurrentPage_["box"] = await Promise.all(_savedCurrentContentObj_.map(async s84P7=>{
+                        s84P7["image"] = await stHandlerFunctionGetImageURL(Tw898,s84P7["image"]);
+                        return s84P7
+                    }));
+                    else{
+                        _savedCurrentContentObj_["image"] = await stHandlerFunctionGetImageURL(Tw898,_savedCurrentContentObj_["image"]);
+                        let __savedObjCurrentParamsSet_ = {viewID:Tw898,pageID:r0A90.id,text:_savedCurrentContentObj_["textButton"],href:_savedCurrentContentObj_["to"],title:_savedCurrentContentObj_["title"],description:_savedCurrentContentObj_["description"],image:_savedCurrentContentObj_["image"],subtitle:_savedCurrentContentObj_["subtitle"]};
+                        if(_savedCurrentContentObj_["promotion"]) _savedRefStructureCurrentPage_["promo"]["element"].push(<BannerGlobal key={F477j} promotion {...__savedObjCurrentParamsSet_}/>);
+                        else _savedRefStructureCurrentPage_["main"] = <BannerGlobal key={F477j} {...__savedObjCurrentParamsSet_}/>;
+                    }
                 }));
                 _savedCurrentDataObj_["content"] = _savedRefStructureCurrentPage_;
                 _savedCurrentDataObj_["idPage"] = r0A90.id;
@@ -42,10 +49,15 @@ const Index = ({global,firebase,authentic}) => {
             </Head>
             <ViewShop global={global} firebase={firebase} slider authentic={authentic}>
                 {data && data["content"]["main"]}
+                {data && (
+                    <div className="Meidium-Promos" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="3000">
+                        <BannerGlobalMultiple double iterator={data["content"]["box"]}/>
+                    </div>
+                )}
                 {data && data["content"]["promo"]["title"]}
                 {data && data["content"]["promo"]["element"]}
                 <ul className="listado-beneficios">
-                    <div className="liss" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+                    <div className="liss" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="3000">
                         <li>
                             <Image src="/d7194a73-1f81-4d62-ab52-b4944ab45fae.png" alt="Pago Seguro [Ícono]" width={50} height={50}/>
                             <h3>Pago Seguro</h3>
