@@ -4,7 +4,7 @@
 @date 03/Ene/23 05:05
 @description Componente con los Componentes del Constructor Global
 */
-import {useContext,Fragment} from 'react';
+import {useContext} from 'react';
 import {ConstructContext} from '../util/context';
 import {AddonBoxPrice,AddonIconDesign,AddonConstructBoxMessage,AddonConstructBoxUploadImage,AddonConstructBoxFontContainerView} from '../addons/Construct';
 import {AddonLayersView,AddonConstructBox,AddonConstructorTextLayout,AddonConstructViewUploadFile} from '../addons/Construct';
@@ -84,25 +84,27 @@ export const PriceBoxView = ({type,info}) => {
         <div className="caja-info-costo">
             <AddonBoxPrice price={_TXT_[0]} style="costo-total" title={`${FnUpper(type)} ${FnUpper(_TXT_[1])}`}/>
             <AddonBoxPrice price={_TOTAL_} style="total-PedidoCompleto" title="Total"/>
-            <button className="btn-more-options-p-d" disabled={_TOTAL_===0}>Pagar</button>
+            <button className="btn-more-options-p-d" disabled={_TOTAL_===0}>Añadir al Carrito</button>
         </div>
     )
 };
 
-export const BoxConstructView = ({type,visible,info,storage}) => {
-    const {CCState:{products,params},CCAction:{CRActUpdateCurrentParamsConstruct,CRActElementsFnCurrentProductLayer},CCDispatch} = useContext(ConstructContext.Context);
+export const BoxConstructView = ({type,visible,info,storage,tag}) => {
+    const {CCState:{products,params,off},CCAction:{CRActUpdateCurrentParamsConstruct,CRActElementsFnCurrentProductLayer,CRActUpdateCurrentNameProductLayer,CRActSetNewProductLayer,CRActDeleteCurrentProductLayer},CCDispatch} = useContext(ConstructContext.Context);
     const gtCurrentActiveLayout = products[type].filter(({active})=>active);let ___;
     if(gtCurrentActiveLayout.length === 0) ___ = params[type];
     else ___ = gtCurrentActiveLayout[0]["variant"].type;
-    const details = info[type][___];
+    const details = info[type][___]["variant"].map(({elementID,tagID})=>{
+        let _={};const {title:A123b,exclude:lF720,content:yZ194,query:vL298,uniqKey:V4d88,display:eJ853} = tag.filter(({uniqKey})=>uniqKey===tagID)[0];
+        _["title"] = A123b;_["exclude"] = lF720;_["param"] = vL298;_["id"] = V4d88;_["show"] = eJ853["construct"];
+        _["variant"] = elementID.map(N3r70=>(yZ194[yZ194.findIndex(({uniqKey})=>uniqKey===N3r70)]));
+        return _
+    });
     const HandlerCheckerType = _ => {
-        let prefix;switch(type){
-            case "taza":
-                prefix=gtCurrentActiveLayout[0]["variant"].color;if(!gtCurrentActiveLayout[0]["variant"].view) return <AddonConstructBoxMessage message={`Favor de seleccionar un lado de la ${type} ${gtCurrentActiveLayout[0]["variant"].type} para comenzar`}/>;
-                else if(!gtCurrentActiveLayout[0]["variant"].color) return <AddonConstructBoxMessage message={`Favor de seleccionar un color de la ${type} ${gtCurrentActiveLayout[0]["variant"].type} para comenzar`}/>;
-            break;
-        }const gtCurrentViewObj = details["views"].filter(({uniqKey})=>uniqKey===gtCurrentActiveLayout[0]["variant"].view)[0];
-        return <AddonConstructBox storageClient={storage} viewID={gtCurrentViewObj["uniqKey"]} variantID={details["uniqKey"]} variantPrefix={prefix}/>
+        let _currentValues_=[];Object.keys(gtCurrentActiveLayout[0]["variant"]).forEach((jN132,cW658)=>{
+            if(jN132 !== "element" && jN132 !== "type") _currentValues_.push(Object.values(gtCurrentActiveLayout[0]["variant"])[cW658]);
+        });if(_currentValues_.includes(null)) return <AddonConstructBoxMessage message="Favor de seleccionar las demás propiedades"/>;
+        else return <AddonConstructBox viewID={gtCurrentActiveLayout[0]["variant"].view} storageClient={storage} variantID={info[type][___].uniqKey} colorID={gtCurrentActiveLayout[0]["variant"].color}/>
     };
     const HandlerClickEvent = (property,value) => CCDispatch(CRActUpdateCurrentParamsConstruct(property,value,type,gtCurrentActiveLayout[0]["uniqKey"]));
     const HandlerCallback = fn => {
@@ -114,43 +116,33 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
     return (
         <div className="My-Account" data-aos="fade-left" data-aos-duration="9000">
             <div id="Constructor">
-                <AddonLayersView type={type} dialog={visible}/>
+                <AddonLayersView type={type} dialog={visible} globalDisabled={off} callback={[CRActUpdateCurrentNameProductLayer,CRActSetNewProductLayer,CRActDeleteCurrentProductLayer,CCDispatch]}/>
                 <div className="Flexie-Constructor">
                     <div className="datos-Cambiantes">
                         <div className="Dato-Camb">
                             <h3>Tipo</h3>
                             {Object.keys(info[type]).map((dJ676,W82x4)=>(
-                                dJ676 !== "_default" && <button onClick={_=>HandlerClickEvent("type",dJ676)} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].type===dJ676?" Active":"":""}`} disabled={gtCurrentActiveLayout.length===0} key={W82x4}>{FnUpper(dJ676)}</button>
+                                dJ676 !== "_default" && <button onClick={_=>HandlerClickEvent("type",dJ676)} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].type===dJ676?" Active":"":""}`} disabled={off||gtCurrentActiveLayout.length===0} key={W82x4}>{info[type][dJ676].title}</button>
                             ))}
                         </div>
-                        <div className="Dato-Camb">
-                            <h3>Lado</h3>
-                                {details["views"].map(({uniqKey,name})=>(
-                                    <button onClick={_=>HandlerClickEvent("view",uniqKey)} disabled={gtCurrentActiveLayout.length===0} key={uniqKey} className={`btn-Basico${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].view===uniqKey?" Active":"":""}`}>{name}</button>
-                                ))}
-                            </div>
-                        {type === "taza" ? (
-                           <Fragment>
-                                <div className="Dato-Camb">
-                                    <h3>Colores</h3>
-                                    {details["colors"].map(({uniqKey,name})=>(
-                                        <button onClick={_=>HandlerClickEvent("color",uniqKey)} disabled={gtCurrentActiveLayout.length===0} key={uniqKey} className={`btn-Circle-Color ${name}${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"].color===uniqKey?" active":"":""}`}></button>
+                        {details.map(({title,param,variant,show,id,exclude})=>(
+                            ((exclude.length === 0 && show) || (exclude.includes(type) === false && show)) && (
+                                <div className="Dato-Camb" key={id}>
+                                    <h3>{title} </h3>
+                                    {variant.map(({name,uniqKey})=>(
+                                        <button onClick={_=>HandlerClickEvent(param,uniqKey)} key={uniqKey} className={`${id==="i9K36"?`btn-Circle-Color ${name}`:"btn-Basico"}${gtCurrentActiveLayout.length>0?gtCurrentActiveLayout[0]["variant"][param]===uniqKey?" Active":"":""}`} disabled={off||gtCurrentActiveLayout.length===0}>{id!=="i9K36"&&name}</button>
                                     ))}
-                                    {(gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"].type === "magica") && (
-                                        <div className="Info-Extra">
-                                            <Image src="/06dffa3d-d791-486e-82eb-f61f24c7a955.jpeg" alt="Demostración de la Taza Mágica" width={600} height={225}/>
-                                            <p>
-                                                <i className="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                                Advertencia: El diseño impreso sobre la talla, no se notará sobre lo negro hasta agregarle líquido muy caliente a la taza, y este se tornará al color blanco básico, así revelando el diseño, como se muestra en la imagen de ejemplo.
-                                            </p>
-                                        </div>
-                                    )}
                                 </div>
-                           </Fragment>
-                        ) : type === "playera" ? (
-                            <p></p>
-                        ) : (
-                            <p></p>
+                            )
+                        ))}
+                        {(gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"].type === "magica") && (
+                            <div className="Info-Extra">
+                                <Image src="/06dffa3d-d791-486e-82eb-f61f24c7a955.jpeg" alt="Demostración de la Taza Mágica" width={600} height={225}/>
+                                <p>
+                                    <i className="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                    Advertencia: El diseño impreso sobre la talla, no se notará sobre lo negro hasta agregarle líquido muy caliente a la taza, y este se tornará al color blanco básico, así revelando el diseño, como se muestra en la imagen de ejemplo.
+                                </p>
+                            </div>
                         )}
                     </div>
                     <div className="Producto-Changes">
@@ -158,23 +150,23 @@ export const BoxConstructView = ({type,visible,info,storage}) => {
                             {products[type].length === 0 ? <AddonConstructBoxMessage message={`Haz click en el "+" para crear tú ${type}`}/> : HandlerCheckerType()}
                             <div className={`EditorCapas Taza-Especificacion${gtCurrentActiveLayout.length > 0 ? ` ${gtCurrentActiveLayout[0]["variant"].type}${gtCurrentActiveLayout[0]["variant"].view}` : undefined}`}>
                                 {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["text"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,content,color,active,axis,size,font,style})=>(
-                                    <AddonConstructorTextLayout visible={visible} axis={axis} viewID={gtCurrentActiveLayout[0]["variant"].view} callback={[HandlerClickActiveElement]} fontName={font} fontStyled={style} active={active} colorHex={color} key={uniqKey} productID={gtCurrentActiveLayout[0]["uniqKey"]} content={content} type={type} textID={uniqKey} fontSize={size}/>
+                                    <AddonConstructorTextLayout globalDisabled={off} visible={visible} axis={axis} viewID={gtCurrentActiveLayout[0]["variant"].view} callback={[HandlerClickActiveElement,CRActElementsFnCurrentProductLayer,CCDispatch]} fontName={font} fontStyled={style} active={active} colorHex={color} key={uniqKey} productID={gtCurrentActiveLayout[0]["uniqKey"]} content={content} type={type} textID={uniqKey} fontSize={size}/>
                                 ))}
                                 {gtCurrentActiveLayout.length > 0 && gtCurrentActiveLayout[0]["variant"]["element"]["image"].filter(({view})=>view===gtCurrentActiveLayout[0]["variant"].view).map(({uniqKey,url,width,active,axis})=>(
-                                    <AddonConstructViewUploadFile callback={[HandlerClickActiveElement]} active={active} key={uniqKey} url={url} width={width} type={type} productID={gtCurrentActiveLayout[0]["uniqKey"]} imageID={uniqKey} viewID={gtCurrentActiveLayout[0]["variant"].view} axis={axis}/>
+                                    <AddonConstructViewUploadFile globalDisabled={off} callback={[HandlerClickActiveElement,CRActElementsFnCurrentProductLayer,CCDispatch]} active={active} key={uniqKey} url={url} width={width} type={type} productID={gtCurrentActiveLayout[0]["uniqKey"]} imageID={uniqKey} viewID={gtCurrentActiveLayout[0]["variant"].view} axis={axis}/>
                                 ))}
                             </div>
                         </div>
                     </div>
                     <div className="Btn-Personalizar">
                         <div className="barra-left">
-                            <AddonIconDesign fontView={visible[0]["fontListView"]["show"]} callback={HandlerCallback} type={type} style="AddText" url="/6f2b809a-be47-4cdf-9be7-03123392ff3a.png"/>
-                            <AddonIconDesign fontView={visible[0]["fontListView"]["show"]} visible={[visible[1],"uploadImageView"]} callback={HandlerCallback} type={type} style="AddImage" url="/92986322-fec4-4883-aa7e-a5b57eb302c2.png"/>
-                            <AddonIconDesign fontView={visible[0]["fontListView"]["show"]} visible={[visible[1],"designListView"]} callback={HandlerCallback} type={type} style="AddDesign" url="/e78af129-f827-46c5-bf77-be62acb5bfaf.png"/>
+                            <AddonIconDesign globalDisabled={off} currentProduct={gtCurrentActiveLayout} callback={HandlerCallback} style="AddText" url="/6f2b809a-be47-4cdf-9be7-03123392ff3a.png"/>
+                            <AddonIconDesign globalDisabled={off} currentProduct={gtCurrentActiveLayout} visible={[visible[1],"uploadImageView"]} callback={HandlerCallback} style="AddImage" url="/92986322-fec4-4883-aa7e-a5b57eb302c2.png"/>
+                            <AddonIconDesign globalDisabled={off} currentProduct={gtCurrentActiveLayout} visible={[visible[1],"designListView"]} callback={HandlerCallback} style="AddDesign" url="/e78af129-f827-46c5-bf77-be62acb5bfaf.png"/>
                         </div>
                     </div>
                 </div>
-                <button className="viewProduct" style={products[type].length === 0 || (gtCurrentActiveLayout.length > 0 && Object.values(gtCurrentActiveLayout[0]["variant"]).includes(null)) ? {background:"#c3bbb1",pointerEvents:"none"} : undefined} disabled={products[type].length === 0 || (gtCurrentActiveLayout.length > 0 && Object.values(gtCurrentActiveLayout[0]["variant"]).includes(null))}>
+                <button className="viewProduct" disabled={off || products[type].length === 0}>
                     <i className="fa fa-search" aria-hidden="true"></i> Vista Prevía
                 </button>
             </div>
@@ -211,9 +203,9 @@ export const UploadImageView = ({visible,type}) => {
     )
 };
 
-export const ButtonAddProduct = ({type,visible}) => {
-    const {CCAction:{CRActSetNewProductLayer},CCDispatch,CCState:{products}} = useContext(ConstructContext.Context);
-    return products[type].length >= 1 && !visible[0]["fontListView"]["show"] && (
+export const ButtonAddProduct = ({type}) => {
+    const {CCAction:{CRActSetNewProductLayer},CCDispatch,CCState:{products,off}} = useContext(ConstructContext.Context);
+    return products[type].length >= 1 && !off && (
         <div className="agregar-Producto-perso" onClick={_=>CCDispatch(CRActSetNewProductLayer(type))}>
             +
         </div>

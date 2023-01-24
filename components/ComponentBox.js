@@ -4,6 +4,7 @@
 @date 16/Dic/22 15:34
 @description Componentes Globales con Cajas (box) para el Proyecto
 */
+import {Fragment} from 'react';
 import {AddonBoxBannerGlobal} from '../addons/Box';
 import Loader from 'react-content-loader';
 import Enlace from 'next/link';
@@ -43,17 +44,96 @@ export const BannerGlobal = ({image,subtitle,title,description,href,text,promoti
     )
 };
 
-export const BannerGlobalProduct = ({title,description,text,to,image}) => {
-    return (
+export const BannerGlobalProduct = ({title,description,text,to,image,full,loading,rating}) => {
+    return loading ? (
         <div className="CategoriaDiv">
+            <div className="content-txt">
+                <h3>
+                    <Loader width={250} height={25}>
+                        <rect x={0} y={0} rx={0} ry={0} width={250} height={25}/>
+                    </Loader>
+                </h3>
+                <p>
+                    <Loader width={350} height={100}>
+                        <rect x={0} y={0} rx={0} ry={0} width={350} height={100}/>
+                    </Loader>
+                </p>
+            </div>
+        </div>
+    ) : (
+        <div className="CategoriaDiv">
+            {full && (
+                <div className="CateImageProducto">
+                    <img src="https://images2.imgbox.com/44/f3/XhNfjZIK_o.png"/>
+                </div>
+            )}
             <div className="content-txt" data-aos="fade-right">
-                <h3>{title}</h3>
-                <p>{description}</p>
-                {(text && to) && (
-                    <Enlace href={to}>
-                        {text}
-                    </Enlace>)
-                }
+                {!full ? (
+                    <Fragment>
+                        <h3>
+                            {title}
+                        </h3>
+                        <p>
+                            {description}
+                        </p>
+                        {(text && to) && (
+                            <Enlace href={to}>
+                                {text}
+                            </Enlace>
+                        )}
+                    </Fragment>
+                ) : (
+                    <Fragment>
+                        <h3>
+                            {title}
+                        </h3>
+                        <div className="ValoracionDiv">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <span>No hay valoraciones</span>
+                        </div>
+                        <span className="precioProducto">$125.00</span>
+                        <p>
+                            Haz recuerdos que no deban ser olvidados, rememoralos cada mañana con un buen café en tu taza favorita.
+                        </p>
+                        <div className="InfoTags">
+                            <p>
+                                <strong>SKU</strong>
+                                <span>41255</span>
+                            </p>
+                            <p className="TagsProduct">
+                                <strong>Etiqueta</strong>
+                                <span>Blanco</span>
+                                <span>San Valentin</span>
+                            </p>
+                            <div className="cantidades-precio">
+                                <div className="cantidad">
+                                    <strong className="menos">-</strong>
+                                    <strong className="n-canti"><i>1</i> pz</strong>
+                                    <strong className="mas">+</strong>
+                                </div>
+                                <button className="btn-white" href="/create?product=taza">Añadir al carrito</button>
+                            </div>
+                            <div class="CtnCompartir">
+                                <button class="FbBtn">
+                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                </button>
+                                <button class="TwitterBtn">
+                                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                                </button>
+                                <button class="GmailBtn">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </button>
+                                <button class="BtnWhatsApp">
+                                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </Fragment>
+                )}
             </div>
             <img className="FondoCategoria" src={image} alt={`Fondo del Producto ${title}`}/>
         </div>

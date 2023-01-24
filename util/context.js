@@ -38,16 +38,20 @@ export const ConstructContext = {
             playera: [],
             canva: [],
             cojin: [],
-            rompecabeza: []
+            rompecabeza: [],
+            agenda: [],
+            chipbag: []
         },
         total: 0,
         params: {
             taza: "blanca",
-            playera: "",
-            canva: "",
-            cojin: "",
-            rompecabeza: ""
+            playera: "credondo",
+            canva: "horizontal",
+            cojin: "cuadrada",
+            rompecabeza: "",
+            agenda: "diaria",
+            chipbag: "papita"
         },
-        byStatic: false
+        off: false
     }
 };

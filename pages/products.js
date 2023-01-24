@@ -9,6 +9,7 @@ import {useRouter} from 'next/router';
 import {getDownloadURL,ref} from 'firebase/storage';
 import {AddonBoxBannerGlobal} from '../addons/Box';
 import {BannerGlobalTitle,BannerGlobalProduct} from '../components/ComponentBox';
+import {ComponentProductList} from '../components/ComponentProduct';
 import {FnUpper} from '../util/crypto';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -18,7 +19,7 @@ const Products = ({global,firebase,authentic}) => {
     const {query,pathname,back,push} = useRouter();
     const [images,setImages] = useState(null);
     const [info,setInfo] = useState(null);
-    let {siteName,siteBuilder:E290b} = global;
+    let {siteName,siteBuilder:E290b,siteTag:lA397} = global;
     const stSavedObjProducts = {
         values: Object.values(E290b),
         keys: Object.keys(E290b)
@@ -37,7 +38,7 @@ const Products = ({global,firebase,authentic}) => {
                         const {images,uniqKey} = xY923["_default"];
                         await Promise.all(Object.keys(images).map(async(g7O70,y5V31)=>{
                             __[g7O70] = await HandlerURLCoverFn(uniqKey,Object.values(images)[y5V31]);
-                        }));if(Object.keys(xY923).length >= 3) await Promise.all(
+                        }));if(Object.keys(xY923).length >= 2) await Promise.all(
                             Object.values(xY923).map(async ({uniqKey,cover}) => {
                                 if(cover) __[uniqKey] = await HandlerURLCoverFn(uniqKey,cover);
                             })
@@ -48,7 +49,7 @@ const Products = ({global,firebase,authentic}) => {
         })(); 
     },[]);
     useMemo(_ => {
-        if(images && query.article && stSavedObjProducts["keys"].includes(query.article) && Object.keys(E290b[query.article]).length > 2) setInfo(E290b[query.article]);
+        if(images && query.article && stSavedObjProducts["keys"].includes(query.article) && Object.keys(E290b[query.article]).length >= 2) setInfo(E290b[query.article]);
         else setInfo(null);
     },[query,images]);
     return (
@@ -61,13 +62,7 @@ const Products = ({global,firebase,authentic}) => {
                     (info && query.type) ? (
                         <Fragment>
                             <BannerGlobalProduct title={info[query.type].title} description="" image={images[info["_default"].uniqKey].full}/>
-                            <div className="CateContainer">
-                                <div className="Categorias-Box">
-                                    <ul>
-                                        <h3>Lo más buscado</h3>
-                                    </ul>
-                                </div>
-                            </div>
+                            <ComponentProductList database={firebase["FirebaseDatabase"]} storage={firebase["FirebaseStorage"]} category={lA397}/>
                         </Fragment>
                     ) : (
                         <Fragment>

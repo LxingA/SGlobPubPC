@@ -3235,7 +3235,7 @@ button.viewProduct {
   border: 15px solid #FFF;
 }
 
-button.btn-Circle-Color.active {
+button.btn-Circle-Color.Active {
   border: 3px solid #d3c1a9;
   pointer-events: none;
 }
@@ -4015,7 +4015,7 @@ img.FondoCategoria {
   position: absolute;
   right: 0;
   margin-right: 40px;
-  width: 13%;
+  width: 14%;
   font-size: 11px;
 }
 
@@ -4105,14 +4105,8 @@ label.SearchInput input:focus {
 
 .NavCate {
   position: sticky;
-  top: 50px;
+  top: 118px;
   z-index: 666;
-}
-
-.listProductos {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .productoPC {
@@ -4508,6 +4502,722 @@ img.TipoImage {
   padding: 5px 56px;
 }
 
+button.viewProduct:disabled {
+  pointer-events: none;
+  background-color: #c3bbb1;
+}
+
+ul.listado-beneficios {
+  margin-top: 60px;
+}
+
+.Categorias-Box button {
+  background: #fff;
+  border: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: black;
+  padding: 25px;
+}
+
+.Categorias-Box button:hover {
+  background: #fbfbfb;
+  cursor: pointer;
+}
+
+.Categorias-Box button.active {
+  background: #fbfbfb;
+}
+
+.Categorias-Box button:disabled {
+  background: none;
+  opacity: .6;
+  pointer-events: none;
+}
+
+.filterContainerText {
+  background: #d0c7be;
+  color: white;
+  padding: 9px 23px;
+  border-radius: 14px;
+  font-size: 12px;
+  margin-right: 25px;
+}
+
+.filterContainerText i {
+  margin-right: 15px;
+}
+
+.BoxCateCtn button {
+  width: 100%;
+  justify-content: inherit;
+  background: #fdfdfd;
+  cursor: pointer!important;
+}
+
+.filterContainerText.Disabled {
+  background: #e5ded4;
+  pointer-events: none;
+}
+
+.filterContainerText.Disabled {
+  background: #ddd6cd;
+}
+
+.MenuCategoriasFilter h3:before {
+  content: " ";
+  border-bottom: 2px solid #af9b82;
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  margin-bottom: -10px;
+}
+
+.MenuCategoriasFilter h3 {
+  position: relative;
+}
+
+.BoxCateCtn.MiniBtn button {
+  display: inline-block;
+  width: 48%;
+  margin-right: 4px;
+  margin-bottom: 3px;
+}
+
+.Categorias-Box button:disabled {
+  background: #fafafa;
+}
+
+.Advertencia-producto .Boxadventencia {
+  width: 58%;
+  margin: 0 auto;
+  text-align: center;
+  border: 25px solid #fafafa;
+  padding: 34px;
+}
+
+.Advertencia-producto i {
+  font-size: 58px;
+  color: #c1c1c1;
+}
+
+.Advertencia-producto p {
+  font-size: 21px;
+  padding: 32px;
+}
+
+.Advertencia-producto button {
+  margin: 0 auto;
+  background: #fbfbfb;
+  width: 184px;
+}
+
+.Advertencia-producto {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NavCate {
+  justify-content: space-between;
+  padding-right: 30px;
+}
+
+.Categorias-Box ul {
+  position: sticky;
+  top: 50px;
+  background: #fff;
+  z-index: 6;
+}
+
+.BoxCateCtn.MiniBtn button:disabled {
+  background: #fff!important;
+}
+
+.BoxCateCtn.MiniBtn button.active:disabled {
+  background: #f8f8f8!important;
+}
+
+label.SearchInput input:disabled {
+  opacity: .3;
+}
+
+.ImgProductoPC button {
+  color: white;
+  background: black;
+  z-index: 7;
+  width: 100%;
+  position: relative;
+  height: 42px;
+  display: flex;
+  padding: 0;
+  transition: all ease 0.7s;
+}
+
+.ImgProductoPC img {
+  position: relative;
+  z-index: 2;
+}
+
+.ImgProductoPC:hover button {
+  transform: translateY(-62px);
+  transition: all ease 0.5s;
+}
+
+.InfoProductoPC button {margin: 0!important;width: 100%;background: none;font-weight: 600;padding: 13px;}
+
+.InfoProductoPC {
+  padding: 9px;
+}
+
+.productoPC {
+  background: #fcfcfc;
+}
+
+.ImgProductoPC:hover button {
+  background: #474747;
+}
+
+.productoPC {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+button.uninvisible {
+  position: absolute;
+  top: 0;
+  background: none;
+  height: 100%;
+}
+
+.ImgProductoPC:hover button.uninvisible {
+  background: none;
+  margin-top: 62px;
+}
+
+.HeaderCategoria {
+  height: 842px;
+  position: relative;
+  overflow: hidden;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+img.FondoCategoria {
+  top: 0;
+  bottom: 43px;
+  object-position: center;
+  object-fit: cover;
+  position: absolute;
+  height: 100%;
+  width: 101%;
+  pointer-events: none;
+}
+
+.HeaderCategoria .content-txt {
+  z-index: 3;
+  background: rgb(255 255 255 / 95%);
+  width: 23%;
+}
+
+.CategoriaDiv {
+  width: 100%;
+  height: 797px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-top: -136px;
+  display: flex;
+  justify-content: center;
+}
+
+.Categorias-Box {
+  max-width: 1585px;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  top: -33px;
+}
+
+.CateContainer {
+  background: #f5f5f5;
+}
+
+.Categorias-Box ul {
+  display: flex;
+  height: 68px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.Categorias-Box ul a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: black;
+  padding: 25px;
+}
+
+.Categorias-Box ul a:hover {
+  background: #f9f9f9;
+}
+
+.Categorias-Box h3 {
+  font-size: 13px;
+}
+
+.NavCate {
+  display: flex;
+  height: 90px;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  padding-left: 34px;
+  border-top: 1px solid #eee;
+  background: #fdfdfd;
+}
+
+.NavCate select {
+  position: absolute;
+  right: 0;
+  margin-right: 40px;
+  width: 13%;
+  font-size: 11px;
+}
+
+.NavCate button {
+  color: white;
+  background: #d0c7be;
+  border: 0px;
+  padding: 10px 38px;
+  border-radius: 16px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-right: 27px;
+}
+
+label.SearchInput {
+  border: 1px solid #Eee;
+  border-radius: 20px;
+  width: 360px;
+  display: flex;
+  align-items: center;
+  height: 45px;
+  background: #fff;
+}
+
+label.SearchInput input {
+  border: 0px;
+  display: block;
+  width: 85%;
+  height: 43px;
+  background: none;
+  margin: 0 auto;
+}
+
+label.SearchInput i {
+  position: relative;
+  margin-left: 14px;
+  opacity: .6;
+}
+
+label.SearchInput input:focus {
+  outline: none;
+}
+
+.CategoriasProductosFilters {
+  display: flex;
+}
+
+.MenuCategoriasFilter {
+  width: 305px;
+  padding: 28px;
+  position: relative;
+}
+
+.MenuCategoriasFilter h3 {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 28px;
+}
+
+.BoxCateCtn {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 31px;
+  margin-bottom: 25px;
+}
+
+.BoxCateCtn a {
+  display: block;
+  padding: 17px;
+  color: #000;
+  font-size: 12px;
+  opacity: .8;
+  background: #f7f7f7;
+  margin-bottom: 3px;
+}
+
+.BoxCateCtn.TagsDiv a {
+  display: inline-block;
+  width: 49%;
+}
+
+.MainMenuCate {
+  position: sticky;
+  top: 57px;
+}
+
+.NavCate {
+  position: sticky;
+  top: 50px;
+  z-index: 666;
+}
+
+.productoPC {
+  position: relative;
+  background: #f9f9f9;
+  overflow: hidden;
+  width: 239px;
+  margin-bottom: 14px;
+}
+
+.ImgProductoPC {
+  height: 226px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ImgProductoPC img {
+  position: relative;
+  width: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ImgProductoPC a {
+  background: #000;
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  color: white;
+  width: 100%;
+  font-size: 11px;
+  padding: 14px;
+  bottom: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ContentProductosCate {
+  width: 81%;
+  padding: 21px;
+  padding-top: 36px;
+}
+
+.ImgProductoPC:hover img {
+  transform: scale(1.1);
+  transition: all ease 0.5s;
+}
+
+.ImgProductoPC img {
+  transition:  all ease 0.5s;
+}
+
+.ImgProductoPC a {
+  transition: all ease 0.5s;
+  transform: translateY(100%);
+}
+
+.ImgProductoPC:hover a {
+  transform: translateY(0%);
+}
+
+.InfoProductoPC {
+  text-align: center;
+  padding: 16px;
+}
+
+.InfoProductoPC p {
+  font-weight: 600;
+  color: #c1c1c1;
+}
+
+.InfoProductoPC a {
+  color: black;
+  font-size: 13px;
+  font-weight: 600;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CateImageProducto {
+  position: relative;
+  overflow: hidden;
+  width: 451px;
+  margin-right: 115px;
+}
+
+.CateImageProducto img {
+  width: 100%;
+}
+
+.CategoriaDiv span.precioProducto {
+  font-size: 37px;
+  font-weight: 600;
+  color: #d3c1a9;
+}
+
+.ValoracionDiv i {
+  font-size: 11px;
+  margin-right: 5px;
+}
+
+.ValoracionDiv {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.ValoracionDiv span {
+  font-size: 10px;
+}
+
+.CategoriaDiv .content-txt h3 {
+  font-size: 25px;
+}
+
+.InfoTags {
+  margin-top: 24px;
+}
+
+.HeaderCategoria .content-txt .InfoTags strong {
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.CategoriaDiv .content-txt {
+  width: 21%;
+  padding: 37px;
+  min-width: 400px;
+}
+
+.CategoriaDiv .content-txt p {
+  font-size: 13px;
+}
+
+.InfoTags p {
+  font-size: 11px!important;
+}
+
+.InfoTags p span {
+  opacity: .8;
+}
+
+.cantidades-precio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 21px;
+}
+
+.cantidades-precio .cantidad {
+  border-radius: 19px;
+  border: 1px solid #eee;
+  width: 41%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 36px;
+}
+
+.cantidad i {
+  font-style: normal;
+}
+
+.cantidades-precio .cantidad strong {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.cantidades-precio .content-txt a.btn-white {
+  margin-top: 0px!important;
+}
+
+.cantidades-precio .btn-white {
+  margin-top: 0!important;
+  background: #d0c7be;
+  color: white;
+}
+
+strong.n-canti {
+  font-size: 8px;
+}
+
+.ContainerProductoAdicional {
+  position: relative;
+  padding-top: 53px;
+}
+
+.MenuOptionsProducto {
+  display: flex;
+  justify-content: center;
+  height: 75px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.MenuOptionsProducto button {border: 9px;padding: 25px;width: 269px;background: #fff;font-size: 12px;text-transform: uppercase;font-weight: 500;opacity: .8;letter-spacing: 1px;}
+
+.MenuOptionsProducto button {
+  cursor: pointer;
+}
+
+.MenuOptionsProducto button.active {
+  border-bottom: 3px solid #b3b3b3;
+}
+
+.CtnCompartir {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  margin-top: 19px;
+}
+
+.CtnCompartir button {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  margin-right: 8px;
+  border: 0px;
+  color: #323232;
+}
+
+.CtnCompartir button {
+  cursor: pointer;
+}
+
+button.FbBtn:hover {
+  background: #185abc;
+  color: white;
+}
+
+button.TwitterBtn:hover {
+  color: white;
+  background: #1aace8;
+}
+
+button.GmailBtn:hover {
+  background: #d93025;
+  color: white;
+}
+
+button.BtnWhatsApp:hover {
+  color: white;
+  background: #89d021;
+}
+
+.CateProductos .CategoriaDiv {
+  margin-top: -135px!important;
+}
+
+p.TagsProduct span {
+  background: #eee;
+  margin-right: 6px;
+  padding: 4px;
+}
+
+p.TagsProduct {
+  margin-top: 20px;
+}
+
+.cantidades-precio .btn-white {
+  border: 0px;
+  cursor: pointer;
+}
+
+.HeaderCategoria .content-txt .InfoTags strong {
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.NavCate {
+  justify-content: space-between!important;
+}
+
+.CateProductos .content-txt {
+  position: relative;
+  margin-right: 0px;
+}
+
+.CateContainer.CatesDefault {background: none;}
+
+.P-Parrafo {
+    display: flex;
+    align-items: center;
+}
+
+.P-Parrafo h2 {
+    font-size: 48px;
+    position: absolute;
+    width: 38%;
+    right: 0;
+    margin-right: 12%;
+    font-family: 'Playfair Display';
+    font-style: italic;
+}
+
+.P-Parrafo img {
+    width: 57%;
+}
+
+.container-Redaccion {
+    padding: 75px;
+}
+
+.P-Parrafo h2 p {
+    font-size: 18px;
+    width: 83%;
+    margin-top: 21px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.P-Parrafo.Reves {
+  flex-direction: row-reverse;
+  margin-top: 63px;
+}
+
+.P-Parrafo.Reves h2 {
+  left: 0%;
+  margin-left: 185px;
+}
+
+.P-Parrafo.Reves img {
+  width: 50%;
+}
+
+.P-Parrafo h2 p span {
+  font-family: 'Playfair Display';
+  line-height: 38px;
+  color: #565656;
+}
+
 @media screen and (max-width: 450px) {
   nav ul li a, nav ul li span {
     padding: 0px!important;
@@ -4534,4 +5244,150 @@ img.TipoImage {
   height: 281px;
   margin-bottom: 0px!important;
 }
+.My-Account.HeaderCategoria.CateProductos {
+  height: auto;
+  padding-bottom: 60px;
+}
+
+.CateProductos .CategoriaDiv {
+  flex-wrap: wrap;
+  height: auto;
+}
+
+.CateProductos .CategoriaDiv .content-txt {
+  left: 0%;
+}
+
+.CateProductos .CateImageProducto {
+  margin-right: 0px;
+  margin-top: 175px;
+}
+
+.container-Redaccion {
+  padding: 11px;
+  padding-top: 60px;
+}
+
+.P-Parrafo {
+  flex-wrap: wrap;
+  display: block;
+}
+
+.P-Parrafo h2 {
+  width: 100%;
+  font-size: 31px;
+  position: relative;
+  text-align: center;
+}
+
+.P-Parrafo h2 p {
+  width: 100%;
+}
+
+.P-Parrafo img {
+  width: 100%;
+  margin-top: 32px;
+}
+
+.P-Parrafo.Reves h2 {
+  position: relative;
+  margin: 0px;
+}
+
+.P-Parrafo.Reves img {
+  width: 100%;
+}
+
+.P-Parrafo h2 p span {
+  display: block;
+  text-align: left;
+  padding-left: 38px;
+}
+
+.CategoriasProductosFilters {
+  flex-wrap: wrap;
+}
+
+.MenuCategoriasFilter {
+  width: 100%;
+}
+
+.ContentProductosCate {
+  width: 100%;
+  padding: 46px;
+}
+
+.productoPC {
+  width: 100%;
+  height: 484px;
+}
+
+.ImgProductoPC {
+  height: 385px;
+}
+
+.My-Account.HeaderCategoria.CateProductos {
+  height: auto;
+  padding-bottom: 60px;
+}
+
+.CateProductos .CategoriaDiv {
+  flex-wrap: wrap;
+  height: auto;
+}
+
+.CateProductos .CategoriaDiv .content-txt {
+  left: 0%;
+}
+
+.CateProductos .CateImageProducto {
+  margin-right: 0px;
+  margin-top: 175px;
+}
+
+.container-Redaccion {
+  padding: 11px;
+  padding-top: 60px;
+}
+
+.P-Parrafo {
+  flex-wrap: wrap;
+  display: block;
+}
+
+.P-Parrafo h2 {
+  width: 100%;
+  font-size: 31px;
+  position: relative;
+  text-align: center;
+}
+
+.P-Parrafo h2 p {
+  width: 100%;
+}
+
+.P-Parrafo img {
+  width: 100%;
+  margin-top: 32px;
+}
+
+.P-Parrafo.Reves h2 {
+  position: relative;
+  margin: 0px;
+}
+
+.P-Parrafo.Reves img {
+  width: 100%;
+}
+
+.P-Parrafo h2 p span {
+  display: block;
+  text-align: left;
+  padding-left: 38px;
+}
+
+.Categorias-Box ul {
+  display: none;
+}
+
 }

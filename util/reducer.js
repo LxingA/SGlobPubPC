@@ -137,6 +137,12 @@ export const ConstructReducer = {
                 idProductCurrent: j96Q1,
                 idViewCurrent: d6N06
             }
+        }),
+        CRActUpdateCurrentDisabledConstruct: Rc021 => ({
+            type: "CRActUpdateCurrentDisabledConstruct",
+            payload: {
+                currentStatusDisabled: Rc021
+            }
         })
     },
     Reducer: (state = ConstructContext.State, action) => {
@@ -206,7 +212,7 @@ export const ConstructReducer = {
                             __["view"] = null;
                             __["element"] = initialElementObj;
                             switch(payload.typeProduct){
-                                case "taza":
+                                default:
                                     __["color"] = null;
                                 break;
                             }
@@ -228,14 +234,10 @@ export const ConstructReducer = {
                         element: initialElementObj
                     }
                 };let _objInitMutate_ = {...stObjInitialStructure};
+                _objInitMutate_["variant"]["type"] = state["params"][payload.stTypeCreate];
                 switch(payload.stTypeCreate){
-                    case "taza":
-                        _objInitMutate_["variant"]["type"] = "blanca";
+                    default:
                         _objInitMutate_["variant"]["color"] = null;
-                    break;
-                    case "playera":
-                    break;
-                    case "canva":
                     break;
                 }let _objRefMutate_ = state["products"][payload.stTypeCreate];
                 _objRefMutate_.unshift(_objInitMutate_);
@@ -265,15 +267,13 @@ export const ConstructReducer = {
                 });_savedRefCurrentState_[payload.typeProductActive] = _objActiveRef_;
                 return {...state,products:_savedRefCurrentState_}
             case "CRActCloneCurrentProductLayer":
-                _savedRefCurrentState_ = state["products"];
-                let _objCloneRefParentState_ = _savedRefCurrentState_[payload.typeProductClone];
-                let _objCopyRefCurrentCloneRequest_ = _objCloneRefParentState_[_objCloneRefParentState_.findIndex(({uniqKey})=>uniqKey===payload.idProductClone)];
-                let _objInitializateNewInstanceForCloneRequest_ = {..._objCopyRefCurrentCloneRequest_};
-                _objInitializateNewInstanceForCloneRequest_["uniqKey"] = RandomHash(16);
-                _objInitializateNewInstanceForCloneRequest_["id"] = _objCloneRefParentState_.length + 1;
-                _objCloneRefParentState_.unshift(_objInitializateNewInstanceForCloneRequest_);
-                _savedRefCurrentState_[payload.typeProductClone] = _objCloneRefParentState_;
-                return {...state,products:_savedRefCurrentState_}
+                let _objCloneRefParentState_ = [...state["products"][payload.typeProductClone]];
+                let _objCopyRefCurrentCloneRequest_ = Object.assign({},_objCloneRefParentState_[_objCloneRefParentState_.findIndex(({uniqKey})=>uniqKey===payload.idProductClone)]);
+                _objCopyRefCurrentCloneRequest_["uniqKey"] = RandomHash(16);
+                _objCopyRefCurrentCloneRequest_["id"] = _objCloneRefParentState_.length + 1;
+                _objCloneRefParentState_.unshift(_objCopyRefCurrentCloneRequest_);
+                _objCloneRefParentState_[payload.typeProductClone] = _objCloneRefParentState_;
+                return {...state,products:_objCloneRefParentState_}
             case "CRActUpdateCurrentNameProductLayer":
                 _savedRefCurrentState_ = state["products"];
                 let _objUpdateNRef_ = _savedRefCurrentState_[payload.typeProductUpdateN];
@@ -282,6 +282,8 @@ export const ConstructReducer = {
                     return Mf999
                 });_savedRefCurrentState_[payload.typeProductUpdateN] = _objUpdateNRef_;
                 return {...state,products:_savedRefCurrentState_}
+            case "CRActUpdateCurrentDisabledConstruct":
+                return {...state,off:payload.currentStatusDisabled}
         }
         return state
     }
